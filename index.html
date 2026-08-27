@@ -26,6 +26,14 @@
 }
 </script>
 <style>
+  /* ---------- fonts (self-hosted, Geist) ---------- */
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
   /* ---------- tokens ---------- */
   :root {
     --bg: #0b0f14;
@@ -37,14 +45,28 @@
     --muted: #8b949e;
     --accent: #3fb950;
     --accent-dim: #2ea043;
+    --on-accent: #0b0f14;
     --radius-card: 12px;
     --radius-pill: 999px;
-    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono", monospace;
+    --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
     --nav-h: 64px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  :root[data-theme="light"] {
+    --bg: #ffffff;
+    --surface: #f6f8fa;
+    --surface-2: #eef1f4;
+    --border: #d0d7de;
+    --border-strong: #afb8c1;
+    --text: #1f2328;
+    --muted: #59636e;
+    --accent: #1a7f37;
+    --accent-dim: #1f883d;
+    --on-accent: #ffffff;
   }
   @media (prefers-color-scheme: light) {
-    :root {
+    :root:not([data-theme="dark"]) {
       --bg: #ffffff;
       --surface: #f6f8fa;
       --surface-2: #eef1f4;
@@ -54,6 +76,7 @@
       --muted: #59636e;
       --accent: #1a7f37;
       --accent-dim: #1f883d;
+      --on-accent: #ffffff;
     }
   }
 
@@ -68,6 +91,7 @@
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   body::before {
     content: "";
@@ -81,13 +105,13 @@
   a:hover { text-decoration: underline; text-underline-offset: 3px; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
   ::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
-  .skip { position: absolute; left: -9999px; top: 0; background: var(--accent); color: var(--bg); padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 100; }
+  .skip { position: absolute; left: -9999px; top: 0; background: var(--accent); color: var(--on-accent); padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 100; }
   .skip:focus { left: 0; }
   .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
   main { display: block; }
   section { padding: 84px 0; scroll-margin-top: calc(var(--nav-h) + 16px); }
   h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 16px; }
-  h2 { font-size: clamp(1.6rem, 3.4vw, 2.1rem); font-weight: 650; }
+  h2 { font-size: clamp(1.6rem, 3.4vw, 2.1rem); font-weight: 600; }
   p { margin: 0 0 16px; }
   .eyebrow {
     font-family: var(--font-mono);
@@ -97,6 +121,20 @@
     color: var(--accent);
     margin: 0 0 12px;
   }
+  .ico { width: 14px; height: 14px; vertical-align: -2px; margin-right: 7px; flex: none; }
+
+  /* scroll progress (CSS scroll-driven; no JS) */
+  .progress {
+    position: fixed; top: 0; left: 0; z-index: 70;
+    width: 100%; height: 2px;
+    background: var(--accent);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+  }
+  @supports (animation-timeline: scroll()) {
+    .progress { animation: grow linear both; animation-timeline: scroll(root); }
+  }
+  @keyframes grow { to { transform: scaleX(1); } }
 
   /* ---------- nav ---------- */
   .nav {
@@ -117,9 +155,11 @@
   .nav-inner { max-width: 1080px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .brand { font-weight: 700; color: var(--text); font-size: 16px; white-space: nowrap; }
   .brand:hover { text-decoration: none; }
-  .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
-  .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+  .nav-links { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.15s ease; }
   .nav-links a:hover { color: var(--text); text-decoration: none; }
+  .nav-links a.active { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .pill {
     display: inline-flex;
     align-items: center;
@@ -139,10 +179,22 @@
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-  @media (max-width: 768px) { .nav-links { display: none; } }
+  .theme-toggle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--border-strong); }
+  @media (max-width: 860px) { .nav-links { display: none; } }
 
   /* ---------- hero ---------- */
-  .hero { padding-top: clamp(4rem, 9vh, 6rem); padding-bottom: clamp(3.5rem, 8vh, 5rem); }
+  .hero { padding-top: clamp(4rem, 9vh, 6rem); padding-bottom: clamp(2.5rem, 6vh, 4rem); }
   .hero h1 { font-size: clamp(2.7rem, 7vw, 4.6rem); font-weight: 700; margin-bottom: 20px; }
   .hero-sub {
     font-size: clamp(1.05rem, 2vw, 1.25rem);
@@ -161,31 +213,59 @@
   }
   .btn:hover { text-decoration: none; }
   .btn:active { transform: translateY(1px) scale(0.98); }
-  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary { background: var(--accent); color: var(--on-accent); }
   .btn-primary:hover { background: var(--accent-dim); }
   .btn-ghost { border: 1px solid var(--border-strong); color: var(--text); background: transparent; }
   .btn-ghost:hover { border-color: var(--accent); }
-  .hero-anim { animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .hero-anim { animation: rise 0.7s var(--ease) both; }
   .hero-anim:nth-child(2) { animation-delay: 0.08s; }
   .hero-anim:nth-child(3) { animation-delay: 0.16s; }
   .hero-anim:nth-child(4) { animation-delay: 0.24s; }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation: none !important; transition: none !important; }
+
+  /* ---------- metrics strip ---------- */
+  .metrics { padding: 0; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 768px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  .metric { padding: 22px 24px 22px 0; border-right: 1px solid var(--border); margin-right: 24px; }
+  .metric:last-child { border-right: none; margin-right: 0; }
+  @media (max-width: 768px) {
+    .metric { padding: 18px 16px 18px 0; margin-right: 0; border-right: none; }
+    .metric:nth-child(odd) { border-right: 1px solid var(--border); margin-right: 16px; }
+    .metric:nth-child(n+3) { padding-top: 22px; border-top: 1px solid var(--border); }
   }
+  .metric .num { font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; color: var(--text); line-height: 1.2; }
+  .metric .num em { font-style: normal; color: var(--accent); }
+  .metric .lbl { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
   /* ---------- about ---------- */
-  .about-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .about p { color: var(--muted); max-width: 65ch; font-size: 17px; }
   .about strong { color: var(--text); font-weight: 600; }
   .status-line { display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 15px; margin-top: 8px; }
 
+  /* ---------- experience ---------- */
+  .exp-row {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-row:first-of-type { border-top: 1px solid var(--border); }
+  @media (max-width: 768px) { .exp-row { grid-template-columns: 1fr; gap: 8px; } }
+  .exp-row h3 { font-size: 16.5px; font-weight: 600; margin: 0 0 4px; }
+  .exp-row .co { font-size: 14px; color: var(--muted); margin: 0; }
+  .exp-row .years { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); display: block; margin-top: 6px; }
+  .exp-row p.scope { color: var(--muted); font-size: 14.5px; margin: 0; }
+  .exp-row p.scope strong { color: var(--text); font-weight: 600; }
+
   /* ---------- skills ---------- */
   .skill-group { margin-bottom: 28px; }
-  .skill-group h3 { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 12px; }
+  .skill-group h3 { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 12px; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-mono);
     font-size: 12.5px;
     color: var(--text);
@@ -193,8 +273,10 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-pill);
     padding: 5px 12px;
+    transition: border-color 0.15s ease;
   }
-  .chip b { color: var(--accent); font-weight: 600; margin-right: 2px; }
+  .chip:hover { border-color: var(--border-strong); }
+  .chip b { color: var(--accent); font-weight: 500; margin-right: 4px; }
 
   /* ---------- projects ---------- */
   .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -210,13 +292,14 @@
     transition: border-color 0.2s ease, transform 0.2s ease;
   }
   .card:hover { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); transform: translateY(-2px); }
-  .card h3 { font-size: 18px; font-weight: 650; margin: 0; }
+  .card h3 { font-size: 18px; font-weight: 600; margin: 0; }
   .card h3 a { color: var(--text); }
   .card h3 a:hover { color: var(--accent); text-decoration: none; }
   .card p { color: var(--muted); font-size: 14.5px; margin: 0; flex: 1; }
-  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); border: 1px solid var(--border); border-radius: var(--radius-pill); padding: 3px 9px; }
-  .card-link { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+  .tag-license { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+  .card-link { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; }
   .card-link .arrow { transition: transform 0.18s ease; }
   .card:hover .card-link .arrow { transform: translateX(3px); }
   .card:hover .card-link { text-decoration: underline; text-underline-offset: 3px; }
@@ -233,7 +316,7 @@
   .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
   @media (max-width: 768px) { .certs-grid { grid-template-columns: 1fr; } }
   .cert-col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 24px; }
-  .cert-col h3 { font-size: 16px; font-weight: 650; margin-bottom: 14px; }
+  .cert-col h3 { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
   .cert-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   .cert-col li { color: var(--muted); font-size: 14.5px; display: flex; gap: 10px; align-items: baseline; }
   .mark { color: var(--accent); font-family: var(--font-mono); font-weight: 700; }
@@ -247,26 +330,51 @@
   .contact-row .v { font-size: 15px; color: var(--text); text-align: right; word-break: break-word; }
   .contact-row .v a { color: var(--text); }
   .contact-row .v a:hover { color: var(--accent); }
+  .contact-note { color: var(--muted); font-size: 14px; margin-top: 20px; }
 
-  footer { border-top: 1px solid var(--border); padding: 32px 0 48px; }
+  /* ---------- footer ---------- */
+  footer { border-top: 1px solid var(--border); padding: 28px 0 44px; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
   footer p { color: var(--muted); font-size: 13.5px; margin: 0; }
+  .foot-status { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12.5px; }
+  .top { font-size: 13.5px; }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .grid-2 .reveal:nth-child(2) { transition-delay: 0.05s; }
+  .grid-2 .reveal:nth-child(3) { transition-delay: 0.1s; }
+  .grid-2 .reveal:nth-child(4) { transition-delay: 0.05s; }
+  .grid-2 .reveal:nth-child(5) { transition-delay: 0.1s; }
+  .grid-2 .reveal:nth-child(6) { transition-delay: 0.05s; }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">Stefan Yasin</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#certs">Certifications</a></li>
-      <li><a href="resume.pdf">Resume</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a class="pill" href="#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+    <div class="nav-right">
+      <a class="pill" href="#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
   </div>
 </header>
 
@@ -283,81 +391,141 @@
     </div>
   </section>
 
+  <section class="metrics" aria-label="Facts at a glance">
+    <div class="container metrics-grid">
+      <div class="metric"><div class="num"><em>20+</em></div><div class="lbl">years hands-on, hardware to cloud</div></div>
+      <div class="metric"><div class="num"><em>6</em></div><div class="lbl">open-source tools, built and maintained</div></div>
+      <div class="metric"><div class="num"><em>40GbE</em></div><div class="lbl">fibre lab backbone, bridged to 10GbE</div></div>
+      <div class="metric"><div class="num"><em>Solar</em></div><div class="lbl">supported home lab, whole-home automation</div></div>
+    </div>
+  </section>
+
   <section class="about" id="about">
     <div class="container">
-      <h2>About</h2>
-      <div class="about-grid">
-        <p>Technical operations professional with hands-on experience across corporate IT, networking, and industrial systems. I build and run infrastructure, automate the operations around it, and translate technical depth into outcomes for the people who depend on it.</p>
-        <p><strong>Currently:</strong> independent technical operations consultant (since 2025). Building AI-assisted operations tooling and monitoring for modern infrastructure.</p>
-        <p class="status-line"><span class="dot" aria-hidden="true"></span> Open to senior roles in technical operations, customer success, service delivery, and field engineering. Remote or GTA. <a href="resume.pdf">View resume</a></p>
+      <h2 class="reveal">About</h2>
+      <p class="reveal">Technical operations professional with hands-on experience across corporate IT, networking, and industrial systems. I build and run infrastructure, automate the operations around it, and translate technical depth into outcomes for the people who depend on it.</p>
+      <p class="reveal"><strong>Currently:</strong> independent technical operations consultant (since 2025). Building AI-assisted operations tooling and monitoring for modern infrastructure, from a solar-supported smart home lab.</p>
+      <p class="status-line reveal"><span class="dot" aria-hidden="true"></span> Open to senior roles in technical operations, customer success, service delivery, and field engineering. Remote or GTA. <a href="resume.pdf">View resume</a></p>
+    </div>
+  </section>
+
+  <section class="experience" id="experience">
+    <div class="container">
+      <h2 class="reveal">Experience</h2>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Independent Consultant</h3>
+          <p class="co">Self-employed</p>
+          <span class="years">2025 - present</span>
+        </div>
+        <p class="scope">AI-assisted operations tooling and monitoring for modern infrastructure. <strong>Open to senior technical operations, customer success, and field engineering roles.</strong></p>
+      </div>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Technical Operations &amp; Infrastructure Lead</h3>
+          <p class="co">Innovopak Inc., Mississauga</p>
+          <span class="years">Sep 2023 - Jun 2025</span>
+        </div>
+        <p class="scope">Led IT, networking, and building management system operations across multiple manufacturing sites, managing a team of six. <strong>Cut incident response from hours to minutes</strong> with integrated monitoring and prioritized alerting.</p>
+      </div>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Marketing Consultant</h3>
+          <p class="co">Exclaim Digital Media, Mississauga</p>
+          <span class="years">Mar 2012 - Feb 2023</span>
+        </div>
+        <p class="scope">Self-employed. <strong>90% client retention over 11 years</strong>; 50M+ online views across B2B and B2C campaigns. Built and sold AI-powered e-commerce automation systems.</p>
+      </div>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Technical Support Specialist &amp; Apple Genius</h3>
+          <p class="co">Apple Inc., Mississauga</p>
+          <span class="years">2014</span>
+        </div>
+        <p class="scope">Front-line hardware and software support on a busy retail floor. De-escalation and plain-language technical explanations for non-technical customers.</p>
+      </div>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Project Manager, Media &amp; Creative</h3>
+          <p class="co">TheLabsPhoto, Greater Toronto Area</p>
+          <span class="years">Mar 2008 - Mar 2012</span>
+        </div>
+        <p class="scope">Drones, 360 photography, and Matterport capture for real estate, marketing, and events. Field work from pre-production through delivery.</p>
+      </div>
+      <div class="exp-row reveal">
+        <div>
+          <h3>Licensed Agent &amp; Mortgage Professional</h3>
+          <p class="co">One Percent Realty and Centum</p>
+          <span class="years">2016 - 2024</span>
+        </div>
+        <p class="scope">Full client lifecycle in regulated environments: buyers, sellers, listing marketing, and <strong>$15M/yr in residential mortgages</strong>.</p>
       </div>
     </div>
   </section>
 
   <section class="skills" id="skills">
     <div class="container">
-      <h2>Skills</h2>
+      <h2 class="reveal">Skills</h2>
 
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h3>Infrastructure</h3>
         <div class="chips">
-          <span class="chip"><b>VMware</b> ESXi</span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/vmware/8b949e" alt="" width="14" height="14"><b>VMware</b> ESXi</span>
           <span class="chip"><b>Windows</b> Server</span>
-          <span class="chip"><b>Linux</b></span>
-          <span class="chip"><b>Dell</b> PowerEdge</span>
-          <span class="chip"><b>Docker</b></span>
-          <span class="chip"><b>Kubernetes</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/linux/8b949e" alt="" width="14" height="14"><b>Linux</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/dell/8b949e" alt="" width="14" height="14"><b>Dell</b> PowerEdge</span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/docker/8b949e" alt="" width="14" height="14"><b>Docker</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/kubernetes/8b949e" alt="" width="14" height="14"><b>Kubernetes</b></span>
           <span class="chip"><b>NAS</b> &amp; storage</span>
-          <span class="chip"><b>VM</b> &amp; virtualization</span>
         </div>
       </div>
 
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h3>Networking</h3>
         <div class="chips">
-          <span class="chip"><b>Cisco</b></span>
-          <span class="chip"><b>Juniper</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cisco/8b949e" alt="" width="14" height="14"><b>Cisco</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/junipernetworks/8b949e" alt="" width="14" height="14"><b>Juniper</b></span>
           <span class="chip"><b>TCP/IP</b></span>
           <span class="chip"><b>VLANs</b></span>
           <span class="chip"><b>VPNs</b></span>
-          <span class="chip"><b>Tailscale</b> mesh</span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/tailscale/8b949e" alt="" width="14" height="14"><b>Tailscale</b> mesh</span>
           <span class="chip"><b>40GbE</b> fibre</span>
           <span class="chip"><b>10GbE</b> copper</span>
         </div>
       </div>
 
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h3>Automation &amp; AI</h3>
         <div class="chips">
-          <span class="chip"><b>Python</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/python/8b949e" alt="" width="14" height="14"><b>Python</b></span>
           <span class="chip"><b>PowerShell</b></span>
-          <span class="chip"><b>Bash</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/gnubash/8b949e" alt="" width="14" height="14"><b>Bash</b></span>
           <span class="chip"><b>SQL</b></span>
-          <span class="chip"><b>C</b> / <b>C++</b></span>
-          <span class="chip"><b>JavaScript</b> / <b>React</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cplusplus/8b949e" alt="" width="14" height="14"><b>C</b> / <b>C++</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/javascript/8b949e" alt="" width="14" height="14"><b>JavaScript</b> / <b>React</b></span>
           <span class="chip"><b>Local LLMs</b></span>
           <span class="chip"><b>MCP</b></span>
           <span class="chip"><b>Prompt engineering</b></span>
-          <span class="chip"><b>AI-assisted ops</b></span>
+          <span class="chip"><b>n8n</b> / <b>Make</b> / <b>Zapier</b></span>
         </div>
       </div>
 
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h3>Platforms &amp; Cloud</h3>
         <div class="chips">
           <span class="chip"><b>Azure</b></span>
           <span class="chip"><b>AWS</b></span>
-          <span class="chip"><b>Google Cloud</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/googlecloud/8b949e" alt="" width="14" height="14"><b>Google Cloud</b></span>
           <span class="chip"><b>Salesforce</b></span>
-          <span class="chip"><b>HubSpot</b></span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/hubspot/8b949e" alt="" width="14" height="14"><b>HubSpot</b></span>
           <span class="chip"><b>Tableau</b></span>
         </div>
       </div>
 
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h3>Industrial &amp; Facilities</h3>
         <div class="chips">
-          <span class="chip"><b>PLC</b> (Siemens, Omron, Schneider)</span>
+          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/siemens/8b949e" alt="" width="14" height="14"><b>PLC</b> (Siemens, Omron, Schneider)</span>
           <span class="chip"><b>SCADA</b> / HMI</span>
           <span class="chip"><b>BMS</b></span>
           <span class="chip"><b>Surveillance</b> (Avigilon, Axis, Hikvision)</span>
@@ -370,42 +538,42 @@
 
   <section class="projects" id="projects">
     <div class="container">
-      <h2>Projects</h2>
+      <h2 class="reveal">Projects</h2>
       <div class="grid-2">
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/endpointwatch">endpointwatch</a></h3>
           <p>Live-response endpoint monitor for Windows. Watches processes, connections, and persistence, with VirusTotal and AbuseIPDB enrichment and plain-English LLM alerts.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">psutil</span><span class="tag">VirusTotal</span><span class="tag">LLM alerts</span></div>
+          <div class="card-tags"><span class="tag">Python</span><span class="tag">psutil</span><span class="tag">LLM alerts</span><span class="tag tag-license">MIT</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/endpointwatch">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/rackpulse">rackpulse</a></h3>
           <p>Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7. Backports modern monitoring onto old enterprise gear.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">ESXi</span><span class="tag">Dell iDRAC</span><span class="tag">AI provisioning</span></div>
+          <div class="card-tags"><span class="tag">Python</span><span class="tag">ESXi</span><span class="tag">Dell iDRAC</span><span class="tag tag-license">MIT</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/rackpulse">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/pinggrid">pinggrid</a></h3>
           <p>Lightweight network monitoring dashboard. Ping sweeps, port scans, and instant alerts from one terminal view. Self-hosted, zero cloud.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">ICMP</span><span class="tag">TCP scan</span><span class="tag">Terminal UI</span></div>
+          <div class="card-tags"><span class="tag">Python</span><span class="tag">ICMP</span><span class="tag">Terminal UI</span><span class="tag tag-license">MIT</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/pinggrid">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/eagleeye2">eagleeye2</a></h3>
           <p>Find a person's social profiles from a face photo. Modern EagleEye successor using deepface, profile discovery, and face verification.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">deepface</span><span class="tag">OSINT</span><span class="tag">Face verification</span></div>
+          <div class="card-tags"><span class="tag">Python</span><span class="tag">deepface</span><span class="tag">OSINT</span><span class="tag tag-license">MIT</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/eagleeye2">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/restore-drill">restore-drill</a></h3>
           <p>Verify your GitHub backups actually restore. Clone, verify integrity, clean up, in one command. A backup that has never been restored is a rumor.</p>
-          <div class="card-tags"><span class="tag">Shell</span><span class="tag">Git</span><span class="tag">Backup verification</span><span class="tag">DR</span></div>
+          <div class="card-tags"><span class="tag">Shell</span><span class="tag">Git</span><span class="tag">Disaster recovery</span><span class="tag tag-license">MIT</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/restore-drill">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
-        <article class="card">
+        <article class="card reveal">
           <h3><a href="https://github.com/StefanYasin/dellsilencer">dellsilencer</a></h3>
           <p>Fan control for Dell PowerEdge servers. Quiet your rack without cooking your drives.</p>
-          <div class="card-tags"><span class="tag">C#</span><span class="tag">IPMI</span><span class="tag">Hysteresis control</span></div>
+          <div class="card-tags"><span class="tag">C#</span><span class="tag">IPMI</span><span class="tag">Hysteresis</span><span class="tag tag-license">GPL-3.0</span></div>
           <a class="card-link" href="https://github.com/StefanYasin/dellsilencer">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
         </article>
       </div>
@@ -414,16 +582,20 @@
 
   <section class="homelab" id="homelab">
     <div class="container">
-      <p class="eyebrow">Homelab</p>
-      <h2>A small data center in the basement</h2>
-      <p>Full-size server rack with a 40GbE fibre backbone bridged to 10GbE copper, remote global access via Tailscale, reverse tunneling, and a VPS interlink. Simulates a corporate and cloud-scale environment for ongoing skills development.</p>
-      <div class="chips">
-        <span class="chip"><b>ESXi</b></span>
-        <span class="chip"><b>Docker</b></span>
-        <span class="chip"><b>Kubernetes</b></span>
+      <p class="eyebrow reveal">Homelab &amp; Smart Home</p>
+      <h2 class="reveal">The whole house is the lab</h2>
+      <p class="reveal">Solar-supported and automated, running around the clock. A full-size server rack with a 40GbE fibre backbone bridged to 10GbE copper sits at the core, and from there it extends into every room: whole-home automation for lighting, climate, security, and media, with remote access from anywhere via Tailscale and a VPS interlink.</p>
+      <div class="chips reveal">
+        <span class="chip"><b>Solar</b> supported</span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/homeassistant/8b949e" alt="" width="14" height="14"><b>Home Assistant</b></span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/zigbee/8b949e" alt="" width="14" height="14"><b>Z-Wave</b> / Zigbee</span>
+        <span class="chip"><b>Mesh Wi-Fi</b></span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/vmware/8b949e" alt="" width="14" height="14"><b>ESXi</b></span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/docker/8b949e" alt="" width="14" height="14"><b>Docker</b></span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/kubernetes/8b949e" alt="" width="14" height="14"><b>Kubernetes</b></span>
         <span class="chip"><b>NAS</b></span>
-        <span class="chip"><b>Cisco</b> rack</span>
-        <span class="chip"><b>Tailscale</b></span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cisco/8b949e" alt="" width="14" height="14"><b>Cisco</b> rack</span>
+        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/tailscale/8b949e" alt="" width="14" height="14"><b>Tailscale</b></span>
         <span class="chip"><b>VPS</b> interlink</span>
       </div>
     </div>
@@ -431,18 +603,19 @@
 
   <section class="certs" id="certs">
     <div class="container">
-      <h2>Certifications</h2>
+      <h2 class="reveal">Certifications</h2>
       <div class="certs-grid">
-        <div class="cert-col">
+        <div class="cert-col reveal">
           <h3>Earned</h3>
           <ul>
             <li><span class="mark" aria-hidden="true">+</span> Apple Developer (10+ years, in good standing)</li>
             <li><span class="mark" aria-hidden="true">+</span> Adobe Creative Educator</li>
             <li><span class="mark" aria-hidden="true">+</span> Six Sigma</li>
             <li><span class="mark" aria-hidden="true">+</span> ISO, WHMIS, OSHA</li>
+            <li><span class="mark" aria-hidden="true">+</span> Real Estate &amp; Mortgage Agent licenses</li>
           </ul>
         </div>
-        <div class="cert-col">
+        <div class="cert-col reveal">
           <h3>In progress</h3>
           <ul>
             <li><span class="mark muted" aria-hidden="true">...</span> CompTIA A+, Security+, CCNA</li>
@@ -456,7 +629,7 @@
 
   <section class="contact" id="contact">
     <div class="container">
-      <h2>Contact</h2>
+      <h2 class="reveal">Contact</h2>
       <div class="contact-grid">
         <div>
           <div class="contact-row"><span class="k">Email</span><span class="v"><a href="mailto:StefanYasin@gmail.com">StefanYasin@gmail.com</a></span></div>
@@ -469,14 +642,72 @@
           <div class="contact-row"><span class="k">Location</span><span class="v">Hamilton, Ontario, Canada</span></div>
         </div>
       </div>
+      <p class="contact-note reveal">Email is the fastest way to reach me. I reply within a day.</p>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="container">
+  <div class="container foot">
     <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="#top">Back to top</a>
   </div>
 </footer>
+
+<script>
+  // Theme toggle: respects system preference until the user chooses
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem("theme"); } catch (e) {}
+    if (stored) document.documentElement.dataset.theme = stored;
+    var glyph = document.getElementById("themeGlyph");
+    var isDark = function () {
+      if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+      return !window.matchMedia("(prefers-color-scheme: light)").matches;
+    };
+    glyph.textContent = isDark() ? "\u2600" : "\u263E";
+    document.getElementById("themeToggle").addEventListener("click", function () {
+      var next = isDark() ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+
+  // Scroll reveal
+  (function () {
+    var els = document.querySelectorAll(".reveal");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!("IntersectionObserver" in window) || reduce) {
+      els.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Scrollspy: highlight the nav link of the section in view
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll(".nav-links a[href^='#']"));
+    var targets = links.map(function (l) { return document.getElementById(l.getAttribute("href").slice(1)); })
+      .filter(Boolean);
+    if (!("IntersectionObserver" in window) || !targets.length) return;
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var id = e.target.id;
+        links.forEach(function (l) {
+          l.classList.toggle("active", l.getAttribute("href") === "#" + id);
+        });
+      });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    targets.forEach(function (t) { spy.observe(t); });
+  })();
+</script>
 </body>
 </html>
