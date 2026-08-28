@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The solar-powered lab that simulates a data center - Stefan Yasin</title>
+<meta name="description" content="A 40GbE backbone, ESXi and Kubernetes, whole-home automation, and why a home lab is the best interview prep I know.">
+<meta property="og:title" content="The solar-powered lab that simulates a data center">
+<meta property="og:description" content="A 40GbE backbone, ESXi and Kubernetes, whole-home automation, and why a home lab is the best interview prep I know.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Homelab</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>The solar-powered lab that simulates a data center</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 28, 2026</span><span>~5 min read</span></p>
+
+      <div class="prose">
+        <p>People ask why I keep a full server rack at home when I've spent my career working on enterprise systems for a living. The honest answer: a home lab is the only place you get to break things on purpose. Production is where you learn to be careful. The lab is where you learn what happens when careful isn't enough, and it costs you a Saturday instead of a customer.</p>
+
+        <h2>What's in it</h2>
+        <ul>
+          <li>A full-size rack with a <strong>40GbE fibre backbone</strong> bridged to 10GbE copper, so the network itself is a real networking problem, not a toy one.</li>
+          <li>Dell PowerEdge servers on <strong>VMware ESXi</strong>, running the workloads: VMs, containers, and a <strong>Kubernetes</strong> cluster.</li>
+          <li>Network-attached storage for the data layer, with the backup and restore discipline that production deserves (<a href="https://github.com/StefanYasin/restore-drill">restore-drill</a> exists because of this).</li>
+          <li>A <strong>Cisco rack</strong> for the switching and routing fundamentals.</li>
+          <li><strong>Tailscale</strong> mesh with a VPS interlink, so I can reach the lab from anywhere on the planet, the same way distributed teams reach their infrastructure.</li>
+        </ul>
+
+        <h2>It's not just a basement rack</h2>
+        <p>The lab is <strong>solar-supported</strong>, and it extends into every room of the house. Whole-home automation handles lighting, climate, security, and media through <strong>Home Assistant</strong> with Z-Wave and Zigbee devices on a mesh Wi-Fi network. That part matters more than it sounds: running a facility, any facility, means managing power, environmental conditions, and a fleet of devices that weren't designed to talk to each other. It's the same muscle as managing a server room, just with better coffee nearby.</p>
+
+        <h2>What it's for</h2>
+        <ul>
+          <li><strong>Skills that stay sharp.</strong> ESXi, Docker, Kubernetes, VLANs, VPNs, storage, monitoring. Every one of these is a line on my resume because I run them at home, not because I read about them.</li>
+          <li><strong>Breaking things safely.</strong> The monitoring tools I open-source (<a href="../../case-studies/rackpulse.html">rackpulse</a>, <a href="../../index.html#projects">pinggrid</a>, <a href="../../case-studies/endpointwatch.html">endpointwatch</a>) were built to solve problems this lab actually had.</li>
+          <li><strong>Interview prep.</strong> When a hiring manager asks how I'd handle a failing host, a noisy network, or an alert that won't stop, I don't answer from theory. I answer from the last time it happened to me at 11pm on a Tuesday.</li>
+        </ul>
+
+        <h2>The lessons</h2>
+        <ul>
+          <li><strong>Simulate the hard parts.</strong> A lab that only does the easy things teaches you nothing. Put real switching, real storage, and real failure modes in it.</li>
+          <li><strong>Power is infrastructure.</strong> Solar support isn't a gimmick, it's an availability story. Same lesson as a UPS in a server room: the grid is a dependency, not a guarantee.</li>
+          <li><strong>Automation compounds.</strong> The whole-home layer runs the same pattern as my ops stack: collect, decide, act. The house is just another environment to operate.</li>
+          <li><strong>Run what you claim.</strong> Everything on my resume that can run at home, runs at home. It keeps claims honest, which is the whole point.</li>
+        </ul>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Homelab</span><span class="tag">Solar</span><span class="tag">Smart home</span><span class="tag">Kubernetes</span><span class="tag">ESXi</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

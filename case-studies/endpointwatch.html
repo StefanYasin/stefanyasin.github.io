@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>endpointwatch - Case Study - Stefan Yasin</title>
+<meta name="description" content="Live-response endpoint monitoring for Windows: processes, connections, and persistence, enriched with VirusTotal and AbuseIPDB, explained in plain English by an LLM.">
+<meta property="og:title" content="endpointwatch: live-response endpoint monitoring for Windows">
+<meta property="og:description" content="Watches processes, connections, and persistence. Enriched with VirusTotal and AbuseIPDB. Alerts in plain English.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/case-studies/endpointwatch.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../blog/index.html">Writing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../index.html">Home</a> / <a href="index.html">Case studies</a> / <span>endpointwatch</span></p>
+      <p class="eyebrow">Case study</p>
+      <h1>endpointwatch: endpoint monitoring that explains itself</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Python / psutil / VirusTotal / AbuseIPDB / LLM alerts</span></p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p><a href="https://github.com/StefanYasin/endpointwatch">endpointwatch</a> is a live-response endpoint monitor for Windows. It watches processes, network connections, and persistence mechanisms, enriches what it finds with VirusTotal and AbuseIPDB lookups, and turns the result into plain-English alerts written by an LLM. It's the maintained alternative in a field of abandoned tools, MIT-licensed and built with Python and psutil.</p>
+
+        <h2>The problem</h2>
+        <p>Two gaps motivated it. First, the endpoint monitoring tools that used to fill this niche for small operators and homelab owners are largely dead: unmaintained, broken against modern Windows, or quietly turned into paid SaaS. Second, raw endpoint telemetry is noise to the person who has to act on it. A process spawning at 3am from a temp directory is significant, but only if someone connects that dot to the IP it's talking to and knows what either of them means.</p>
+
+        <h2>How it works</h2>
+        <ul>
+          <li><strong>Watch.</strong> Continuously monitors running processes, active connections, and persistence points (services, scheduled tasks, startup entries) using psutil.</li>
+          <li><strong>Enrich.</strong> Suspicious indicators are checked against VirusTotal and AbuseIPDB, so a new connection to a known-bad IP or a hash with a threat score becomes an explicit fact, not a guess.</li>
+          <li><strong>Explain.</strong> An LLM layer converts the enriched event into a plain-English alert: what changed, why it matters, and what to check next. No dashboard spelunking required.</li>
+        </ul>
+
+        <h2>Design decisions</h2>
+        <ul>
+          <li><strong>"Maintained alternative" as a position.</strong> The category leader is abandoned. The README says so plainly, and the project positions itself as the maintained answer. Users running this class of tool are actively looking for that.</li>
+          <li><strong>Python and psutil.</strong> The stack is boring on purpose: ubiquitous, auditable, and runnable on any Windows box without a build chain.</li>
+          <li><strong>Windows-first.</strong> Endpoint monitoring pain is loudest on Windows desktops and servers in small shops. One platform, done properly, beats three platforms done poorly.</li>
+          <li><strong>LLM alerts as a feature, not a wrapper.</strong> The model isn't bolted on to look modern. It exists because the failure mode of raw alerts is alert fatigue, and plain-English context is the fix. That's the same lesson from my incident-response work: an alert that explains itself gets acted on.</li>
+          <li><strong>MIT license.</strong> Security tooling should be readable and reusable. Licensing it openly is part of the trust story.</li>
+        </ul>
+
+        <h2>Result</h2>
+        <p>A self-hosted, zero-cloud endpoint monitor that turns raw telemetry into decisions. It runs on the same philosophy as the rest of my tooling: collect everything, decide what matters, tell the person who can act.</p>
+
+        <div class="post-footer">
+          <p><a href="https://github.com/StefanYasin/endpointwatch">View the repository <span aria-hidden="true">-&gt;</span></a> &nbsp;/&nbsp; <a href="../blog/posts/incident-response-hours-to-minutes.html">Related post: incident response</a></p>
+          <div class="article-tags"><span class="tag">Python</span><span class="tag">Endpoint security</span><span class="tag">DFIR</span><span class="tag">LLM alerts</span><span class="tag">MIT</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I cut incident response from hours to minutes - Stefan Yasin</title>
+<meta name="description" content="Rebuilding monitoring and alerting across a multi-site manufacturing operation: collect, enrich, route, escalate. The lessons apply to any ops team.">
+<meta property="og:title" content="How I cut incident response from hours to minutes">
+<meta property="og:description" content="Rebuilding monitoring and alerting across a multi-site manufacturing operation: collect, enrich, route, escalate.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Incident response</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>How I cut incident response from hours to minutes</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 28, 2026</span><span>~6 min read</span></p>
+
+      <div class="prose">
+        <p>From 2023 to 2025 I ran IT, networking, and building management system (BMS) operations for a plastics manufacturer with multiple sites, leading a team of six. When I started, a real incident could take hours to surface, and longer to reach the right person. The fix wasn't buying a fancier monitoring platform. It was deciding what each alert was worth, and who it should wake up.</p>
+
+        <h2>The problem: everything was monitored, nothing was actionable</h2>
+        <p>The systems were all being watched. Network gear had one tool, servers another, the BMS a third, production equipment a fourth. Every one of them could generate alerts. The result was the classic failure mode: because everything pinged everyone, nothing mattered to anyone. A chilled water fault on the BMS and a dead disk on a file server competed for the same attention. Response time was measured in hours because the signal was buried in noise.</p>
+
+        <h2>The build: collect, enrich, route, escalate</h2>
+        <p>I rebuilt the alerting pipeline in four layers. None of the layers were exotic. The design was the hard part, not the tooling.</p>
+        <h3>1. Collect</h3>
+        <p>One intake path for every source: network devices, VMware hosts, Windows servers, BMS controllers, and the production endpoints that mattered. If it could emit a status, it got a collector. This closed the gaps where things silently stopped being watched.</p>
+        <h3>2. Enrich</h3>
+        <p>Every event was tagged with context: which site, which system class, which service it affected, and a severity. A storage warning on a non-critical server and a production line controller fault are not the same event, and the pipeline stopped treating them like they were.</p>
+        <h3>3. Route</h3>
+        <p>Each severity had one owner. Operators got operational alerts. I got the ones that needed a decision. Management got a daily digest, not a 2am page. The rule that changed everything: <strong>an alert with no named owner is a dashboard, not an alert.</strong></p>
+        <h3>4. Escalate</h3>
+        <p>If a critical alert wasn't acknowledged inside a defined window, it escalated up the chain automatically. Acknowledged but not resolved? Same thing. Escalation made the system honest: silence no longer meant "fine".</p>
+
+        <h2>The result</h2>
+        <p>Incident response went from hours to minutes. Not because alerts were faster, but because the right person saw the right alert the first time, with the context to act. The same design carried us through the decommissioning of one site and the commissioning of another, which is where this kind of discipline pays for itself: during a move, things break constantly, and you need to know which breaks matter.</p>
+
+        <h2>Lessons that transfer anywhere</h2>
+        <ul>
+          <li><strong>Alert fatigue is the real enemy.</strong> More dashboards don't fix it. Routing and severity do.</li>
+          <li><strong>Name an owner for every alert.</strong> If you can't say who should act, you haven't finished building the alert.</li>
+          <li><strong>Escalation is a feature.</strong> Acknowledged-but-ignored is a state your system should track.</li>
+          <li><strong>Document the runbook before the crisis.</strong> The move taught me that the second value of monitoring is knowing what's normal, which you can't reconstruct under pressure.</li>
+          <li><strong>Monitoring is a people problem.</strong> The best pipeline fails if the on-call culture doesn't trust it.</li>
+        </ul>
+
+        <p>I later open-sourced part of this philosophy in <a href="../../case-studies/endpointwatch.html">endpointwatch</a>, a live-response endpoint monitor that watches processes, connections, and persistence and explains what changed in plain English. Same idea: collect everything, decide what matters, tell the person who can act.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Incident response</span><span class="tag">Monitoring</span><span class="tag">Alerting</span><span class="tag">Ops</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

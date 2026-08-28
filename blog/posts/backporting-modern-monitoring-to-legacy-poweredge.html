@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backporting modern health monitoring onto 2016-era servers - Stefan Yasin</title>
+<meta name="description" content="How rackpulse gives old Dell PowerEdge gear on VMware ESXi 6.7 the health monitoring modern hardware takes for granted.">
+<meta property="og:title" content="Backporting modern health monitoring onto 2016-era servers">
+<meta property="og:description" content="How rackpulse gives old Dell PowerEdge gear on VMware ESXi 6.7 the monitoring modern hardware takes for granted.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>rackpulse</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>Backporting modern health monitoring onto 2016-era servers</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 28, 2026</span><span>~5 min read</span></p>
+
+      <div class="prose">
+        <p>Enterprise hardware is supposed to be retired on a schedule. In the real world, a lot of it runs past its date because it still works, and because replacing it costs more than the budget allows. My lab is full of exactly that: Dell PowerEdge servers on VMware ESXi 6.7, an edition old enough that the modern monitoring story mostly passes it by. <a href="../../case-studies/rackpulse.html">rackpulse</a> is what I built to close that gap.</p>
+
+        <h2>The problem with old gear isn't the gear</h2>
+        <p>An ESXi 6.7 host from 2016 can serve workloads fine. What it can't do is tell you it's dying in useful ways. The vendor's own tooling for that vintage is either sunset, expensive, or both, and the community tools that filled the gap have a habit of going unmaintained. So you end up with servers that run for years, then fail with no warning, because nobody is watching the metrics that predict failure: temperatures creeping up, disks degrading, sensors going quiet.</p>
+
+        <h2>The design: testable core, thin hardware layer</h2>
+        <p>The first version of rackpulse made the classic mistake: hardware calls tangled up with decision logic, which meant every test needed a real server. I split it.</p>
+        <ul>
+          <li><strong>core.py</strong> is the decision engine: pure functions and dataclasses that take sensor readings and return health states. It has no idea what a server is.</li>
+          <li><strong>esxi.py</strong> is a thin adapter that talks to the host and feeds readings into the core.</li>
+        </ul>
+        <p>That split changed everything. The thresholds, the hysteresis, the escalation logic, all of it is unit-testable on any machine in seconds. The hardware layer is small enough to review by eye. When I added the AI provisioning agent, it plugged into the same core, so the tests covered it too.</p>
+
+        <h2>Severity escalation is a feature</h2>
+        <p>Early on I "fixed" a bug where a hot CPU triggered multiple alerts as it crossed thresholds. Then I realized the escalation was the point. A warning at 75&deg;C and a critical at 90&deg;C are different events with different owners and different responses. Multi-tier thresholds produce multi-tier alerts, and that's correct behavior, so now the tests assert it.</p>
+
+        <h2>What the old gear taught me</h2>
+        <ul>
+          <li><strong>Hardware-adjacent code should be testable without hardware.</strong> If you can't test the decision logic on a laptop, you'll stop testing it.</li>
+          <li><strong>"Maintained alternative" is a real position.</strong> The tools that died left a gap, and a maintained fork of a good idea is genuinely valuable to people still running the same gear.</li>
+          <li><strong>Legacy gear keeps operating skills honest.</strong> Old hardware doesn't have the guardrails new platforms have. You learn the fundamentals, or the fundamentals teach you.</li>
+        </ul>
+
+        <p>The same philosophy runs through the rest of my tooling: <a href="../../case-studies/endpointwatch.html">endpointwatch</a> for Windows endpoints, <a href="../../index.html#projects">pinggrid</a> for the network side. Collect, decide, act. Whether the thing being watched was built in 2016 or last week.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">ESXi</span><span class="tag">Dell PowerEdge</span><span class="tag">Monitoring</span><span class="tag">Homelab</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

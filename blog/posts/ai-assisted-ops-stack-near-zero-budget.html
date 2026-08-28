@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Running an AI-assisted ops stack on a near-zero budget - Stefan Yasin</title>
+<meta name="description" content="An agent-based ops stack that automates monitoring, email, and job-hunt pipelines for near-zero cost. The three tools that talk to each other beat the eight-tool stack.">
+<meta property="og:title" content="Running an AI-assisted ops stack on a near-zero budget">
+<meta property="og:description" content="An agent-based ops stack that automates monitoring, email, and job-hunt pipelines for near-zero cost.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>AI-assisted ops</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>Running an AI-assisted ops stack on a near-zero budget</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 28, 2026</span><span>~5 min read</span></p>
+
+      <div class="prose">
+        <p>There's a pattern I keep seeing in the marketing world: people subscribe to eight tools because each one does one thing, and the stack quietly runs to $1,000 or $2,000 a month. The better pattern is older than software: <strong>you don't need eight tools, you need three tools that actually talk to each other.</strong> My ops stack follows that rule, and it costs almost nothing.</p>
+
+        <h2>What the stack is</h2>
+        <p>I run an agent-based automation layer on my own hardware: a local orchestrator with model access through cheap APIs, plus the monitoring tools I've built (<a href="../../case-studies/endpointwatch.html">endpointwatch</a>, <a href="../../index.html#projects">pinggrid</a>, <a href="../../case-studies/rackpulse.html">rackpulse</a>). Three layers, all talking to each other:</p>
+        <ul>
+          <li><strong>Collect.</strong> The monitors watch servers, endpoints, and the network continuously, and emit structured events.</li>
+          <li><strong>Reason.</strong> An agent layer turns those events into plain-language assessments and actions. It's the difference between "port 443 down" and "the website is down, the certificate expires in 6 days, and here's who to call".</li>
+          <li><strong>Act.</strong> Scheduled pipelines handle the repetitive work: ingesting email into searchable notes, tracking application statuses, transcribing meeting and video content, generating daily digests.</li>
+        </ul>
+
+        <h2>What it costs</h2>
+        <p>Near zero. Local models cover the private work, cheap API access covers the heavy lifting, and everything runs on hardware I already own. Compare that with the subscription stacks I see quoted in the same conversations, and the difference is two orders of magnitude, with better privacy: the sensitive stuff never leaves the building.</p>
+
+        <h2>What it actually does for me</h2>
+        <ul>
+          <li><strong>My job hunt runs on it.</strong> Postings are scanned continuously, applications are tracked, cover letters and resumes are tailored per role from a master profile. The repetitive parts are automated; the judgment stays mine.</li>
+          <li><strong>My monitoring writes its own alerts.</strong> The LLM layer converts raw events into plain-English summaries, which is the difference between an alert that gets ignored and one that gets acted on.</li>
+          <li><strong>Email becomes a knowledge base.</strong> Incoming material is captured, filed, and searchable instead of sitting in an inbox.</li>
+          <li><strong>Content compounds.</strong> The same pipelines transcribe and summarize the material I read, so nothing I consume is wasted.</li>
+        </ul>
+
+        <h2>The lessons</h2>
+        <ul>
+          <li><strong>Integration beats inventory.</strong> Three tools that share state outperform eight tools that don't. Every subscription should justify its data flow, not just its feature list.</li>
+          <li><strong>Automation is a force multiplier for a solo operator.</strong> What I can't do is hire a team, so the stack works shifts I don't.</li>
+          <li><strong>Privacy is a feature of local-first.</strong> Running the reasoning layer locally means my data is mine, and in a customer-facing ops role that's a story worth telling.</li>
+          <li><strong>Cheap models are good enough for structured work.</strong> The frontier models are impressive, but most operational workloads are bounded tasks where a small model with the right context wins.</li>
+        </ul>
+
+        <p>None of this is exotic. It's the same discipline as the incident-response post: collect everything, decide what matters, tell the person who can act. The only difference is that now the person who can act sometimes runs on my own hardware.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">AI ops</span><span class="tag">Automation</span><span class="tag">Local LLMs</span><span class="tag">MCP</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

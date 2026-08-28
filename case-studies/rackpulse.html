@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rackpulse - Case Study - Stefan Yasin</title>
+<meta name="description" content="Health monitoring and AI provisioning for legacy Dell PowerEdge servers on ESXi 6.7. A testable decision core behind a thin hardware layer.">
+<meta property="og:title" content="rackpulse: modern health monitoring for legacy Dell PowerEdge">
+<meta property="og:description" content="Backports modern host and hardware health monitoring onto 2016-era enterprise gear. Testable core, thin hardware layer, AI provisioning.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/case-studies/rackpulse.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../blog/index.html">Writing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../index.html">Home</a> / <a href="index.html">Case studies</a> / <span>rackpulse</span></p>
+      <p class="eyebrow">Case study</p>
+      <h1>rackpulse: modern health monitoring for 2016-era servers</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Python / ESXi / Dell PowerEdge / AI provisioning</span></p>
+
+      <div class="prose">
+        <h2>Overview</h2>
+        <p><a href="https://github.com/StefanYasin/rackpulse">rackpulse</a> is a health monitoring and AI provisioning agent for legacy Dell PowerEdge servers running VMware ESXi 6.7. It backports the host and hardware health monitoring that modern platforms take for granted onto enterprise gear that's past its vendor's support window but still doing real work.</p>
+
+        <h2>The problem</h2>
+        <p>ESXi 6.7 hosts from the mid-2010s are everywhere, and they keep running because they're reliable. The problem is visibility. The tooling that used to watch this vintage is sunset, expensive, or abandoned, and the failure mode of old hardware is rarely sudden: temperatures climb, disks degrade, sensors go quiet. Without monitoring, those trends are invisible until something stops working.</p>
+
+        <h2>The design: testable core, thin adapter</h2>
+        <p>The architecture is the point of this project:</p>
+        <ul>
+          <li><strong>core.py</strong> is a pure decision engine: dataclasses and functions that take sensor readings and return health states with severity. No hardware imports, no I/O, fully unit-testable on any machine.</li>
+          <li><strong>esxi.py</strong> is a thin adapter that talks to the host through pyVmomi and feeds readings into the core.</li>
+        </ul>
+        <p>This split means the threshold logic, hysteresis, and escalation behavior are verified by tests that run in milliseconds, without a server in sight. The hardware layer is small enough to review by eye.</p>
+
+        <h2>Key behaviors</h2>
+        <ul>
+          <li><strong>Multi-tier severity.</strong> A warning at one threshold and a critical at the next are distinct events with distinct owners. Escalation is asserted in tests, not treated as a bug to smooth over.</li>
+          <li><strong>AI provisioning agent.</strong> The agent plugs into the same core, so it inherits the same tested decision logic when it assesses host state and suggests provisioning actions.</li>
+          <li><strong>Legacy as a first-class citizen.</strong> The project is explicit about its target: old enterprise gear, kept honest by modern monitoring. That's a real niche with real users.</li>
+        </ul>
+
+        <h2>Design decisions</h2>
+        <ul>
+          <li><strong>Hardware-adjacent code must be testable without hardware.</strong> If the tests need a live server, they won't be run, and then the logic rots. This was the single most important decision in the project.</li>
+          <li><strong>One platform, deeply.</strong> ESXi 6.7 with Dell iDRAC hardware. Narrow scope, done properly.</li>
+          <li><strong>Homelab-first, production-relevant.</strong> Built against the same servers that run my workloads, so every feature is exercised by real use, not hypotheticals.</li>
+        </ul>
+
+        <h2>Result</h2>
+        <p>Old servers with new visibility: temperature, disk, and host health trends that predict failure instead of reporting it. The same pattern, collect, decide, act, applied to the most stubborn hardware in the building.</p>
+
+        <div class="post-footer">
+          <p><a href="https://github.com/StefanYasin/rackpulse">View the repository <span aria-hidden="true">-&gt;</span></a> &nbsp;/&nbsp; <a href="../blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html">Related post: backporting monitoring</a></p>
+          <div class="article-tags"><span class="tag">Python</span><span class="tag">ESXi</span><span class="tag">Dell PowerEdge</span><span class="tag">Monitoring</span><span class="tag">MIT</span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing - Stefan Yasin</title>
+<meta name="description" content="Notes from 20+ years in technical operations: incident response, legacy infrastructure, AI-assisted ops on a near-zero budget, and the lab I run it all from.">
+<meta property="og:title" content="Writing - Stefan Yasin">
+<meta property="og:description" content="Notes from 20+ years in technical operations: incident response, legacy infrastructure, AI-assisted ops, and the lab I run it all from.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="index.html">Writing</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="article">
+    <div class="container">
+      <p class="eyebrow">Writing</p>
+      <h1>Notes from the operations floor</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Technical operations, infrastructure, applied AI</span></p>
+      <p style="color:var(--muted);max-width:65ch;font-size:17px;">Field notes on running systems and the people who depend on them: what broke, what I built, and what I'd do differently. Written for operators, not marketers.</p>
+    </div>
+  </section>
+
+  <section class="article" style="padding-top:0;">
+    <div class="container">
+      <div class="post-list">
+        <div class="post-row">
+          <time datetime="2026-08-28">Aug 28, 2026</time>
+          <div>
+            <h3><a href="posts/incident-response-hours-to-minutes.html">How I cut incident response from hours to minutes</a></h3>
+            <p>What happened when I rebuilt monitoring and alerting across a multi-site manufacturing operation, and the lessons that apply to any ops team.</p>
+          </div>
+        </div>
+        <div class="post-row">
+          <time datetime="2026-08-28">Aug 28, 2026</time>
+          <div>
+            <h3><a href="posts/backporting-modern-monitoring-to-legacy-poweredge.html">Backporting modern health monitoring onto 2016-era servers</a></h3>
+            <p>How rackpulse gives old Dell PowerEdge gear on ESXi 6.7 the monitoring modern hardware takes for granted.</p>
+          </div>
+        </div>
+        <div class="post-row">
+          <time datetime="2026-08-28">Aug 28, 2026</time>
+          <div>
+            <h3><a href="posts/ai-assisted-ops-stack-near-zero-budget.html">Running an AI-assisted ops stack on a near-zero budget</a></h3>
+            <p>The three tools that talk to each other beat the eight-tool stack. Here's the stack my job hunt and my lab run on.</p>
+          </div>
+        </div>
+        <div class="post-row">
+          <time datetime="2026-08-28">Aug 28, 2026</time>
+          <div>
+            <h3><a href="posts/solar-powered-lab-that-simulates-a-data-center.html">The solar-powered lab that simulates a data center</a></h3>
+            <p>A 40GbE backbone, ESXi and Kubernetes, whole-home automation, and why a home lab is the best interview prep I know.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
