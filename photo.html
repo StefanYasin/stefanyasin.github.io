@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stefan Yasin — Portfolio Preview</title>
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-2: #101014;
+    --text: #f5f5f7;
+    --text-2: #a1a1a6;
+    --text-3: #6e6e73;
+    --accent: #0a84ff;
+    --line: rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(10,132,255,0.3); }
+
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px; height:64px;
+    background: rgba(10,10,12,0.72);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo { font-weight:600; font-size:17px; }
+  .nav-links { display:flex; gap:28px; list-style:none; }
+  .nav-links a { color:var(--text-2); text-decoration:none; font-size:13px; font-weight:500; transition:color .3s; }
+  .nav-links a:hover { color:var(--text); }
+
+  /* HERO with photo */
+  .hero {
+    min-height: 100dvh;
+    display:flex; align-items:center; justify-content:center;
+    padding: 120px 32px 60px;
+    position:relative;
+    background:
+      radial-gradient(ellipse 60% 45% at 50% -10%, rgba(10,132,255,0.16), transparent 65%),
+      radial-gradient(ellipse 40% 35% at 85% 110%, rgba(48,209,88,0.07), transparent 60%),
+      var(--bg);
+  }
+  .hero-inner { display:flex; align-items:center; gap:64px; max-width:1000px; width:100%; }
+  .photo-wrap { flex-shrink: 0; position: relative; }
+  .photo-ring {
+    width: 300px; height: 300px; border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, rgba(10,132,255,0.5), rgba(48,209,88,0.2), rgba(191,90,242,0.3));
+    animation: spin-slow 12s linear infinite;
+  }
+  .photo-ring img {
+    width: 100%; height: 100%; border-radius: 50%;
+    object-fit: cover; display: block;
+    border: 6px solid var(--bg);
+  }
+  @keyframes spin-slow { to { transform: rotate(360deg); } }
+  .hero-copy h1 {
+    font-size: clamp(40px, 5.5vw, 64px); font-weight:700; letter-spacing:-0.03em; line-height:1.05;
+    background: linear-gradient(180deg, #fff 60%, #8e8e93);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero-copy .sub { margin-top:16px; font-size: clamp(18px, 2.2vw, 24px); color:var(--text-2); font-weight:500; }
+  .hero-copy .tagline { margin-top:10px; color:var(--text-3); font-size:15px; max-width:480px; }
+  .hero-cta { margin-top:32px; display:flex; gap:14px; }
+  .btn { padding:13px 26px; border-radius:999px; font-size:15px; font-weight:600; text-decoration:none; transition:transform .2s cubic-bezier(.16,1,.3,1), opacity .2s; }
+  .btn:active { transform:scale(.97); }
+  .btn-primary { background:var(--accent); color:#fff; }
+  .btn-primary:hover { opacity:.85; }
+  .btn-glass { background:var(--glass); color:var(--text); border:1px solid var(--line); }
+  .btn-glass:hover { background:rgba(255,255,255,.1); }
+
+  @media (max-width: 800px) {
+    .hero-inner { flex-direction:column; gap:32px; text-align:center; }
+    .hero-cta { justify-content:center; }
+    .photo-ring { width:220px; height:220px; }
+    .nav-links { display:none; }
+  }
+
+  /* photo variant comparison */
+  .variants { padding: 80px 32px; max-width: 1100px; margin: 0 auto; }
+  .variants h2 { font-size: 34px; font-weight:700; letter-spacing:-0.02em; margin-bottom:8px; }
+  .variants p { color:var(--text-2); margin-bottom:40px; }
+  .variant-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:24px; }
+  .variant {
+    border-radius: 20px; overflow:hidden; border:1px solid var(--line);
+    background: var(--bg-2); text-align:center; padding-bottom:20px;
+  }
+  .variant img { width:100%; height:260px; object-fit:cover; display:block; }
+  .variant h3 { font-size:16px; margin:14px 0 4px; }
+  .variant .cap { font-size:12.5px; color:var(--text-3); padding:0 16px; }
+  @media (max-width: 800px) { .variant-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Stefan Yasin</div>
+  <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#variants">Photo</a></li>
+    <li><a href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a></li>
+    <li><a href="mailto:StefanYasin@gmail.com">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="photo-wrap">
+      <div class="photo-ring">
+        <img src="Prof%20Pic.jpg" alt="Stefan Yasin">
+      </div>
+    </div>
+    <div class="hero-copy">
+      <h1>Stefan Yasin</h1>
+      <p class="sub">Technical solutions that move real-world operations.</p>
+      <p class="tagline">From factory floors to fleet telematics, I build the systems that keep industrial and automotive businesses running, measured, and automated.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#variants">Photo check</a>
+        <a class="btn btn-glass" href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="variants" id="variants">
+  <h2>Photo crop variants</h2>
+  <p>Same photo, three different crops. Pick the one you like best for the portfolio.</p>
+  <div class="variant-grid">
+    <div class="variant">
+      <img src="Prof%20Pic.jpg" alt="Original">
+      <h3>Original</h3>
+      <p class="cap">Full frame, as taken.</p>
+    </div>
+    <div class="variant">
+      <img src="Prof%20Pic.jpg" alt="Square crop" style="object-position: 50% 20%;">
+      <h3>Faces-up crop</h3>
+      <p class="cap">Object-position 50% 20%, focuses the face.</p>
+    </div>
+    <div class="variant">
+      <img src="Prof%20Pic.jpg" alt="Tighter" style="object-position: 50% 25%; transform: scale(1.3);">
+      <h3>Tighter zoom</h3>
+      <p class="cap">Zoomed in, head-and-shoulders feel.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
