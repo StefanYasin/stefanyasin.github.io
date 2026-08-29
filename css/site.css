@@ -377,3 +377,57 @@ footer p { color: var(--muted); font-size: 13.5px; margin: 0; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ============================================================
+   Aceternity-flavor layer (Aug 2026) — additive, non-destructive.
+   Aurora haze, spotlight cards, moving-border CTA, card hover lift.
+   ============================================================ */
+
+/* Aurora haze behind the hero (subtle, dark-mode only default) */
+.hero .eyebrow { position: relative; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 42% at 12% -5%, rgba(63,185,80,0.10), transparent 62%),
+    radial-gradient(ellipse 45% 38% at 92% 18%, rgba(35,134,54,0.07), transparent 62%);
+  opacity: 1;
+}
+:root[data-theme="light"] body::before,
+@media (prefers-color-scheme: light) body::before { opacity: 0; }
+
+/* Spotlight tracking on project/themed cards */
+.card, .project-card, article {
+  position: relative; overflow: hidden;
+  transition: transform var(--ease) 0.35s, border-color 0.3s ease;
+}
+.card:hover, .project-card:hover, article:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+}
+.card::after, .project-card::after, article::after {
+  content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s ease;
+  background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), rgba(63,185,80,0.10), transparent 70%);
+  pointer-events: none;
+}
+.card:hover::after, .project-card:hover::after, article:hover::after { opacity: 1; }
+
+/* Moving-border primary CTA (Aceternity signature) */
+.btn-primary, .cta-primary, .button-primary {
+  position: relative; z-index: 0;
+}
+.btn-primary::before, .cta-primary::before, .button-primary::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from 0deg, transparent 0 22%, var(--accent) 50%, transparent 78% 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: spin-border 5s linear infinite;
+  pointer-events: none;
+}
+@keyframes spin-border { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, .card::after, .project-card::after, article::after { transition: none; }
+  .btn-primary::before, .cta-primary::before, .button-primary::before { animation: none; }
+  .card:hover, .project-card:hover, article:hover { transform: none; }
+}

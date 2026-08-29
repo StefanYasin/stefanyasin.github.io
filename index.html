@@ -336,6 +336,16 @@
       cell.style.setProperty('--my', (e.clientY - rect.top) + 'px');
     });
   });
+
+  // Spotlight tracking (Aceternity flavor, additive)
+  document.querySelectorAll('.card, .project-card, article').forEach(cell => {
+    cell.addEventListener('mousemove', (e) => {
+      const rect = cell.getBoundingClientRect();
+      cell.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+      cell.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+    });
+  });
+
 </script>
 </body>
 </html>
