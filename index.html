@@ -3,418 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stefan Yasin - Technical Operations &amp; Applied AI</title>
-<meta name="description" content="Stefan Yasin. Technical operations professional with 20+ years across IT infrastructure, networking, and applied AI. Open to senior technical operations, customer success, and field engineering roles.">
-<meta property="og:title" content="Stefan Yasin - Technical Operations &amp; Applied AI">
-<meta property="og:description" content="20+ years running the systems businesses run on: infrastructure, networking, automation, and the people in between.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://stefanyasin.github.io/">
-<meta property="og:image" content="https://stefanyasin.github.io/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Stefan Yasin",
-  "jobTitle": "Technical Operations Professional",
-  "address": { "@type": "PostalAddress", "addressLocality": "Hamilton", "addressRegion": "Ontario", "addressCountry": "Canada" },
-  "url": "https://stefanyasin.github.io/",
-  "sameAs": [
-    "https://github.com/StefanYasin",
-    "https://www.linkedin.com/in/stefanyasin/",
-    "https://orcid.org/0009-0004-3416-7447"
-  ]
-}
-</script>
-<link rel="stylesheet" href="css/site.css">
+<title>Stefan Yasin — Technical Operations & Applied AI</title>
+<style>
+  :root {
+    --bg: #050505;
+    --surface: #0c0c0e;
+    --text: #f5f5f7;
+    --text-2: #a1a1a6;
+    --text-3: #6e6e73;
+    --accent: #0a84ff;
+    --accent-2: #30d158;
+    --line: rgba(255,255,255,0.08);
+    --radius: 20px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+  }
+  ::selection { background: rgba(10,132,255,0.3); }
+
+  /* ---- Gradient haze behind everything (aurora approximation) ---- */
+  .haze {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(ellipse 50% 40% at 15% 0%, rgba(10,132,255,0.14), transparent 60%),
+      radial-gradient(ellipse 40% 35% at 90% 25%, rgba(191,90,242,0.10), transparent 60%),
+      radial-gradient(ellipse 45% 40% at 55% 100%, rgba(48,209,88,0.08), transparent 60%);
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100; height:64px;
+    display:flex; align-items:center; justify-content:space-between; padding:0 32px;
+    background: rgba(5,5,5,0.7);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo { font-weight:700; font-size:17px; letter-spacing:-0.02em; }
+  .links { display:flex; gap:26px; list-style:none; }
+  .links a { color:var(--text-2); text-decoration:none; font-size:13.5px; font-weight:500; transition:color .3s; }
+  .links a:hover { color:var(--text); }
+  @media (max-width:768px){ .links{display:none;} }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:120px 24px 60px; position:relative;
+  }
+  .hero .eyebrow {
+    font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:20px;
+  }
+  .hero h1 {
+    font-size: clamp(46px, 8vw, 92px); font-weight:750; letter-spacing:-0.035em; line-height:1.02;
+    background: linear-gradient(180deg,#fff 55%,#86868b);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero .sub {
+    margin-top:22px; font-size:clamp(19px,2.6vw,27px); color:var(--text-2); font-weight:500;
+    max-width:660px; letter-spacing:-0.01em;
+  }
+  .hero .tag { margin-top:12px; color:var(--text-3); font-size:16px; max-width:560px; }
+  .hero-cta { margin-top:44px; display:flex; gap:16px; }
+
+  /* Moving Border button (Aceternity signature — vanilla adaptation) */
+  .btn-wrap { position:relative; display:inline-block; padding:1.5px; border-radius:999px; overflow:hidden; }
+  .btn-wrap::before {
+    content:""; position:absolute; inset:-150%; z-index:0;
+    background: conic-gradient(from 0deg, transparent 0 25%, var(--accent) 50%, transparent 75% 100%);
+    animation: spin-border 4s linear infinite;
+  }
+  @keyframes spin-border { to { transform: rotate(360deg); } }
+  .btn-wrap .btn {
+    position:relative; z-index:1; display:inline-block; padding:13px 30px;
+    border-radius:999px; font-size:15px; font-weight:650; text-decoration:none;
+    background:#0a0a0c; color:var(--text); transition:transform .2s cubic-bezier(.16,1,.3,1);
+  }
+  .btn-wrap .btn-primary { background:var(--accent); color:#fff; }
+  .btn-wrap .btn:hover { transform:scale(1.03); }
+  .btn-wrap .btn:active { transform:scale(.97); }
+  .btn-ghost { padding:13px 30px; border-radius:999px; font-size:15px; font-weight:650;
+    text-decoration:none; color:var(--text); background:rgba(255,255,255,0.06);
+    border:1px solid var(--line); transition:background .3s; }
+  .btn-ghost:hover { background:rgba(255,255,255,0.1); }
+
+  /* ---- SECTIONS ---- */
+  section { padding:110px 32px; max-width:1200px; margin:0 auto; }
+  .sec-head { margin-bottom:56px; }
+  .sec-head h2 { font-size:clamp(34px,5vw,54px); font-weight:750; letter-spacing:-0.025em;
+    background:linear-gradient(180deg,#fff 55%,#86868b);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .sec-head p { margin-top:14px; color:var(--text-2); font-size:17px; max-width:580px; }
+
+  .reveal { opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity:1; transform:translateY(0); }
+  /* Safety: if JS never runs or user prints, show everything */
+  html.no-js .reveal, .reveal.no-js { opacity:1; transform:none; transition:none; }
+
+  /* ---- Bento grid (Aceternity signature) ---- */
+  .bento { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
+  .cell {
+    position:relative; border-radius:var(--radius); overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border:1px solid var(--line); padding:30px;
+    transition:transform .4s cubic-bezier(.16,1,.3,1), border-color .3s;
+  }
+  .cell:hover { transform:translateY(-4px); border-color:rgba(255,255,255,0.18); }
+  /* Spotlight tracking on hover (Aceternity spotlight) */
+  .cell::after {
+    content:""; position:absolute; inset:0; opacity:0; transition:opacity .4s;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(10,132,255,0.12), transparent 70%);
+  }
+  .cell:hover::after { opacity:1; }
+  .cell .ic { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    font-size:22px; margin-bottom:18px; background:rgba(10,132,255,0.14); border:1px solid rgba(10,132,255,0.3); }
+  .cell.green .ic { background:rgba(48,209,88,0.12); border-color:rgba(48,209,88,0.3); }
+  .cell.purple .ic { background:rgba(191,90,242,0.12); border-color:rgba(191,90,242,0.3); }
+  .cell.orange .ic { background:rgba(255,159,10,0.12); border-color:rgba(255,159,10,0.3); }
+  .cell h3 { font-size:20px; font-weight:680; letter-spacing:-0.01em; margin-bottom:8px; }
+  .cell p { color:var(--text-2); font-size:14.5px; }
+  .cell .meta { margin-top:16px; font-size:12px; color:var(--text-3); font-family:"SF Mono",ui-monospace,monospace; }
+  .cell a.stretched { position:absolute; inset:0; opacity:0; }
+
+  .c7 { grid-column:span 7; } .c5 { grid-column:span 5; } .c4 { grid-column:span 4; }
+  @media (max-width:900px){ .c7,.c5,.c4{ grid-column:span 12; } }
+
+  /* ---- Experience rows ---- */
+  .exp { display:flex; flex-direction:column; }
+  .row { display:flex; justify-content:space-between; align-items:baseline; gap:24px;
+    padding:28px 6px; border-bottom:1px solid var(--line); }
+  .row:last-child { border:none; }
+  .row .co { font-size:21px; font-weight:650; letter-spacing:-0.01em; }
+  .row .role { color:var(--text-2); font-size:15px; margin-top:4px; }
+  .row .yrs { color:var(--text-3); font-size:13px; white-space:nowrap; font-family:"SF Mono",ui-monospace,monospace; }
+  @media (max-width:768px){ .row{ flex-direction:column; gap:6px; } }
+
+  /* ---- Chips ---- */
+  .chips { display:flex; flex-wrap:wrap; gap:10px; max-width:760px; }
+  .chip { padding:10px 20px; border-radius:999px; font-size:13.5px; font-weight:520;
+    color:var(--text-2); background:rgba(255,255,255,0.05); border:1px solid var(--line);
+    transition:all .25s cubic-bezier(.16,1,.3,1); }
+  .chip:hover { color:var(--text); border-color:rgba(255,255,255,0.22); transform:translateY(-2px); }
+
+  /* ---- Contact ---- */
+  .contact-card {
+    border-radius:28px; padding:72px 48px; text-align:center; position:relative; overflow:hidden;
+    background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border:1px solid var(--line);
+  }
+  .contact-card::before {
+    content:""; position:absolute; inset:-1px; z-index:0; opacity:0.5;
+    background:radial-gradient(ellipse 60% 70% at 50% 0%, rgba(10,132,255,0.16), transparent 60%);
+  }
+  .contact-card h2 { position:relative; z-index:1; font-size:clamp(34px,5vw,50px); font-weight:750; letter-spacing:-0.025em; }
+  .contact-card p { position:relative; z-index:1; color:var(--text-2); margin:16px auto 36px; max-width:500px; }
+  .contact-cta { position:relative; z-index:1; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  footer { padding:40px 32px 48px; text-align:center; color:var(--text-3); font-size:13px;
+    border-top:1px solid var(--line); max-width:1200px; margin:0 auto; }
+  footer a { color:var(--text-3); text-decoration:none; }
+  footer a:hover { color:var(--text); }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .btn-wrap::before{animation:none;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .cell:hover{transform:none;}
+  }
+</style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="progress" aria-hidden="true"></div>
+<div class="haze"></div>
 
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="#top">Stefan Yasin</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#writing">Writing</a></li>
-      <li><a href="#certs">Certifications</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <a class="pill" href="#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
-    </div>
+<nav>
+  <div class="logo">Stefan Yasin</div>
+  <ul class="links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">Technical Operations &amp; Applied AI</div>
+  <h1>Stefan Yasin</h1>
+  <p class="sub">Technical solutions that move real-world operations.</p>
+  <p class="tag">From factory floors to fleet telematics, the systems that keep industrial and automotive businesses running, measured, and automated.</p>
+  <div class="hero-cta">
+    <div class="btn-wrap"><a class="btn" href="#work">View Work</a></div>
+    <a class="btn-ghost" href="#contact">Get in touch</a>
   </div>
 </header>
 
-<main id="main">
-  <section class="hero" id="top">
-    <div class="container">
-      <p class="eyebrow hero-anim">Technical Operations / IT Infrastructure / Applied AI</p>
-      <h1 class="hero-anim">Stefan Yasin</h1>
-      <p class="hero-sub hero-anim">20+ years running the systems businesses run on: infrastructure, networking, automation, and the people in between.</p>
-      <div class="hero-ctas hero-anim">
-        <a class="btn btn-primary" href="#projects">View projects</a>
-        <a class="btn btn-ghost" href="#contact">Get in touch</a>
-      </div>
+<section id="work">
+  <div class="sec-head reveal">
+    <h2>Selected work</h2>
+    <p>Open-source tools built from real problems in operations, monitoring, and security.</p>
+  </div>
+  <div class="bento">
+    <div class="cell c7 reveal">
+      <div class="ic">🔍</div>
+      <h3>eagleeye2</h3>
+      <p>OSINT research platform with Kali integration. Built to be taught in courses, used by agencies, and trusted by security teams.</p>
+      <div class="meta">OSINT · Security · Python</div>
+      <a class="stretched" href="https://github.com/StefanYasin/eagleeye2" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="metrics" aria-label="Facts at a glance">
-    <div class="container metrics-grid">
-      <div class="metric"><div class="num"><em>20+</em></div><div class="lbl">years hands-on, hardware to cloud</div></div>
-      <div class="metric"><div class="num"><em>6</em></div><div class="lbl">open-source tools, built and maintained</div></div>
-      <div class="metric"><div class="num"><em>40GbE</em></div><div class="lbl">fibre lab backbone, bridged to 10GbE</div></div>
-      <div class="metric"><div class="num"><em>Solar</em></div><div class="lbl">supported home lab, whole-home automation</div></div>
+    <div class="cell green c5 reveal">
+      <div class="ic">🛡️</div>
+      <h3>endpointwatch</h3>
+      <p>Live-response endpoint monitoring with plain-English alerts for Windows.</p>
+      <div class="meta">Monitoring · Alerts</div>
+      <a class="stretched" href="https://github.com/StefanYasin/endpointwatch" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="about" id="about">
-    <div class="container">
-      <h2 class="reveal">About</h2>
-      <p class="reveal">Technical operations professional with hands-on experience across corporate IT, networking, and industrial systems. I build and run infrastructure, automate the operations around it, and translate technical depth into outcomes for the people who depend on it.</p>
-      <p class="reveal"><strong>Currently:</strong> independent technical operations consultant (since 2025). Building AI-assisted operations tooling and monitoring for modern infrastructure, from a solar-supported smart home lab.</p>
-      <p class="status-line reveal"><span class="dot" aria-hidden="true"></span> Open to senior roles in technical operations, customer success, service delivery, and field engineering. Remote or GTA. <a href="resume.pdf">View resume</a></p>
+    <div class="cell purple c5 reveal">
+      <div class="ic">📡</div>
+      <h3>pinggrid</h3>
+      <p>Distributed uptime and latency tracking across a grid of nodes.</p>
+      <div class="meta">Uptime · Distributed</div>
+      <a class="stretched" href="https://github.com/StefanYasin/pinggrid" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="experience" id="experience">
-    <div class="container">
-      <h2 class="reveal">Experience</h2>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Independent Consultant</h3>
-          <p class="co">Self-employed</p>
-          <span class="years">2025 - present</span>
-        </div>
-        <p class="scope">AI-assisted operations tooling and monitoring for modern infrastructure. <strong>Open to senior technical operations, customer success, and field engineering roles.</strong></p>
-      </div>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Technical Operations &amp; Infrastructure Lead</h3>
-          <p class="co">Innovopak Inc., Mississauga</p>
-          <span class="years">Sep 2023 - Jun 2025</span>
-        </div>
-        <p class="scope">Led IT, networking, and building management system operations across multiple manufacturing sites, managing a team of six. <strong>Cut incident response from hours to minutes</strong> with integrated monitoring and prioritized alerting.</p>
-      </div>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Marketing Consultant</h3>
-          <p class="co">Exclaim Digital Media, Mississauga</p>
-          <span class="years">Mar 2012 - Feb 2023</span>
-        </div>
-        <p class="scope">Self-employed. <strong>90% client retention over 11 years</strong>; 50M+ online views across B2B and B2C campaigns. Built and sold AI-powered e-commerce automation systems.</p>
-      </div>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Technical Support Specialist &amp; Apple Genius</h3>
-          <p class="co">Apple Inc., Mississauga</p>
-          <span class="years">2014</span>
-        </div>
-        <p class="scope">Front-line hardware and software support on a busy retail floor. De-escalation and plain-language technical explanations for non-technical customers.</p>
-      </div>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Project Manager, Media &amp; Creative</h3>
-          <p class="co">TheLabsPhoto, Greater Toronto Area</p>
-          <span class="years">Mar 2008 - Mar 2012</span>
-        </div>
-        <p class="scope">Drones, 360 photography, and Matterport capture for real estate, marketing, and events. Field work from pre-production through delivery.</p>
-      </div>
-      <div class="exp-row reveal">
-        <div>
-          <h3>Licensed Agent &amp; Mortgage Professional</h3>
-          <p class="co">One Percent Realty and Centum</p>
-          <span class="years">2016 - 2024</span>
-        </div>
-        <p class="scope">Full client lifecycle in regulated environments: buyers, sellers, listing marketing, and <strong>$15M/yr in residential mortgages</strong>.</p>
-      </div>
+    <div class="cell c7 reveal">
+      <div class="ic">🧊</div>
+      <h3>rackpulse</h3>
+      <p>Health monitoring and AI provisioning for legacy Dell PowerEdge servers on ESXi 6.7.</p>
+      <div class="meta">Hardware · Telemetry</div>
+      <a class="stretched" href="https://github.com/StefanYasin/rackpulse" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="skills" id="skills">
-    <div class="container">
-      <h2 class="reveal">Skills</h2>
-
-      <div class="skill-group reveal">
-        <h3>Infrastructure</h3>
-        <div class="chips">
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/vmware/8b949e" alt="" width="14" height="14"><b>VMware</b> ESXi</span>
-          <span class="chip"><b>Windows</b> Server</span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/linux/8b949e" alt="" width="14" height="14"><b>Linux</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/dell/8b949e" alt="" width="14" height="14"><b>Dell</b> PowerEdge</span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/docker/8b949e" alt="" width="14" height="14"><b>Docker</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/kubernetes/8b949e" alt="" width="14" height="14"><b>Kubernetes</b></span>
-          <span class="chip"><b>NAS</b> &amp; storage</span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal">
-        <h3>Networking</h3>
-        <div class="chips">
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cisco/8b949e" alt="" width="14" height="14"><b>Cisco</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/junipernetworks/8b949e" alt="" width="14" height="14"><b>Juniper</b></span>
-          <span class="chip"><b>TCP/IP</b></span>
-          <span class="chip"><b>VLANs</b></span>
-          <span class="chip"><b>VPNs</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/tailscale/8b949e" alt="" width="14" height="14"><b>Tailscale</b> mesh</span>
-          <span class="chip"><b>40GbE</b> fibre</span>
-          <span class="chip"><b>10GbE</b> copper</span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal">
-        <h3>Automation &amp; AI</h3>
-        <div class="chips">
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/python/8b949e" alt="" width="14" height="14"><b>Python</b></span>
-          <span class="chip"><b>PowerShell</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/gnubash/8b949e" alt="" width="14" height="14"><b>Bash</b></span>
-          <span class="chip"><b>SQL</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cplusplus/8b949e" alt="" width="14" height="14"><b>C</b> / <b>C++</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/javascript/8b949e" alt="" width="14" height="14"><b>JavaScript</b> / <b>React</b></span>
-          <span class="chip"><b>Local LLMs</b></span>
-          <span class="chip"><b>MCP</b></span>
-          <span class="chip"><b>Prompt engineering</b></span>
-          <span class="chip"><b>n8n</b> / <b>Make</b> / <b>Zapier</b></span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal">
-        <h3>Platforms &amp; Cloud</h3>
-        <div class="chips">
-          <span class="chip"><b>Azure</b></span>
-          <span class="chip"><b>AWS</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/googlecloud/8b949e" alt="" width="14" height="14"><b>Google Cloud</b></span>
-          <span class="chip"><b>Salesforce</b></span>
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/hubspot/8b949e" alt="" width="14" height="14"><b>HubSpot</b></span>
-          <span class="chip"><b>Tableau</b></span>
-        </div>
-      </div>
-
-      <div class="skill-group reveal">
-        <h3>Industrial &amp; Facilities</h3>
-        <div class="chips">
-          <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/siemens/8b949e" alt="" width="14" height="14"><b>PLC</b> (Siemens, Omron, Schneider)</span>
-          <span class="chip"><b>SCADA</b> / HMI</span>
-          <span class="chip"><b>BMS</b></span>
-          <span class="chip"><b>Surveillance</b> (Avigilon, Axis, Hikvision)</span>
-          <span class="chip"><b>Access control</b></span>
-          <span class="chip"><b>H&amp;S</b> (Ontario regs)</span>
-        </div>
-      </div>
+    <div class="cell orange c4 reveal">
+      <div class="ic">🔕</div>
+      <h3>dellsilencer</h3>
+      <p>Fan control with hysteresis for Dell laptops. Quiet without the screaming.</p>
+      <div class="meta">Hardware · Fan Control</div>
+      <a class="stretched" href="https://github.com/StefanYasin/dellsilencer" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="projects" id="projects">
-    <div class="container">
-      <h2 class="reveal">Projects</h2>
-      <div class="grid-2">
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/endpointwatch">endpointwatch</a></h3>
-          <p>Live-response endpoint monitor for Windows. Watches processes, connections, and persistence, with VirusTotal and AbuseIPDB enrichment and plain-English LLM alerts.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">psutil</span><span class="tag">LLM alerts</span><span class="tag tag-license">MIT</span></div>
-          <div class="card-links"><a class="card-link" href="https://github.com/StefanYasin/endpointwatch">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a><a class="card-link" href="case-studies/endpointwatch.html">Case study</a></div>
-        </article>
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/rackpulse">rackpulse</a></h3>
-          <p>Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7. Backports modern monitoring onto old enterprise gear.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">ESXi</span><span class="tag">Dell iDRAC</span><span class="tag tag-license">MIT</span></div>
-          <div class="card-links"><a class="card-link" href="https://github.com/StefanYasin/rackpulse">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a><a class="card-link" href="case-studies/rackpulse.html">Case study</a></div>
-        </article>
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/pinggrid">pinggrid</a></h3>
-          <p>Lightweight network monitoring dashboard. Ping sweeps, port scans, and instant alerts from one terminal view. Self-hosted, zero cloud.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">ICMP</span><span class="tag">Terminal UI</span><span class="tag tag-license">MIT</span></div>
-          <a class="card-link" href="https://github.com/StefanYasin/pinggrid">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
-        </article>
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/eagleeye2">eagleeye2</a></h3>
-          <p>Find a person's social profiles from a face photo. Modern EagleEye successor using deepface, profile discovery, and face verification.</p>
-          <div class="card-tags"><span class="tag">Python</span><span class="tag">deepface</span><span class="tag">OSINT</span><span class="tag tag-license">MIT</span></div>
-          <a class="card-link" href="https://github.com/StefanYasin/eagleeye2">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
-        </article>
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/restore-drill">restore-drill</a></h3>
-          <p>Verify your GitHub backups actually restore. Clone, verify integrity, clean up, in one command. A backup that has never been restored is a rumor.</p>
-          <div class="card-tags"><span class="tag">Shell</span><span class="tag">Git</span><span class="tag">Disaster recovery</span><span class="tag tag-license">MIT</span></div>
-          <a class="card-link" href="https://github.com/StefanYasin/restore-drill">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
-        </article>
-        <article class="card reveal">
-          <h3><a href="https://github.com/StefanYasin/dellsilencer">dellsilencer</a></h3>
-          <p>Fan control for Dell PowerEdge servers. Quiet your rack without cooking your drives.</p>
-          <div class="card-tags"><span class="tag">C#</span><span class="tag">IPMI</span><span class="tag">Hysteresis</span><span class="tag tag-license">GPL-3.0</span></div>
-          <a class="card-link" href="https://github.com/StefanYasin/dellsilencer">View repo <span class="arrow" aria-hidden="true">-&gt;</span></a>
-        </article>
-      </div>
+    <div class="cell c4 reveal">
+      <div class="ic">💾</div>
+      <h3>restore-drill</h3>
+      <p>Backup restore verification CLI. Tests that backups actually restore, before you need them.</p>
+      <div class="meta">Backups · Verification</div>
+      <a class="stretched" href="https://github.com/StefanYasin/restore-drill" target="_blank" rel="noopener"></a>
     </div>
-  </section>
-
-  <section class="writing" id="writing">
-    <div class="container">
-      <h2 class="reveal">Writing</h2>
-      <div class="post-list">
-        <div class="post-row reveal">
-          <time datetime="2026-08-28">Aug 28, 2026</time>
-          <div>
-            <h3><a href="blog/posts/incident-response-hours-to-minutes.html">How I cut incident response from hours to minutes</a></h3>
-            <p>What happened when I rebuilt monitoring and alerting across a multi-site manufacturing operation, and the lessons that apply to any ops team.</p>
-          </div>
-        </div>
-        <div class="post-row reveal">
-          <time datetime="2026-08-28">Aug 28, 2026</time>
-          <div>
-            <h3><a href="blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html">Backporting modern health monitoring onto 2016-era servers</a></h3>
-            <p>How rackpulse gives old Dell PowerEdge gear on ESXi 6.7 the monitoring modern hardware takes for granted.</p>
-          </div>
-        </div>
-        <div class="post-row reveal">
-          <time datetime="2026-08-28">Aug 28, 2026</time>
-          <div>
-            <h3><a href="blog/posts/ai-assisted-ops-stack-near-zero-budget.html">Running an AI-assisted ops stack on a near-zero budget</a></h3>
-            <p>The three tools that talk to each other beat the eight-tool stack, and my job hunt runs on it.</p>
-          </div>
-        </div>
-      </div>
-      <a class="view-all reveal" href="blog/index.html">All posts <span aria-hidden="true">-&gt;</span></a>
+    <div class="cell green c4 reveal">
+      <div class="ic">🏘️</div>
+      <h3>Nextdoor Lead Engine</h3>
+      <p>Scans Nextdoor for service requests, drafts replies in the right voice, tracks leads.</p>
+      <div class="meta">Lead Gen · Automation</div>
+      <a class="stretched" href="https://github.com/StefanYasin/nextdoor-lead-engine" target="_blank" rel="noopener"></a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="homelab" id="homelab">
-    <div class="container">
-      <p class="eyebrow reveal">Homelab &amp; Smart Home</p>
-      <h2 class="reveal">The whole house is the lab</h2>
-      <p class="reveal">Solar-supported and automated, running around the clock. A full-size server rack with a 40GbE fibre backbone bridged to 10GbE copper sits at the core, and from there it extends into every room: whole-home automation for lighting, climate, security, and media, with remote access from anywhere via Tailscale and a VPS interlink.</p>
-      <div class="chips reveal">
-        <span class="chip"><b>Solar</b> supported</span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/homeassistant/8b949e" alt="" width="14" height="14"><b>Home Assistant</b></span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/zigbee/8b949e" alt="" width="14" height="14"><b>Z-Wave</b> / Zigbee</span>
-        <span class="chip"><b>Mesh Wi-Fi</b></span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/vmware/8b949e" alt="" width="14" height="14"><b>ESXi</b></span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/docker/8b949e" alt="" width="14" height="14"><b>Docker</b></span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/kubernetes/8b949e" alt="" width="14" height="14"><b>Kubernetes</b></span>
-        <span class="chip"><b>NAS</b></span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/cisco/8b949e" alt="" width="14" height="14"><b>Cisco</b> rack</span>
-        <span class="chip"><img class="ico" src="https://cdn.simpleicons.org/tailscale/8b949e" alt="" width="14" height="14"><b>Tailscale</b></span>
-        <span class="chip"><b>VPS</b> interlink</span>
-      </div>
+<section id="experience">
+  <div class="sec-head reveal">
+    <h2>Experience</h2>
+    <p>A decade of hands-on work where industrial systems meet business outcomes.</p>
+  </div>
+  <div class="exp">
+    <div class="row reveal">
+      <div><div class="co">Innovopak</div><div class="role">IT, Networking &amp; BMS Operations Lead</div></div>
+      <div class="yrs">2023-2025</div>
     </div>
-  </section>
+    <div class="row reveal">
+      <div><div class="co">One Percent Realty</div><div class="role">Real Estate Agent</div></div>
+      <div class="yrs">2021-2024</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">Centum Home Loans</div><div class="role">Mortgage Agent</div></div>
+      <div class="yrs">2016-2023</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">WhirlWind Labs</div><div class="role">Founder, systems and performance computing</div></div>
+      <div class="yrs">2006</div>
+    </div>
+  </div>
+</section>
 
-  <section class="certs" id="certs">
-    <div class="container">
-      <h2 class="reveal">Certifications</h2>
-      <div class="certs-grid">
-        <div class="cert-col reveal">
-          <h3>Earned</h3>
-          <ul>
-            <li><span class="mark" aria-hidden="true">+</span> Apple Developer (10+ years, in good standing)</li>
-            <li><span class="mark" aria-hidden="true">+</span> Adobe Creative Educator</li>
-            <li><span class="mark" aria-hidden="true">+</span> Six Sigma</li>
-            <li><span class="mark" aria-hidden="true">+</span> ISO, WHMIS, OSHA</li>
-            <li><span class="mark" aria-hidden="true">+</span> Real Estate &amp; Mortgage Agent licenses</li>
-          </ul>
-        </div>
-        <div class="cert-col reveal">
-          <h3>In progress</h3>
-          <ul>
-            <li><span class="mark muted" aria-hidden="true">...</span> CompTIA A+, Security+, CCNA</li>
-            <li><span class="mark muted" aria-hidden="true">...</span> Azure AZ-900, AI-900, SC-900, DP-900</li>
-            <li><span class="mark muted" aria-hidden="true">...</span> ISC2 Candidate</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="skills">
+  <div class="sec-head reveal">
+    <h2>Skills</h2>
+    <p>The stack behind the work.</p>
+  </div>
+  <div class="chips reveal">
+    <span class="chip">PLC &amp; SCADA (Siemens WinCC)</span>
+    <span class="chip">Industrial Automation</span>
+    <span class="chip">Network Infrastructure</span>
+    <span class="chip">Fleet &amp; Telematics</span>
+    <span class="chip">OSINT &amp; Security</span>
+    <span class="chip">Backup &amp; Recovery</span>
+    <span class="chip">Python</span>
+    <span class="chip">Systems Monitoring</span>
+    <span class="chip">Homelab &amp; Virtualization</span>
+    <span class="chip">AI Workflows &amp; Automation</span>
+  </div>
+</section>
 
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2 class="reveal">Contact</h2>
-      <div class="contact-grid">
-        <div>
-          <div class="contact-row"><span class="k">Email</span><span class="v"><a href="mailto:StefanYasin@gmail.com">StefanYasin@gmail.com</a></span></div>
-          <div class="contact-row"><span class="k">Phone</span><span class="v"><a href="tel:+14167351899">(416) 735-1899</a></span></div>
-          <div class="contact-row"><span class="k">LinkedIn</span><span class="v"><a href="https://www.linkedin.com/in/stefanyasin/">in/stefanyasin</a></span></div>
-          <div class="contact-row"><span class="k">GitHub</span><span class="v"><a href="https://github.com/StefanYasin">github.com/StefanYasin</a></span></div>
-        </div>
-        <div>
-          <div class="contact-row"><span class="k">Resume</span><span class="v"><a href="resume.pdf">Stefan Yasin - Platform Resume (PDF)</a></span></div>
-          <div class="contact-row"><span class="k">ORCID</span><span class="v"><a href="https://orcid.org/0009-0004-3416-7447">0009-0004-3416-7447</a></span></div>
-          <div class="contact-row"><span class="k">Location</span><span class="v">Hamilton, Ontario, Canada · Eastern Time</span></div>
-        </div>
-      </div>
-      <p class="contact-note reveal">Email is the fastest way to reach me, and I reply within a day. Calls and texts welcome during business hours (ET).</p>
+<section id="contact">
+  <div class="contact-card reveal">
+    <h2>Let's build something.</h2>
+    <p>Technical consulting, custom tooling, or automation for industrial, automotive, and operations-focused teams.</p>
+    <div class="contact-cta">
+      <div class="btn-wrap"><a class="btn btn-primary" href="mailto:StefanYasin@gmail.com">Email Me</a></div>
+      <a class="btn-ghost" href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn-ghost" href="https://linkedin.com/in/stefanyasin" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
 <footer>
-  <div class="container foot">
-    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
-    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
-    <a class="top" href="#top">Back to top</a>
-  </div>
+  <p>© 2026 Stefan Yasin · <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">github.com/StefanYasin</a></p>
 </footer>
 
 <script>
-  // Theme toggle: respects system preference until the user chooses
-  (function () {
-    var stored = null;
-    try { stored = localStorage.getItem("theme"); } catch (e) {}
-    if (stored) document.documentElement.dataset.theme = stored;
-    var glyph = document.getElementById("themeGlyph");
-    var isDark = function () {
-      if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
-      return !window.matchMedia("(prefers-color-scheme: light)").matches;
-    };
-    glyph.textContent = isDark() ? "\u2600" : "\u263E";
-    document.getElementById("themeToggle").addEventListener("click", function () {
-      var next = isDark() ? "light" : "dark";
-      document.documentElement.dataset.theme = next;
-      glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
-      try { localStorage.setItem("theme", next); } catch (e) {}
-    });
-  })();
-
   // Scroll reveal
-  (function () {
-    var els = document.querySelectorAll(".reveal");
-    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!("IntersectionObserver" in window) || reduce) {
-      els.forEach(function (el) { el.classList.add("in"); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
-  })();
+  const obs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // Safety: reveal everything after 2.5s no matter what (print, crawlers, no-scroll)
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
 
-  // Scrollspy: highlight the nav link of the section in view
-  (function () {
-    var links = Array.prototype.slice.call(document.querySelectorAll(".nav-links a[href^='#']"));
-    var targets = links.map(function (l) { return document.getElementById(l.getAttribute("href").slice(1)); })
-      .filter(Boolean);
-    if (!("IntersectionObserver" in window) || !targets.length) return;
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var id = e.target.id;
-        links.forEach(function (l) {
-          l.classList.toggle("active", l.getAttribute("href") === "#" + id);
-        });
-      });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    targets.forEach(function (t) { spy.observe(t); });
-  })();
+  // Spotlight tracking on bento cells (Aceternity spotlight adaptation)
+  document.querySelectorAll('.cell').forEach(cell => {
+    cell.addEventListener('mousemove', (e) => {
+      const rect = cell.getBoundingClientRect();
+      cell.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+      cell.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+    });
+  });
 </script>
 </body>
 </html>
