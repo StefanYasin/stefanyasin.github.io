@@ -25,7 +25,7 @@
   }
   ::selection { background: rgba(10,132,255,0.3); }
 
-  /* ---- Gradient haze behind everything (aurora approximation) ---- */
+  /* ---- Aurora haze (Aceternity signature) ---- */
   .haze {
     position: fixed; inset: 0; z-index: -1; pointer-events: none;
     background:
@@ -49,15 +49,32 @@
   .links a:hover { color:var(--text); }
   @media (max-width:768px){ .links{display:none;} }
 
-  /* ---- HERO ---- */
+  /* ---- HERO with photo ---- */
   .hero {
     min-height: 100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:120px 24px 60px; position:relative;
   }
   .hero .eyebrow {
     font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--accent); margin-bottom:20px;
+    color:var(--accent); margin-bottom:28px;
   }
+  .photo-ring {
+    width: 200px; height: 200px; border-radius: 50%; padding: 3px; margin: 0 auto 32px;
+    background: conic-gradient(from 0deg, #0a84ff, #30d158, #bf5af2, #ff9f0a, #0a84ff);
+    animation: ring-rotate 8s linear infinite;
+    position: relative;
+  }
+  .photo-ring::after {
+    content:""; position:absolute; inset:-8px; border-radius:50%;
+    background: radial-gradient(circle, rgba(10,132,255,0.25), transparent 65%);
+    z-index:-1; animation: ring-glow 3s ease-in-out infinite;
+  }
+  .photo-ring img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display:block;
+    border: 6px solid var(--bg);
+  }
+  @keyframes ring-rotate { to { transform: rotate(360deg); } }
+  @keyframes ring-glow { 0%,100% { opacity:.4; } 50% { opacity:1; } }
   .hero h1 {
     font-size: clamp(46px, 8vw, 92px); font-weight:750; letter-spacing:-0.035em; line-height:1.02;
     background: linear-gradient(180deg,#fff 55%,#86868b);
@@ -70,7 +87,11 @@
   .hero .tag { margin-top:12px; color:var(--text-3); font-size:16px; max-width:560px; }
   .hero-cta { margin-top:44px; display:flex; gap:16px; }
 
-  /* Moving Border button (Aceternity signature — vanilla adaptation) */
+  /* Sparkles (Aceternity sparkles — canvas) */
+  #sparkles { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+  .hero > * { position:relative; z-index:1; }
+
+  /* Moving Border button (Aceternity signature) */
   .btn-wrap { position:relative; display:inline-block; padding:1.5px; border-radius:999px; overflow:hidden; }
   .btn-wrap::before {
     content:""; position:absolute; inset:-150%; z-index:0;
@@ -101,10 +122,9 @@
 
   .reveal { opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
   .reveal.in { opacity:1; transform:translateY(0); }
-  /* Safety: if JS never runs or user prints, show everything */
-  html.no-js .reveal, .reveal.no-js { opacity:1; transform:none; transition:none; }
+  @media print, (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
 
-  /* ---- Bento grid (Aceternity signature) ---- */
+  /* ---- Bento grid w/ flashing frames ---- */
   .bento { display:grid; grid-template-columns:repeat(12,1fr); gap:16px; }
   .cell {
     position:relative; border-radius:var(--radius); overflow:hidden;
@@ -112,13 +132,21 @@
     border:1px solid var(--line); padding:30px;
     transition:transform .4s cubic-bezier(.16,1,.3,1), border-color .3s;
   }
-  .cell:hover { transform:translateY(-4px); border-color:rgba(255,255,255,0.18); }
-  /* Spotlight tracking on hover (Aceternity spotlight) */
+  .cell:hover { transform:translateY(-4px); }
+  /* Spotlight tracking */
   .cell::after {
     content:""; position:absolute; inset:0; opacity:0; transition:opacity .4s;
     background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(10,132,255,0.12), transparent 70%);
   }
   .cell:hover::after { opacity:1; }
+  /* Animated gradient frame (flashy module frame) */
+  .cell.flash::before {
+    content:""; position:absolute; inset:-2px; z-index:-1; border-radius:inherit;
+    background: conic-gradient(from var(--ang,0deg), transparent 0 70%, rgba(10,132,255,0.6) 85%, transparent 100%);
+    animation: frame-spin 3.5s linear infinite;
+  }
+  @property --ang { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+  @keyframes frame-spin { to { --ang: 360deg; } }
   .cell .ic { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center;
     font-size:22px; margin-bottom:18px; background:rgba(10,132,255,0.14); border:1px solid rgba(10,132,255,0.3); }
   .cell.green .ic { background:rgba(48,209,88,0.12); border-color:rgba(48,209,88,0.3); }
@@ -131,6 +159,20 @@
 
   .c7 { grid-column:span 7; } .c5 { grid-column:span 5; } .c4 { grid-column:span 4; }
   @media (max-width:900px){ .c7,.c5,.c4{ grid-column:span 12; } }
+
+  /* ---- Stats row ---- */
+  .stats { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin-top:48px; }
+  .stat { padding:18px 30px; border-radius:18px; background:rgba(255,255,255,0.04);
+    border:1px solid var(--line); text-align:center; min-width:150px; }
+  .stat .n { font-size:34px; font-weight:750; letter-spacing:-0.02em; color:var(--text); }
+  .stat .l { font-size:12px; color:var(--text-3); margin-top:2px; text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* ---- Architecture diagram section ---- */
+  .diagram-wrap {
+    background: rgba(15,23,42,0.35); border-radius:24px; border:1px solid var(--line);
+    padding: 28px; overflow-x:auto;
+  }
+  .diagram-wrap svg { width:100%; min-width:780px; height:auto; display:block; font-family:"SF Mono", "JetBrains Mono", ui-monospace, monospace; }
 
   /* ---- Experience rows ---- */
   .exp { display:flex; flex-direction:column; }
@@ -168,10 +210,9 @@
   footer a { color:var(--text-3); text-decoration:none; }
   footer a:hover { color:var(--text); }
 
-  /* reduced motion */
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .btn-wrap::before{animation:none;}
+    .btn-wrap::before,.photo-ring,.photo-ring::after,.cell.flash::before{animation:none;}
     .reveal{opacity:1;transform:none;transition:none;}
     .cell:hover{transform:none;}
   }
@@ -184,6 +225,7 @@
   <div class="logo">Stefan Yasin</div>
   <ul class="links">
     <li><a href="#work">Work</a></li>
+    <li><a href="#architecture">Blueprints</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -191,13 +233,23 @@
 </nav>
 
 <header class="hero">
+  <canvas id="sparkles"></canvas>
   <div class="eyebrow">Technical Operations &amp; Applied AI</div>
+  <div class="photo-ring">
+    <img src="avatar.jpg" alt="Stefan Yasin">
+  </div>
   <h1>Stefan Yasin</h1>
   <p class="sub">Technical solutions that move real-world operations.</p>
   <p class="tag">From factory floors to fleet telematics, the systems that keep industrial and automotive businesses running, measured, and automated.</p>
   <div class="hero-cta">
     <div class="btn-wrap"><a class="btn" href="#work">View Work</a></div>
     <a class="btn-ghost" href="#contact">Get in touch</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n" data-count="20">0</div><div class="l">Years deep</div></div>
+    <div class="stat"><div class="n" data-count="7">0</div><div class="l">Open tools</div></div>
+    <div class="stat"><div class="n" data-count="1500">0</div><div class="l">Endpoints watched</div></div>
+    <div class="stat"><div class="n" data-count="24">0</div><div class="l">Cron automations</div></div>
   </div>
 </header>
 
@@ -207,14 +259,14 @@
     <p>Open-source tools built from real problems in operations, monitoring, and security.</p>
   </div>
   <div class="bento">
-    <div class="cell c7 reveal">
+    <div class="cell flash c7 reveal">
       <div class="ic">🔍</div>
       <h3>eagleeye2</h3>
       <p>OSINT research platform with Kali integration. Built to be taught in courses, used by agencies, and trusted by security teams.</p>
       <div class="meta">OSINT · Security · Python</div>
       <a class="stretched" href="https://github.com/StefanYasin/eagleeye2" target="_blank" rel="noopener"></a>
     </div>
-    <div class="cell green c5 reveal">
+    <div class="cell green flash c5 reveal">
       <div class="ic">🛡️</div>
       <h3>endpointwatch</h3>
       <p>Live-response endpoint monitoring with plain-English alerts for Windows.</p>
@@ -228,7 +280,7 @@
       <div class="meta">Uptime · Distributed</div>
       <a class="stretched" href="https://github.com/StefanYasin/pinggrid" target="_blank" rel="noopener"></a>
     </div>
-    <div class="cell c7 reveal">
+    <div class="cell flash c7 reveal">
       <div class="ic">🧊</div>
       <h3>rackpulse</h3>
       <p>Health monitoring and AI provisioning for legacy Dell PowerEdge servers on ESXi 6.7.</p>
@@ -242,7 +294,7 @@
       <div class="meta">Hardware · Fan Control</div>
       <a class="stretched" href="https://github.com/StefanYasin/dellsilencer" target="_blank" rel="noopener"></a>
     </div>
-    <div class="cell c4 reveal">
+    <div class="cell flash c4 reveal">
       <div class="ic">💾</div>
       <h3>restore-drill</h3>
       <p>Backup restore verification CLI. Tests that backups actually restore, before you need them.</p>
@@ -256,6 +308,106 @@
       <div class="meta">Lead Gen · Automation</div>
       <a class="stretched" href="https://github.com/StefanYasin/nextdoor-lead-engine" target="_blank" rel="noopener"></a>
     </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="sec-head reveal">
+    <h2>Blueprints</h2>
+    <p>How the stack fits together. Industrial floors, network core, and AI layer, one system.</p>
+  </div>
+  <div class="diagram-wrap reveal">
+    <svg viewBox="0 0 1000 620">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+        </marker>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+
+      <rect width="100%" height="100%" fill="url(#grid)" />
+
+      <!-- Layer labels -->
+      <text x="30" y="40" fill="#94a3b8" font-size="9" font-weight="600" letter-spacing="0.1em">INDUSTRIAL LAYER</text>
+      <text x="30" y="180" fill="#94a3b8" font-size="9" font-weight="600" letter-spacing="0.1em">NETWORK / INFRA</text>
+      <text x="30" y="330" fill="#94a3b8" font-size="9" font-weight="600" letter-spacing="0.1em">DATA &amp; SECURITY</text>
+      <text x="30" y="480" fill="#94a3b8" font-size="9" font-weight="600" letter-spacing="0.1em">AGENT / AI LAYER</text>
+
+      <!-- Row 1: Industrial -->
+      <rect x="150" y="46" width="250" height="56" rx="8" fill="rgba(6,78,59,0.35)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="275" y="70" fill="white" font-size="11" font-weight="600" text-anchor="middle">PLC &amp; Process Control</text>
+      <text x="275" y="86" fill="#94a3b8" font-size="9" text-anchor="middle">Siemens · Omron · Schneider · Delta</text>
+
+      <rect x="420" y="46" width="250" height="56" rx="8" fill="rgba(6,78,59,0.35)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="545" y="70" fill="white" font-size="11" font-weight="600" text-anchor="middle">SCADA + HMI</text>
+      <text x="545" y="86" fill="#94a3b8" font-size="9" text-anchor="middle">Siemens WinCC · Remote I/O</text>
+
+      <rect x="690" y="46" width="270" height="56" rx="8" fill="rgba(6,78,59,0.35)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="825" y="70" fill="white" font-size="11" font-weight="600" text-anchor="middle">BMS &amp; M&E Systems</text>
+      <text x="825" y="86" fill="#94a3b8" font-size="9" text-anchor="middle">HVAC · Chillers · Boilers · UPS</text>
+
+      <!-- Row 2: Network -->
+      <rect x="150" y="186" width="250" height="56" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="275" y="210" fill="white" font-size="11" font-weight="600" text-anchor="middle">Network Core</text>
+      <text x="275" y="226" fill="#94a3b8" font-size="9" text-anchor="middle">Cisco Rack · Firewalls · VLANs</text>
+
+      <rect x="420" y="186" width="250" height="56" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="545" y="210" fill="white" font-size="11" font-weight="600" text-anchor="middle">Servers &amp; Storage</text>
+      <text x="545" y="226" fill="#94a3b8" font-size="9" text-anchor="middle">PowerEdge ESXi · NAS · Docker</text>
+
+      <rect x="690" y="186" width="270" height="56" rx="8" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="825" y="210" fill="white" font-size="11" font-weight="600" text-anchor="middle">Fleet &amp; Telematics</text>
+      <text x="825" y="226" fill="#94a3b8" font-size="9" text-anchor="middle">GT350 · Viper · fleet.json · Monitors</text>
+
+      <!-- Row 3: Data & Security -->
+      <rect x="150" y="336" width="250" height="56" rx="8" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+      <text x="275" y="360" fill="white" font-size="11" font-weight="600" text-anchor="middle">OSINT &amp; Security</text>
+      <text x="275" y="376" fill="#94a3b8" font-size="9" text-anchor="middle">eagleeye2 · Shodan · Threat Intel</text>
+
+      <rect x="420" y="336" width="250" height="56" rx="8" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="545" y="360" fill="white" font-size="11" font-weight="600" text-anchor="middle">Monitoring &amp; Alerts</text>
+      <text x="545" y="376" fill="#94a3b8" font-size="9" text-anchor="middle">endpointwatch · pinggrid · rackpulse</text>
+
+      <rect x="690" y="336" width="270" height="56" rx="8" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="825" y="360" fill="white" font-size="11" font-weight="600" text-anchor="middle">Backups &amp; Restore</text>
+      <text x="825" y="376" fill="#94a3b8" font-size="9" text-anchor="middle">restore-drill · Vault · Git</text>
+
+      <!-- Row 4: Agent layer -->
+      <rect x="150" y="486" width="560" height="72" rx="10" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="430" y="512" fill="white" font-size="12" font-weight="600" text-anchor="middle">Hermes Agent Suite</text>
+      <text x="430" y="530" fill="#94a3b8" font-size="9" text-anchor="middle">Memory (MemOS) · Vault · Cron Automations · Email Ingest · Reddit Research</text>
+      <text x="430" y="546" fill="#94a3b8" font-size="9" text-anchor="middle">WebUI over Tailscale · Model routing (qwen flash / deepseek strategic)</text>
+
+      <rect x="730" y="486" width="230" height="72" rx="10" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="845" y="512" fill="white" font-size="11" font-weight="600" text-anchor="middle">Outbound</text>
+      <text x="845" y="530" fill="#94a3b8" font-size="8" text-anchor="middle">Lead Engine · Faceless IG</text>
+      <text x="845" y="544" fill="#94a3b8" font-size="8" text-anchor="middle">LinkedIn drafts · Agency Kit</text>
+
+      <!-- Arrows -->
+      <line x1="275" y1="102" x2="275" y2="184" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+      <line x1="545" y1="102" x2="545" y2="184" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+      <line x1="275" y1="242" x2="275" y2="334" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrowhead)"/>
+      <line x1="545" y1="242" x2="545" y2="334" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrowhead)"/>
+      <line x1="545" y1="392" x2="545" y2="484" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+      <line x1="430" y1="522" x2="728" y2="522" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+      <!-- Legend -->
+      <text x="920" y="350" fill="white" font-size="10" font-weight="600">Legend</text>
+      <rect x="920" y="360" width="14" height="9" rx="2" fill="rgba(6,78,59,0.35)" stroke="#34d399" stroke-width="1"/>
+      <text x="940" y="368" fill="#94a3b8" font-size="8">Industrial</text>
+      <rect x="920" y="376" width="14" height="9" rx="2" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1"/>
+      <text x="940" y="384" fill="#94a3b8" font-size="8">Network</text>
+      <rect x="920" y="392" width="14" height="9" rx="2" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1"/>
+      <text x="940" y="400" fill="#94a3b8" font-size="8">Security</text>
+      <rect x="920" y="408" width="14" height="9" rx="2" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1"/>
+      <text x="940" y="416" fill="#94a3b8" font-size="8">Data</text>
+      <rect x="920" y="424" width="14" height="9" rx="2" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1"/>
+      <text x="940" y="432" fill="#94a3b8" font-size="8">Agent</text>
+      <rect x="920" y="440" width="14" height="9" rx="2" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1"/>
+      <text x="940" y="448" fill="#94a3b8" font-size="8">Outbound</text>
+    </svg>
   </div>
 </section>
 
@@ -325,10 +477,9 @@
     es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  // Safety: reveal everything after 2.5s no matter what (print, crawlers, no-scroll)
   setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('in')), 2500);
 
-  // Spotlight tracking on bento cells (Aceternity spotlight adaptation)
+  // Spotlight tracking
   document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('mousemove', (e) => {
       const rect = cell.getBoundingClientRect();
@@ -337,15 +488,42 @@
     });
   });
 
-  // Spotlight tracking (Aceternity flavor, additive)
-  document.querySelectorAll('.card, .project-card, article').forEach(cell => {
-    cell.addEventListener('mousemove', (e) => {
-      const rect = cell.getBoundingClientRect();
-      cell.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-      cell.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+  // Count-up stats
+  const statObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count, dur = 1400, t0 = performance.now();
+      const tick = (t) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + (target >= 100 ? '+' : '');
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      statObs.unobserve(el);
     });
-  });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.stat .n').forEach(el => statObs.observe(el));
 
+  // Sparkles canvas (Aceternity sparkles adaptation)
+  const canvas = document.getElementById('sparkles'), ctx = canvas.getContext('2d');
+  let W, H; const DOTS = [];
+  function resize() { W = canvas.width = canvas.parentElement.offsetWidth; H = canvas.height = canvas.parentElement.offsetHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i = 0; i < 40; i++) DOTS.push({ x: Math.random(), y: Math.random() * 0.6, r: Math.random() * 1.6 + 0.4, s: Math.random() * 0.0004 + 0.0001, o: Math.random() * 0.7 + 0.2 });
+  function sparkleLoop(t) {
+    ctx.clearRect(0, 0, W, H);
+    for (const d of DOTS) {
+      d.y -= d.s; if (d.y < 0) d.y = 1;
+      ctx.globalAlpha = d.o * (0.6 + 0.4 * Math.sin(t / 700 + d.x * 100));
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath(); ctx.arc(d.x * W, d.y * H, d.r, 0, 7); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!reducedMotion) requestAnimationFrame(sparkleLoop);
+  }
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reducedMotion) requestAnimationFrame(sparkleLoop);
 </script>
 </body>
 </html>
