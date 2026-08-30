@@ -49,7 +49,7 @@
   .links a:hover { color:var(--text); }
   @media (max-width:768px){ .links{display:none;} }
 
-  /* ---- HERO with photo ---- */
+  /* ---- HERO (no photo) ---- */
   .hero {
     min-height: 100dvh; display:flex; flex-direction:column; align-items:center; justify-content:center;
     text-align:center; padding:120px 24px 60px; position:relative;
@@ -58,23 +58,6 @@
     font-size:13px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
     color:var(--accent); margin-bottom:28px;
   }
-  .photo-ring {
-    width: 200px; height: 200px; border-radius: 50%; padding: 3px; margin: 0 auto 32px;
-    background: conic-gradient(from 0deg, #0a84ff, #30d158, #bf5af2, #ff9f0a, #0a84ff);
-    animation: ring-rotate 8s linear infinite;
-    position: relative;
-  }
-  .photo-ring::after {
-    content:""; position:absolute; inset:-8px; border-radius:50%;
-    background: radial-gradient(circle, rgba(10,132,255,0.25), transparent 65%);
-    z-index:-1; animation: ring-glow 3s ease-in-out infinite;
-  }
-  .photo-ring img {
-    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display:block;
-    border: 6px solid var(--bg);
-  }
-  @keyframes ring-rotate { to { transform: rotate(360deg); } }
-  @keyframes ring-glow { 0%,100% { opacity:.4; } 50% { opacity:1; } }
   .hero h1 {
     font-size: clamp(46px, 8vw, 92px); font-weight:750; letter-spacing:-0.035em; line-height:1.02;
     background: linear-gradient(180deg,#fff 55%,#86868b);
@@ -204,6 +187,11 @@
   .contact-card h2 { position:relative; z-index:1; font-size:clamp(34px,5vw,50px); font-weight:750; letter-spacing:-0.025em; }
   .contact-card p { position:relative; z-index:1; color:var(--text-2); margin:16px auto 36px; max-width:500px; }
   .contact-cta { position:relative; z-index:1; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .contact-photo { position:relative; z-index:1; margin: 28px auto 0; }
+  .contact-photo img {
+    width: 120px; height: 120px; border-radius: 50%;
+    object-fit: cover; border: 2px solid var(--line); display:block; margin: 0 auto;
+  }
 
   footer { padding:40px 32px 48px; text-align:center; color:var(--text-3); font-size:13px;
     border-top:1px solid var(--line); max-width:1200px; margin:0 auto; }
@@ -212,7 +200,7 @@
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .btn-wrap::before,.photo-ring,.photo-ring::after,.cell.flash::before{animation:none;}
+    .btn-wrap::before,.cell.flash::before{animation:none;}
     .reveal{opacity:1;transform:none;transition:none;}
     .cell:hover{transform:none;}
   }
@@ -235,9 +223,6 @@
 <header class="hero">
   <canvas id="sparkles"></canvas>
   <div class="eyebrow">Technical Operations &amp; Applied AI</div>
-  <div class="photo-ring">
-    <img src="avatar.jpg" alt="Stefan Yasin">
-  </div>
   <h1>Stefan Yasin</h1>
   <p class="sub">Technical solutions that move real-world operations.</p>
   <p class="tag">From factory floors to fleet telematics, the systems that keep industrial and automotive businesses running, measured, and automated.</p>
@@ -463,6 +448,9 @@
       <div class="btn-wrap"><a class="btn btn-primary" href="mailto:StefanYasin@gmail.com">Email Me</a></div>
       <a class="btn-ghost" href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a>
       <a class="btn-ghost" href="https://linkedin.com/in/stefanyasin" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="contact-photo">
+      <img src="avatar.jpg" alt="Stefan Yasin">
     </div>
   </div>
 </section>
