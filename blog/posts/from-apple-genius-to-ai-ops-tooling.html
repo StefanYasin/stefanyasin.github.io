@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Apple Genius to building AI ops tooling - Stefan Yasin</title>
+<meta name="description" content="Explaining tech to humans in 2014 turned out to be the same skill as building systems that explain themselves in 2026.">
+<meta property="og:title" content="From Apple Genius to building AI ops tooling">
+<meta property="og:description" content="Explaining tech to humans in 2014 turned out to be the same skill as building systems that explain themselves in 2026.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Career</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>From Apple Genius to building AI ops tooling</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 30, 2026</span><span>~5 min read</span></p>
+
+      <div class="prose">
+        <p>In 2014 I stood behind the Genius Bar at Apple, explaining to people why their laptop was slow in words that didn't make their eyes glaze over. In 2026 I write code that explains itself to the person who needs to act. The job didn't change. The delivery system did.</p>
+
+        <h2>The through-line: translation</h2>
+        <p>Every role I've held has been the same career wearing different uniforms. Front-line support, technical advisor, marketing consultant, operations lead, now AI-assisted tooling. The common thread is <strong>translation</strong>: taking something complex and making it understandable and actionable for the person who owns the problem.</p>
+        <ul>
+          <li><strong>Apple (2014):</strong> a customer with a slow laptop doesn't want a lecture, they want a decision they can act on with confidence. De-escalation and plain language, under pressure, on a busy retail floor.</li>
+          <li><strong>Technical advisor:</strong> turning engineering constraints into product decisions that front-line staff could execute and document.</li>
+          <li><strong>Operations lead (2023-2025):</strong> cutting incident response from hours to minutes with monitoring that routes the right alert to the right person. Same translation, different medium.</li>
+          <li><strong>Now:</strong> endpointwatch turns raw process and connection telemetry into plain-English alerts. The LLM isn't there to look modern. It's there so the person on call knows <em>why</em> they're being paged.</li>
+        </ul>
+
+        <h2>Why this matters for customer-facing roles</h2>
+        <p>Technical depth is table stakes in operations. What gets remembered is whether you could make a non-technical stakeholder understand the situation fast enough to act. That's the skill hiring managers are really screening for, and it's the one that compounds: every explanation you've ever given makes the next one faster.</p>
+
+        <h2>What the AI layer actually changed</h2>
+        <p>It didn't replace the explanation. It made it scalable. A system that watches a hundred endpoints and writes a readable summary for each incident is a translator that never gets tired. The operator's job becomes judgment, not spelunking.</p>
+        <p>That's why my current work is split between infrastructure and applied AI: the infrastructure keeps running, and the AI layer makes sure the humans involved understand what it's doing. Same instinct as the Genius Bar, twenty years later, running on my own hardware instead of someone else's.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Career</span><span class="tag">Customer success</span><span class="tag">AI ops</span><span class="tag">Technical communication</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

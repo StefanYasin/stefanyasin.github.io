@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://stefanyasin.github.io/</loc><lastmod>2026-08-30</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/</loc><lastmod>2026-08-30</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html</loc><lastmod>2026-08-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html</loc><lastmod>2026-08-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html</loc><lastmod>2026-08-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/case-studies/</loc><lastmod>2026-08-28</lastmod><priority>0.8</priority></url>
+  <url><loc>https://stefanyasin.github.io/case-studies/endpointwatch.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+  <url><loc>https://stefanyasin.github.io/case-studies/rackpulse.html</loc><lastmod>2026-08-28</lastmod><priority>0.7</priority></url>
+</urlset>

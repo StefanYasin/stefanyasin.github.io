@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Stefan Yasin - Writing</title>
+  <subtitle>Field notes on technical operations, infrastructure, and applied AI.</subtitle>
+  <link href="https://stefanyasin.github.io/feed.xml" rel="self"/>
+  <link href="https://stefanyasin.github.io/blog/"/>
+  <id>https://stefanyasin.github.io/</id>
+  <updated>2026-08-30T00:00:00Z</updated>
+  <author><name>Stefan Yasin</name><email>StefanYasin@gmail.com</email></author>
+  <entry>
+    <title>What a $0 home lab taught me about enterprise ops</title>
+    <link href="https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html</id>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <summary>Break things on purpose so production stays boring: the cost discipline, failure modes, and transferable lessons of running a lab on leftovers.</summary>
+  </entry>
+  <entry>
+    <title>From Apple Genius to building AI ops tooling</title>
+    <link href="https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html</id>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <summary>Explaining tech to humans in 2014 turned out to be the same skill as building systems that explain themselves in 2026.</summary>
+  </entry>
+  <entry>
+    <title>Why I open-source my monitoring tools</title>
+    <link href="https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html</id>
+    <updated>2026-08-30T00:00:00Z</updated>
+    <summary>Abandoned tools, fake claims, and why MIT with an honest README beats marketing. What open source actually gets you when nobody is watching.</summary>
+  </entry>
+  <entry>
+    <title>How I cut incident response from hours to minutes</title>
+    <link href="https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html</id>
+    <updated>2026-08-28T00:00:00Z</updated>
+    <summary>Collect, enrich, route, escalate. How I rebuilt alerting across a multi-site manufacturing operation.</summary>
+  </entry>
+  <entry>
+    <title>Backporting modern health monitoring onto 2016-era servers</title>
+    <link href="https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html</id>
+    <updated>2026-08-28T00:00:00Z</updated>
+    <summary>A testable decision core behind a thin hardware layer: rackpulse on old Dell PowerEdge and ESXi 6.7.</summary>
+  </entry>
+  <entry>
+    <title>Running an AI-assisted ops stack on a near-zero budget</title>
+    <link href="https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html</id>
+    <updated>2026-08-28T00:00:00Z</updated>
+    <summary>Three tools that talk to each other beat eight that don't. The agent stack my job hunt and my lab run on.</summary>
+  </entry>
+  <entry>
+    <title>The solar-powered lab that simulates a data center</title>
+    <link href="https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html</id>
+    <updated>2026-08-28T00:00:00Z</updated>
+    <summary>A 40GbE backbone, whole-home automation, and why the lab is the best interview prep I know.</summary>
+  </entry>
+</feed>

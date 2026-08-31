@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What a $0 home lab taught me about enterprise ops - Stefan Yasin</title>
+<meta name="description" content="Break things on purpose so production stays boring: the cost discipline, failure modes, and transferable lessons of running a lab on leftovers.">
+<meta property="og:title" content="What a $0 home lab taught me about enterprise ops">
+<meta property="og:description" content="Break things on purpose so production stays boring: the cost discipline, failure modes, and transferable lessons of a lab built on leftovers.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Homelab</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>What a $0 home lab taught me about enterprise ops</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Aug 30, 2026</span><span>~5 min read</span></p>
+
+      <div class="prose">
+        <p>Some people spend thousands of dollars on a home lab. Mine is built from leftovers, decommissioned hardware, and open-source software, and the bill rounds to zero. As it turns out, the zero is the point: a lab that has to stay cheap teaches you the cost discipline that enterprise ops rarely gets to practice.</p>
+
+        <h2>The lab is where I practice, production is where I perform</h2>
+        <p>Production is where you learn to be careful. The lab is where you learn what happens when careful isn't enough. Every failure mode I've ever met in a server room, I first met at 11pm in the basement: a host that won't respond, a switch that silently drops frames, a backup that says it succeeded but restores nothing. Each one cost me a Saturday and taught me more than any course.</p>
+
+        <h2>Cost discipline is a skill, not a constraint</h2>
+        <p>My lab runs on <strong>solar</strong> power and hardware that was already in the building. That means every problem gets solved with what's on hand, not with a purchase order. That constraint is a feature. The question "can we afford this?" turns into "what does this actually need?", and the answer is usually less than you think. In a business, that muscle saves serious money. The same discipline runs through everything I build: the monitoring stack is self-hosted, the AI layer runs on cheap models, the whole portfolio site is static with zero frameworks.</p>
+
+        <h2>The lessons that transfer</h2>
+        <ul>
+          <li><strong>If you can't break it, you don't own it.</strong> The ability to destroy something safely is the prerequisite for knowing how it works.</li>
+          <li><strong>Old hardware is honest.</strong> Modern platforms hide the fundamentals. Legacy gear doesn't, so you learn the real behavior of storage, IO, and thermal limits.</li>
+          <li><strong>Cheap forces clarity.</strong> When you can't buy a tool, you either fix the process or build the tool. Both are better outcomes than buying one.</li>
+          <li><strong>Self-hosting is a repeatable skill.</strong> DNS, certs, backups, monitoring, and power management are the same problems at any scale.</li>
+          <li><strong>Interview answers come from experience.</strong> When a hiring manager asks how I'd handle a failing host, I answer from the last time one failed on me. Theory is cheap; history isn't.</li>
+        </ul>
+
+        <h2>The whole house is the lab</h2>
+        <p>The rack is the core, but the lab extends into every room: lighting, climate, security, and media automated through <strong>Home Assistant</strong> with Z-Wave and Zigbee on a mesh network, all solar-supported. Running a facility, any facility, means managing power, environmental conditions, and a fleet of devices that weren't designed to talk to each other. Same muscle as a server room, warmer coffee.</p>
+
+        <p>None of this is a flex. It's a method: run the hard parts at home, and bring the lessons to work. The best part is that after 20+ years, I still find new ways to break things, and that's exactly why I keep doing it.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Homelab</span><span class="tag">Ops</span><span class="tag">Cost discipline</span><span class="tag">Solar</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
