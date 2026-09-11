@@ -4,6 +4,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stefan Yasin — Technical Operations & Applied AI</title>
+<meta name="description" content="Technical operations, IT infrastructure, and applied AI. 20+ years across manufacturing IT, networking, and industrial automation. Open to senior roles, remote or GTA.">
+<link rel="canonical" href="https://stefanyasin.github.io/">
+<meta name="author" content="Stefan Yasin">
+<meta name="theme-color" content="#050505">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<!-- Icons -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- Social cards -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stefan Yasin">
+<meta property="og:url" content="https://stefanyasin.github.io/">
+<meta property="og:title" content="Stefan Yasin — Technical Operations & Applied AI">
+<meta property="og:description" content="20+ years keeping the systems businesses run on working: infrastructure, networking, industrial automation, and applied AI. Open to senior roles, remote or GTA.">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stefan Yasin — Technical Operations & Applied AI">
+<meta name="twitter:description" content="20+ years keeping the systems businesses run on working. Open to senior roles, remote or GTA.">
+<meta name="twitter:image" content="https://stefanyasin.github.io/og.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://stefanyasin.github.io/#person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "image": "https://stefanyasin.github.io/avatar.jpg",
+      "jobTitle": "Technical Operations and Applied AI Consultant",
+      "email": "mailto:StefanYasin@gmail.com",
+      "telephone": "+1-416-735-1899",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hamilton",
+        "addressRegion": "ON",
+        "addressCountry": "CA"
+      },
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ],
+      "knowsAbout": [
+        "Technical operations",
+        "IT infrastructure",
+        "Network engineering",
+        "Industrial automation",
+        "PLC and SCADA systems",
+        "Systems monitoring and alerting",
+        "Applied AI and workflow automation",
+        "Virtualization and homelab infrastructure",
+        "Backup and recovery"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://stefanyasin.github.io/#service",
+      "name": "Stefan Yasin Technical Operations Consulting",
+      "url": "https://stefanyasin.github.io/",
+      "founder": { "@id": "https://stefanyasin.github.io/#person" },
+      "email": "mailto:StefanYasin@gmail.com",
+      "telephone": "+1-416-735-1899",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hamilton",
+        "addressRegion": "ON",
+        "addressCountry": "CA"
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Hamilton, Ontario" },
+        { "@type": "AdministrativeArea", "name": "Greater Toronto Area" },
+        { "@type": "AdministrativeArea", "name": "Southern Ontario" },
+        { "@type": "Place", "name": "Remote (Canada and United States)" }
+      ],
+      "availableLanguage": "en",
+      "priceRange": "$$",
+      "serviceType": [
+        "Technical operations",
+        "IT infrastructure",
+        "Systems monitoring and alerting",
+        "Industrial automation support",
+        "Applied AI and workflow automation",
+        "Custom tooling and open-source utilities"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Infrastructure and network operations" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Monitoring, alerting, and incident response" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Industrial systems and PLC/SCADA support" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI and workflow automation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom tooling and open-source utilities" } }
+        ]
+      }
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://stefanyasin.github.io/#page",
+      "url": "https://stefanyasin.github.io/",
+      "about": { "@id": "https://stefanyasin.github.io/#person" },
+      "mainEntity": { "@id": "https://stefanyasin.github.io/#person" }
+    }
+  ]
+}
+</script>
 <style>
   :root {
     --bg: #050505;
@@ -212,6 +322,23 @@
     .reveal{opacity:1;transform:none;transition:none;}
     .cell:hover{transform:none;}
   }
+  /* ---- FAQ ---- */
+  .faq { max-width: 780px; margin: 0 auto; }
+  .faq details {
+    border:1px solid var(--line); border-radius:16px; background:var(--surface);
+    padding:18px 20px; margin-bottom:12px; transition:border-color .3s;
+  }
+  .faq details[open] { border-color: rgba(10,132,255,0.35); }
+  .faq summary {
+    cursor:pointer; font-weight:600; font-size:16px; color:var(--text);
+    list-style:none; display:flex; justify-content:space-between; gap:16px; align-items:center;
+  }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after { content:"+"; color:var(--accent); font-weight:600; font-size:19px; line-height:1; }
+  .faq details[open] summary::after { content:"-"; }
+  .faq p { color:var(--text-2); font-size:15px; margin-top:12px; }
+  .faq p a { color:var(--accent); text-decoration:none; }
+  .faq p a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -449,6 +576,84 @@
     <span class="chip">AI Workflows &amp; Automation</span>
   </div>
 </section>
+
+<section id="faq">
+  <div class="sec-head reveal">
+    <h2>Questions</h2>
+    <p>Straight answers before you reach out.</p>
+  </div>
+  <div class="faq reveal">
+    <details>
+      <summary>What kind of work do you take on?</summary>
+      <p>Technical operations and IT infrastructure work, applied AI and automation, and custom tooling. Recent examples: monitoring and alerting rebuilds, network design and cleanup, industrial systems support, and the glue code that connects them. Available for consulting, contract, or full-time roles.</p>
+    </details>
+    <details>
+      <summary>Are you open to full-time roles?</summary>
+      <p>Yes. Senior technical operations, customer success, service delivery, and field engineering. Remote, or onsite across the GTA and Southern Ontario. The full resume is at <a href="resume.pdf">stefanyasin.github.io/resume.pdf</a>.</p>
+    </details>
+    <details>
+      <summary>Do you work remotely?</summary>
+      <p>Remote first, onsite when it matters. Based in Hamilton, Ontario, working Eastern Time, and I travel for commissioning, cutovers, and site work.</p>
+    </details>
+    <details>
+      <summary>What does an engagement look like?</summary>
+      <p>It starts with the problem, not a platform. I map what is running, what breaks, and who gets woken up when it does. Then we fix the most expensive failure first: alerting that routes to one owner, a monitoring gap, or a manual process worth automating. Scoped in weeks, shipped in pieces, documented as it goes.</p>
+    </details>
+    <details>
+      <summary>Where can I see the work?</summary>
+      <p>Six maintained open-source tools on <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a>, <a href="case-studies/">written case studies</a>, and a <a href="blog/">blog</a> with the technical detail behind them.</p>
+    </details>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What kind of work do you take on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Technical operations and IT infrastructure work, applied AI and automation, and custom tooling. Recent examples: monitoring and alerting rebuilds, network design and cleanup, industrial systems support, and the glue code that connects them. Available for consulting, contract, or full-time roles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are you open to full-time roles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Senior technical operations, customer success, service delivery, and field engineering. Remote, or onsite across the GTA and Southern Ontario. The full resume is at stefanyasin.github.io/resume.pdf."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you work remotely?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Remote first, onsite when it matters. Based in Hamilton, Ontario, working Eastern Time, and I travel for commissioning, cutovers, and site work."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does an engagement look like?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It starts with the problem, not a platform. I map what is running, what breaks, and who gets woken up when it does. Then we fix the most expensive failure first: alerting that routes to one owner, a monitoring gap, or a manual process worth automating. Scoped in weeks, shipped in pieces, documented as it goes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I see the work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Six maintained open-source tools on GitHub, written case studies, and a blog with the technical detail behind them."
+      }
+    }
+  ]
+}
+</script>
 
 <section id="contact">
   <div class="contact-card reveal">
