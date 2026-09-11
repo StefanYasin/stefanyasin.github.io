@@ -72,6 +72,14 @@
 
   /* Sparkles (Aceternity sparkles — canvas) */
   #sparkles { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+
+  /* 3D hero topology (three.js, vendored — takes over when WebGL is available) */
+  #hero3d {
+    position:absolute; inset:0; width:100%; height:100%; z-index:0;
+    pointer-events:none; opacity:0; transition:opacity 1.2s ease;
+  }
+  #hero3d.ready { opacity:1; }
+  @media (prefers-reduced-motion: reduce) { #hero3d { transition:none; } }
   .hero > * { position:relative; z-index:1; }
 
   /* Moving Border button (Aceternity signature) */
@@ -223,6 +231,7 @@
 
 <header class="hero">
   <canvas id="sparkles"></canvas>
+  <canvas id="hero3d" aria-hidden="true"></canvas>
   <div class="eyebrow">Technical Operations &amp; Applied AI</div>
   <h1>Stefan Yasin</h1>
   <p class="sub">Technical solutions that move real-world operations.</p>
@@ -497,6 +506,7 @@
   // Sparkles canvas (Aceternity sparkles adaptation)
   const canvas = document.getElementById('sparkles'), ctx = canvas.getContext('2d');
   let W, H; const DOTS = [];
+  let sparkleActive = true;
   function resize() { W = canvas.width = canvas.parentElement.offsetWidth; H = canvas.height = canvas.parentElement.offsetHeight; }
   resize(); window.addEventListener('resize', resize);
   for (let i = 0; i < 40; i++) DOTS.push({ x: Math.random(), y: Math.random() * 0.6, r: Math.random() * 1.6 + 0.4, s: Math.random() * 0.0004 + 0.0001, o: Math.random() * 0.7 + 0.2 });
@@ -509,10 +519,27 @@
       ctx.beginPath(); ctx.arc(d.x * W, d.y * H, d.r, 0, 7); ctx.fill();
     }
     ctx.globalAlpha = 1;
-    if (!reducedMotion) requestAnimationFrame(sparkleLoop);
+    if (!reducedMotion && sparkleActive) requestAnimationFrame(sparkleLoop);
   }
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reducedMotion) requestAnimationFrame(sparkleLoop);
+
+  // If the 3D hero initialises, it takes over the backdrop and sparkles stand down.
+  window.__stopSparkles = function () {
+    sparkleActive = false;
+    ctx.clearRect(0, 0, W, H);
+    canvas.style.display = 'none';
+  };
+</script>
+<script type="module">
+  // Load the 3D hero after the page is interactive: keeps first paint fast,
+  // and if the import fails, the existing sparkles/backdrop simply stay.
+  const start3d = () => { import('./js/hero3d.js').catch(() => {}); };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(start3d, { timeout: 2500 });
+  } else {
+    window.addEventListener('load', () => setTimeout(start3d, 600));
+  }
 </script>
 </body>
 </html>
