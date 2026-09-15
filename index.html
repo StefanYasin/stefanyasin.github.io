@@ -6,6 +6,7 @@
 <title>Stefan Yasin — Technical Operations & Applied AI</title>
 <meta name="description" content="Technical operations, IT infrastructure, and applied AI. 20+ years across manufacturing IT, networking, and industrial automation. Open to senior roles, remote or GTA.">
 <link rel="canonical" href="https://stefanyasin.github.io/">
+<link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
 <meta name="author" content="Stefan Yasin">
 <meta name="theme-color" content="#050505">
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -322,6 +323,26 @@
     .reveal{opacity:1;transform:none;transition:none;}
     .cell:hover{transform:none;}
   }
+  /* ---- Availability line (open to work, plain and locatable) ---- */
+  .avail {
+    margin-top:26px; display:inline-flex; align-items:center; gap:9px; flex-wrap:wrap; justify-content:center;
+    font-size:12.5px; font-weight:500; letter-spacing:0.01em; color:var(--text-3);
+    border:1px solid var(--line); border-radius:100px; padding:8px 16px;
+    background:rgba(12,12,14,0.6);
+  }
+  .avail .dot {
+    width:7px; height:7px; border-radius:50%; background:var(--accent-2); flex:none;
+    box-shadow:0 0 0 0 rgba(48,209,88,0.6); animation:availPulse 2.4s infinite;
+  }
+  @keyframes availPulse {
+    0%   { box-shadow:0 0 0 0 rgba(48,209,88,0.55); }
+    70%  { box-shadow:0 0 0 7px rgba(48,209,88,0); }
+    100% { box-shadow:0 0 0 0 rgba(48,209,88,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .avail .dot { animation:none; } }
+  .avail a { color:var(--text-2); text-decoration:none; }
+  .avail a:hover { color:var(--text); }
+
   /* ---- FAQ ---- */
   .faq { max-width: 780px; margin: 0 auto; }
   .faq details {
@@ -352,6 +373,7 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="blog/index.html">Writing</a></li>
+    <li><a href="#faq">Questions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -363,6 +385,7 @@
   <h1>Stefan Yasin</h1>
   <p class="sub">Technical solutions that move real-world operations.</p>
   <p class="tag">From factory floors to fleet telematics, the systems that keep industrial and automotive businesses running, measured, and automated.</p>
+  <p class="avail"><span class="dot"></span>Hamilton, Ontario · Remote or onsite across the GTA · Open to senior operations, customer success, and field engineering roles</p>
   <div class="hero-cta">
     <div class="btn-wrap"><a class="btn" href="#work">View Work</a></div>
     <a class="btn-ghost" href="#contact">Get in touch</a>
@@ -548,7 +571,7 @@
       <div class="yrs">2021-2024</div>
     </div>
     <div class="row reveal">
-      <div><div class="co">Centum Home Loans</div><div class="role">Mortgage Agent</div></div>
+      <div><div class="co">Centum Total Mortgage Services Inc.</div><div class="role">Mortgage Agent</div></div>
       <div class="yrs">2016-2023</div>
     </div>
     <div class="row reveal">
