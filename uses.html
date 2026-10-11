@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
+<title>Uses - Stefan Yasin</title>
+<meta name="description" content="The hardware, software, and tooling Stefan Yasin runs day to day: servers and virtualization, networking, monitoring stack, PLC and industrial platforms, and the automation that ties it together.">
+<meta property="og:title" content="Uses - Stefan Yasin">
+<meta property="og:description" content="Servers, networking, monitoring, industrial platforms, and the automation stack behind the work.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stefanyasin.github.io/uses.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="css/site.css">
+<link rel="canonical" href="https://stefanyasin.github.io/uses.html">
+<link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+<link rel="alternate" type="application/feed+json" title="Stefan Yasin - Writing (JSON Feed)" href="https://stefanyasin.github.io/feed.json">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Uses",
+  "url": "https://stefanyasin.github.io/uses.html",
+  "description": "The hardware, software, and tooling Stefan Yasin runs day to day across operations, monitoring, and industrial systems.",
+  "isPartOf": { "@type": "WebSite", "url": "https://stefanyasin.github.io/", "name": "Stefan Yasin" },
+  "author": {
+    "@type": "Person",
+    "name": "Stefan Yasin",
+    "url": "https://stefanyasin.github.io/",
+    "sameAs": [
+      "https://github.com/StefanYasin",
+      "https://www.linkedin.com/in/stefanyasin/",
+      "https://orcid.org/0009-0004-3416-7447"
+    ]
+  },
+  "inLanguage": "en-CA"
+}
+</script>
+<link rel="stylesheet" href="css/palette.css">
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="blog/index.html">Writing</a></li>
+      <li><a href="now.html">Now</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cmdk-btn" type="button" data-cmdk-open aria-label="Search this site"><span>Search</span><kbd>&#8984;K</kbd></button>
+      <a class="pill" href="index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="index.html">Home</a> / <span>Uses</span></p>
+      <p class="eyebrow">Uses</p>
+      <h1>The stack I actually run</h1>
+      <p class="byline"><span>Updated October 11, 2026</span><span>No affiliate links, nothing sponsored</span></p>
+
+      <div class="prose">
+        <p>Everything here is in service of one thing: keeping systems observable and recoverable when nobody is standing in front of them. If a tool cannot be monitored, backed up, and restored, it does not earn a place.</p>
+
+        <h2>Servers and virtualization</h2>
+        <ul>
+          <li>Dell PowerEdge hardware, still earning its keep on ESXi 6.7 rather than being replaced</li>
+          <li>VMware ESXi for the hypervisor layer, with VMs split by job: monitoring, storage, automation</li>
+          <li>Kubernetes for the workloads that benefit from it, including the agents that scrape and report</li>
+          <li>Docker for everything that does not need an orchestrator</li>
+          <li>NAS storage with offsite replication, and restore drills that get run instead of assumed</li>
+        </ul>
+
+        <h2>Networking</h2>
+        <ul>
+          <li>Cisco switching and routing, racked and cabled by hand</li>
+          <li>40GbE backbone between the heavy hitters where the data actually moves</li>
+          <li>Tailscale for reaching the lab from anywhere without opening a port to the internet</li>
+          <li>Segmented networks for management, storage, and anything exposed</li>
+        </ul>
+
+        <h2>Monitoring and alerting</h2>
+        <ul>
+          <li>My own tooling, because the failure modes I care about are specific: <a href="https://github.com/StefanYasin/endpointwatch" target="_blank" rel="noopener">endpointwatch</a>, <a href="https://github.com/StefanYasin/rackpulse" target="_blank" rel="noopener">rackpulse</a>, <a href="https://github.com/StefanYasin/pinggrid" target="_blank" rel="noopener">pinggrid</a>, <a href="https://github.com/StefanYasin/restore-drill" target="_blank" rel="noopener">restore-drill</a></li>
+          <li>Severity tiers with one named owner per tier, and escalation that runs whether or not I am awake. The model is written up in <a href="blog/posts/alert-severity-that-people-respect.html">this post</a></li>
+          <li>An outside-in heartbeat, so silence itself becomes an alert when the lab is the thing that died</li>
+        </ul>
+
+        <h2>Industrial and control systems</h2>
+        <ul>
+          <li>PLC platforms: Siemens, Omron, Schneider, Delta, Lenze</li>
+          <li>SCADA and HMI: Siemens WinCC and comparable HMI panels</li>
+          <li>Injection and blow molding lines, cap lining, grinders, drives and robotics integration</li>
+          <li>Plant services as one system: natural gas, compressed air, water, electrical, HVAC and chillers</li>
+        </ul>
+
+        <h2>Software and scripting</h2>
+        <ul>
+          <li>Python for automation, scraping, and the glue between systems</li>
+          <li>PowerShell and Bash for the unglamorous work that has to be repeatable</li>
+          <li>Windows Server and Linux in the same rack, because operations reality is mixed</li>
+          <li>AI models as a component, not a product: summarising, classifying, and explaining what changed</li>
+        </ul>
+
+        <h2>Home and lab automation</h2>
+        <ul>
+          <li>Z-Wave and Home Assistant for lighting, sensors, and whole-home control</li>
+          <li>A solar-supported lab, which is the most direct way to learn what a power event does to a workload</li>
+          <li>ESP32 and CAN bus for the hardware-level work that pure software people skip</li>
+        </ul>
+
+        <h2>How this page stays honest</h2>
+        <p>Nothing on this page is an affiliate link and nothing is sponsored. If a tool leaves the stack, it leaves the page. Related reading: <a href="blog/posts/zero-dollar-homelab-enterprise-ops.html">what a $0 home lab taught me about enterprise ops</a>.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="index.html">Back to the portfolio</a></p>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="bmc-foot" href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a>
+    <a class="top" href="index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+<script src="js/palette.js" defer></script>
+</body>
+</html>

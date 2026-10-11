@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
 <meta name="robots" content="noindex, nofollow">
 <title>Stefan Yasin — Portfolio Preview</title>
 <style>
@@ -99,8 +100,10 @@
   .variant .cap { font-size:12.5px; color:var(--text-3); padding:0 16px; }
   @media (max-width: 800px) { .variant-grid { grid-template-columns: 1fr; } }
 </style>
+<link rel="stylesheet" href="css/palette.css">
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 
 <nav>
   <div class="nav-logo">Stefan Yasin</div>
@@ -110,6 +113,7 @@
     <li><a href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="mailto:StefanYasin@gmail.com">Contact</a></li>
   </ul>
+  <button class="cmdk-btn" type="button" data-cmdk-open aria-label="Search this site"><span>Search</span><kbd>&#8984;K</kbd></button>
 </nav>
 
 <header class="hero" id="hero">
@@ -153,5 +157,6 @@
   </div>
 </section>
 
+<script src="js/palette.js" defer></script>
 </body>
 </html>

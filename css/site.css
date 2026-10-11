@@ -436,3 +436,7 @@ body::before {
 /* ---- Buy me a coffee (footer link, all subpages) ---- */
 .bmc-foot { color: var(--accent); text-decoration: none; }
 .bmc-foot:hover { text-decoration: underline; }
+
+/* ---- Now / Uses footer links ---- */
+.foot-link { color: var(--muted); text-decoration: none; }
+.foot-link:hover { color: var(--text); }
