@@ -1,0 +1,79 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Stefan Yasin - Writing",
+  "home_page_url": "https://stefanyasin.github.io/",
+  "feed_url": "https://stefanyasin.github.io/feed.json",
+  "description": "Field notes on technical operations, infrastructure, and applied AI.",
+  "language": "en-CA",
+  "authors": [
+    {
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html",
+      "url": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html",
+      "title": "Alert severity that people actually respect",
+      "date_published": "2026-10-11T00:00:00Z",
+      "summary": "Most alerting systems have too many levels and no owners. The four-tier severity model I use, with ack windows and escalation timers."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html",
+      "url": "https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html",
+      "title": "Monitoring a homelab you cannot always reach",
+      "date_published": "2026-10-11T00:00:00Z",
+      "summary": "Silent failures cost the most. What to watch in a remote lab, what to ignore, and the outside-in heartbeat that catches a dead monitoring host."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html",
+      "url": "https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html",
+      "title": "What a $0 home lab taught me about enterprise ops",
+      "date_published": "2026-08-30T00:00:00Z",
+      "summary": "Break things on purpose so production stays boring: the cost discipline, failure modes, and transferable lessons of running a lab on leftovers."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html",
+      "url": "https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html",
+      "title": "From Apple Genius to building AI ops tooling",
+      "date_published": "2026-08-30T00:00:00Z",
+      "summary": "Explaining tech to humans in 2014 turned out to be the same skill as building systems that explain themselves in 2026."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html",
+      "url": "https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html",
+      "title": "Why I open-source my monitoring tools",
+      "date_published": "2026-08-30T00:00:00Z",
+      "summary": "Abandoned tools, fake claims, and why MIT with an honest README beats marketing. What open source actually gets you when nobody is watching."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html",
+      "url": "https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html",
+      "title": "How I cut incident response from hours to minutes",
+      "date_published": "2026-08-28T00:00:00Z",
+      "summary": "Collect, enrich, route, escalate. How I rebuilt alerting across a multi-site manufacturing operation."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html",
+      "url": "https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html",
+      "title": "Backporting modern health monitoring onto 2016-era servers",
+      "date_published": "2026-08-28T00:00:00Z",
+      "summary": "A testable decision core behind a thin hardware layer: rackpulse on old Dell PowerEdge and ESXi 6.7."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html",
+      "url": "https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html",
+      "title": "Running an AI-assisted ops stack on a near-zero budget",
+      "date_published": "2026-08-28T00:00:00Z",
+      "summary": "Three tools that talk to each other beat eight that don't. The agent stack my job hunt and my lab run on."
+    },
+    {
+      "id": "https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html",
+      "url": "https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html",
+      "title": "The solar-powered lab that simulates a data center",
+      "date_published": "2026-08-28T00:00:00Z",
+      "summary": "A 40GbE backbone, whole-home automation, and why the lab is the best interview prep I know."
+    }
+  ]
+}

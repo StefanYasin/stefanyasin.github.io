@@ -1,0 +1,105 @@
+/* Command palette, scroll progress, and view transitions.
+   Shared by every page. Token fallbacks keep it correct on the homepage (blue accent) and the blog (green). */
+:root {
+  --cmdk-accent: var(--accent, #0a84ff);
+  --cmdk-bg: var(--bg, #0b0f14);
+  --cmdk-surface: var(--surface, #11161d);
+  --cmdk-text: var(--text, #e6edf3);
+  --cmdk-muted: var(--muted, var(--text-2, #8b949e));
+  --cmdk-border: var(--border, var(--line, rgba(255,255,255,0.10)));
+}
+
+/* ---- nav trigger ---- */
+.cmdk-btn {
+  display: inline-flex; align-items: center; gap: 8px; margin-left: 18px;
+  padding: 7px 12px; border-radius: 999px; cursor: pointer;
+  font: 500 12.5px/1 var(--font-mono, "SF Mono", ui-monospace, monospace);
+  color: var(--cmdk-muted); background: transparent;
+  border: 1px solid var(--cmdk-border);
+  transition: color .2s ease, border-color .2s ease;
+}
+.cmdk-btn:hover { color: var(--cmdk-text); border-color: color-mix(in srgb, var(--cmdk-accent) 45%, transparent); }
+.cmdk-btn kbd {
+  font: inherit; padding: 2px 5px; border-radius: 5px;
+  background: color-mix(in srgb, var(--cmdk-text) 8%, transparent);
+  border: 1px solid var(--cmdk-border);
+}
+@media (max-width: 720px) { .cmdk-btn span { display: none; } }
+
+/* ---- palette ---- */
+html.cmdk-open { overflow: hidden; }
+.cmdk {
+  position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-start;
+  justify-content: center; padding: 12vh 16px 16px;
+  background: rgba(3, 5, 8, 0.62); backdrop-filter: blur(6px);
+  animation: cmdk-fade .16s ease;
+}
+@keyframes cmdk-fade { from { opacity: 0 } to { opacity: 1 } }
+.cmdk[hidden] { display: none; }
+.cmdk-card {
+  width: 100%; max-width: 620px; overflow: hidden;
+  background: var(--cmdk-surface); color: var(--cmdk-text);
+  border: 1px solid var(--cmdk-border); border-radius: 14px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+.cmdk-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--cmdk-border); }
+.cmdk-glyph { color: var(--cmdk-accent); font: 600 14px/1 var(--font-mono, ui-monospace, monospace); }
+.cmdk-input {
+  flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--cmdk-text); font-size: 15.5px; font-family: inherit;
+}
+.cmdk-input::placeholder { color: var(--cmdk-muted); }
+.cmdk-esc {
+  cursor: pointer; padding: 4px 8px; border-radius: 6px;
+  font: 500 11px/1 var(--font-mono, ui-monospace, monospace);
+  color: var(--cmdk-muted); background: transparent; border: 1px solid var(--cmdk-border);
+}
+.cmdk-esc:hover { color: var(--cmdk-text); }
+.cmdk-list { list-style: none; margin: 0; padding: 6px; max-height: 52vh; overflow-y: auto; }
+.cmdk-group {
+  padding: 9px 10px 5px; font: 500 10.5px/1 var(--font-mono, ui-monospace, monospace);
+  letter-spacing: .16em; text-transform: uppercase; color: var(--cmdk-muted);
+}
+.cmdk-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 12px; border-radius: 9px; cursor: pointer; font-size: 14.5px;
+}
+.cmdk-item.is-active { background: color-mix(in srgb, var(--cmdk-accent) 16%, transparent); }
+.cmdk-tag { font: 500 10px/1 var(--font-mono, ui-monospace, monospace); color: var(--cmdk-muted); }
+.cmdk-empty { padding: 16px 12px; color: var(--cmdk-muted); font-size: 14px; }
+.cmdk-foot {
+  display: flex; gap: 16px; padding: 10px 14px; margin: 0;
+  border-top: 1px solid var(--cmdk-border); color: var(--cmdk-muted); font-size: 11.5px;
+}
+.cmdk-toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 210;
+  padding: 11px 18px; border-radius: 999px; font-size: 13.5px;
+  background: var(--cmdk-surface); color: var(--cmdk-text);
+  border: 1px solid var(--cmdk-border); box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.cmdk-toast.out { opacity: 0; transform: translateX(-50%) translateY(8px); }
+
+/* ---- scroll progress (CSS only, no JS) ---- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 190;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--cmdk-accent), var(--accent-2, var(--accent, #30d158)));
+}
+@supports (animation-timeline: scroll()) {
+  .progress { animation: progress-grow linear; animation-timeline: scroll(root block); }
+  @keyframes progress-grow { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+}
+
+/* ---- view transitions ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  .brand, .logo { view-transition-name: site-mark; }
+  ::view-transition-old(site-mark), ::view-transition-new(site-mark) { animation-duration: .28s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmdk { animation: none; }
+  .cmdk-toast { transition: none; }
+  .progress { animation: none; transform: scaleX(1); opacity: .5; }
+}

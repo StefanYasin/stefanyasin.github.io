@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
 <title>Monitoring a homelab you cannot always reach - Stefan Yasin</title>
 <meta name="description" content="What to monitor in a homelab that lives behind a VPN: disks and SMART, temps, UPS state, backup age, and the outside-in heartbeat that notices when the monitoring host itself dies.">
 <meta property="og:title" content="Monitoring a homelab you cannot always reach">
@@ -59,8 +60,11 @@
   "inLanguage": "en-CA"
 }
 </script>
+<link rel="stylesheet" href="../../css/palette.css">
+<link rel="alternate" type="application/feed+json" title="Stefan Yasin - Writing (JSON Feed)" href="https://stefanyasin.github.io/feed.json">
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav">
@@ -75,6 +79,7 @@
       <li><a href="../../index.html#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
+      <button class="cmdk-btn" type="button" data-cmdk-open aria-label="Search this site"><span>Search</span><kbd>&#8984;K</kbd></button>
       <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
     </div>
@@ -143,6 +148,11 @@
   <div class="container foot">
     <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
     <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+
+    <a class="foot-link" href="../../now.html">Now</a>
+
+    <a class="foot-link" href="../../uses.html">Uses</a>
+
     <a class="bmc-foot" href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a>
     <a class="top" href="../../index.html">Home</a>
   </div>
@@ -167,5 +177,6 @@
   });
 })();
 </script>
+<script src="../../js/palette.js" defer></script>
 </body>
 </html>

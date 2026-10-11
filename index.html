@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="view-transition" content="same-origin">
 <title>Stefan Yasin — Technical Operations & Applied AI</title>
 <meta name="description" content="Technical operations, IT infrastructure, and applied AI. 20+ years across manufacturing IT, networking, and industrial automation. Open to senior roles, remote or GTA.">
 <link rel="canonical" href="https://stefanyasin.github.io/">
@@ -298,6 +299,17 @@
     transition:all .25s cubic-bezier(.16,1,.3,1); }
   .chip:hover { color:var(--text); border-color:rgba(255,255,255,0.22); transform:translateY(-2px); }
 
+  /* ---- Live stats strip (fed by a scheduled GitHub Action) ---- */
+  .live-strip { display:flex; flex-wrap:wrap; gap:14px; }
+  .live-cell { flex:1 1 165px; padding:20px 22px; border-radius:18px; background:rgba(255,255,255,0.04);
+    border:1px solid var(--line); transition:border-color .3s ease; }
+  .live-cell .n { font-size:26px; font-weight:720; letter-spacing:-0.02em; }
+  .live-cell .n a { color:inherit; text-decoration:none; }
+  .live-cell .n a:hover { color:var(--accent-2); }
+  .live-cell .l { font-size:11.5px; color:var(--text-3); text-transform:uppercase; letter-spacing:.09em; margin-top:4px; }
+  .live-note { flex:1 1 100%; margin:2px 0 0; font-family:"SF Mono",ui-monospace,monospace; font-size:12px; color:var(--text-3); }
+  .live-strip.is-live .live-cell { border-color:rgba(48,209,88,0.28); }
+
   /* ---- Buy me a coffee ---- */
   .bmc-wrap { position:relative; z-index:1; margin-top:30px; display:flex; flex-direction:column;
     align-items:center; gap:10px; }
@@ -378,8 +390,10 @@
   .faq p a { color:var(--accent); text-decoration:none; }
   .faq p a:hover { text-decoration:underline; }
 </style>
+<link rel="stylesheet" href="css/palette.css">
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 <div class="haze"></div>
 
 <nav>
@@ -393,6 +407,7 @@
     <li><a href="#faq">Questions</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="cmdk-btn" type="button" data-cmdk-open aria-label="Search this site"><span>Search</span><kbd>&#8984;K</kbd></button>
 </nav>
 
 <header class="hero">
@@ -470,6 +485,20 @@
       <div class="meta">Lead Gen · Automation</div>
       <a class="stretched" href="https://github.com/StefanYasin/nextdoor-lead-engine" target="_blank" rel="noopener" aria-label="View the Nextdoor Lead Engine project on GitHub"></a>
     </div>
+  </div>
+</section>
+
+<section id="live">
+  <div class="sec-head reveal">
+    <h2>Live from GitHub</h2>
+    <p>Real numbers, pulled from the GitHub API by a scheduled Action. No hand-typed achievements.</p>
+  </div>
+  <div class="live-strip reveal" id="liveStats" data-src="data/stats.json">
+    <div class="live-cell"><div class="n" data-live="publicTools">6</div><div class="l">Public tools</div></div>
+    <div class="live-cell"><div class="n" data-live="stars">&hellip;</div><div class="l">Stars</div></div>
+    <div class="live-cell"><div class="n" data-live="commits">&hellip;</div><div class="l">Commits, 12 mo</div></div>
+    <div class="live-cell"><div class="n"><a data-live-link="lastShip" href="https://github.com/StefanYasin" target="_blank" rel="noopener"><span data-live="lastShip">repos</span></a></div><div class="l">Last shipped</div></div>
+    <p class="live-note" data-live="stamp">Reads data/stats.json, refreshed daily by a scheduled GitHub Action.</p>
   </div>
 </section>
 
@@ -732,13 +761,13 @@
       <p class="bmc-note">Everything here is free: the tools, the writing, the code. Tips keep the lab running.</p>
     </div>
     <div class="contact-photo">
-      <img src="avatar.jpg" alt="Stefan Yasin">
+      <img src="avatar.jpg" alt="Stefan Yasin" width="120" height="120" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 Stefan Yasin · <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">github.com/StefanYasin</a> · <a href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a></p>
+  <p>© 2026 Stefan Yasin · <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">github.com/StefanYasin</a> · <a href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a> · <a href="now.html">Now</a> · <a href="uses.html">Uses</a></p>
 </footer>
 
 <script>
@@ -813,5 +842,7 @@
     window.addEventListener('load', () => setTimeout(start3d, 600));
   }
 </script>
+<script src="js/palette.js" defer></script>
+<script src="js/live-stats.js" defer></script>
 </body>
 </html>
