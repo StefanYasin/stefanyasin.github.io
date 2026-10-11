@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-10-11T15:32:44.730Z",
+  "user": "StefanYasin",
+  "publicTools": 5,
+  "repos": 7,
+  "stars": 1,
+  "commitsLast365": 37,
+  "lastShip": {
+    "repo": "restore-drill",
+    "url": "https://github.com/StefanYasin/restore-drill",
+    "date": "2026-10-11T15:21:13Z",
+    "message": "docs: add author footer with portfolio link"
+  },
+  "topRepos": [
+    {
+      "name": "eagleeye2",
+      "url": "https://github.com/StefanYasin/eagleeye2",
+      "stars": 1,
+      "language": "Python",
+      "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
+      "pushedAt": "2026-10-11T15:21:04Z"
+    },
+    {
+      "name": "restore-drill",
+      "url": "https://github.com/StefanYasin/restore-drill",
+      "stars": 0,
+      "language": "Shell",
+      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
+      "pushedAt": "2026-10-11T15:21:14Z"
+    },
+    {
+      "name": "rackpulse",
+      "url": "https://github.com/StefanYasin/rackpulse",
+      "stars": 0,
+      "language": "Python",
+      "description": "Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7 — backports modern host/hardware health onto old enterprise gear.",
+      "pushedAt": "2026-10-11T15:21:11Z"
+    },
+    {
+      "name": "pinggrid",
+      "url": "https://github.com/StefanYasin/pinggrid",
+      "stars": 0,
+      "language": "Python",
+      "description": "Lightweight network monitoring dashboard — ping sweeps, port scans, and instant alerts from one terminal view.",
+      "pushedAt": "2026-10-11T15:21:08Z"
+    },
+    {
+      "name": "endpointwatch",
+      "url": "https://github.com/StefanYasin/endpointwatch",
+      "stars": 0,
+      "language": "Python",
+      "description": "Live-response endpoint monitor for Windows: watches processes, connections, and persistence, enriched with VirusTotal + AbuseIPDB and plain-English LLM alerts.",
+      "pushedAt": "2026-10-11T15:21:06Z"
+    }
+  ]
+}
