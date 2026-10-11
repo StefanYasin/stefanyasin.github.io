@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alert severity that people actually respect - Stefan Yasin</title>
+<meta name="description" content="Most alerting systems have too many levels and no owners. This is the four-tier severity model I use, with ack windows, escalation timers, and the anti-patterns that cause alert fatigue.">
+<meta property="og:title" content="Alert severity that people actually respect">
+<meta property="og:description" content="Most alerting systems have too many levels and no owners. The four-tier severity model I use, with ack windows and escalation timers.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+<link rel="canonical" href="https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html">
+<link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Alert severity that people actually respect",
+  "description": "Most alerting systems have too many levels and no owners. This is the four-tier severity model I use, with ack windows, escalation timers, and the anti-patterns that cause alert fatigue.",
+  "url": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html",
+  "image": "https://stefanyasin.github.io/og.png",
+  "datePublished": "2026-10-11",
+  "dateModified": "2026-10-11",
+  "author": {
+    "@type": "Person",
+    "name": "Stefan Yasin",
+    "url": "https://stefanyasin.github.io/",
+    "sameAs": [
+      "https://github.com/StefanYasin",
+      "https://www.linkedin.com/in/stefanyasin/",
+      "https://orcid.org/0009-0004-3416-7447"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Stefan Yasin",
+    "url": "https://stefanyasin.github.io/",
+    "sameAs": [
+      "https://github.com/StefanYasin",
+      "https://www.linkedin.com/in/stefanyasin/",
+      "https://orcid.org/0009-0004-3416-7447"
+    ]
+  },
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Stefan Yasin - Writing",
+    "url": "https://stefanyasin.github.io/blog/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html"
+  },
+  "inLanguage": "en-CA"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Alert severity</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>Alert severity that people actually respect</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Oct 11, 2026</span><span>~7 min read</span></p>
+
+      <div class="prose">
+        <p>Every alerting system I have inherited had the same problem: too many severity levels, and no agreement on what they meant. One tool called a disk warning critical. Another called a production line fault a notice. The person on call learned to distrust all of it, which is the only rational response to a system that cries wolf.</p>
+
+        <p>Severity is not a label you attach to an event. It is a decision about who gets interrupted, and for how long you are willing to let something sit. Once I started treating it that way, the number of levels collapsed to four and the arguments stopped.</p>
+
+        <p>I wrote about the wider pipeline in <a href="incident-response-hours-to-minutes.html">how I cut incident response from hours to minutes</a>. This post is the part people ask about most: the severity model itself.</p>
+
+        <h2>Start with the interruption, not the event</h2>
+        <p>The question is never "how bad is this event". It is "who needs to stop what they are doing, right now, because of this". That reframes everything. A dead disk in a replicated array is not the same event as a dead disk on a single point of failure, even though the monitoring tool reports both the same way.</p>
+
+        <h2>The four tiers</h2>
+        <p>Four levels is enough for a mid-sized operation. More than that and people stop remembering which is which.</p>
+
+        <table>
+          <thead>
+            <tr><th>Tier</th><th>What it means</th><th>Who gets it</th><th>How</th><th>Ack window</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>P1</td><td>Something is down or about to cause damage. Operations or safety affected now.</td><td>Named owner, then their backup</td><td>Page</td><td>15 minutes</td></tr>
+            <tr><td>P2</td><td>Degraded, but the business is still running. Will become P1 if ignored.</td><td>Named owner</td><td>Push or DM</td><td>Next business morning</td></tr>
+            <tr><td>P3</td><td>Needs a human decision eventually. Capacity, wear, licence, documentation drift.</td><td>Queue owner</td><td>Ticket or daily digest</td><td>Days</td></tr>
+            <tr><td>P4</td><td>Record it and move on. Nobody is interrupted, ever.</td><td>Nobody</td><td>Log and dashboard</td><td>None</td></tr>
+          </tbody>
+        </table>
+
+        <p>The P4 tier is the one people forget to create, and it is the most important release valve. Without a place for noise to go, noise lands in P1 and P2 and ruins them.</p>
+
+        <h2>Five rules that make the model hold</h2>
+        <h3>1. One owner per severity, by name</h3>
+        <p>Not a team, not a shared inbox, a person. A shared inbox means nobody owns it. If you cannot name who should act on an alert, the alert is not finished being designed.</p>
+
+        <h3>2. Severity comes from impact, not from the source system</h3>
+        <p>Normalize on the way in. A network switch alerting "critical" because a port flapped does not get to define critical. Your severity assignment happens at the pipeline layer, where you know what the device does for the business.</p>
+
+        <h3>3. Every tier has a different channel</h3>
+        <p>P1 pages. P2 pushes. P3 becomes a ticket. P4 is a dashboard nobody watches until they need it. If two tiers share a channel, they are one tier pretending to be two.</p>
+
+        <h3>4. Acknowledged is not resolved</h3>
+        <p>Track the two states separately. An alert acknowledged and then forgotten is worse than one that never got a response, because the system thinks it is handled. Wire a second timer to ack-without-resolution.</p>
+
+        <h3>5. Escalation is automatic and boring</h3>
+        <p>No ack in the window, the next person gets it. No drama, no manual chase. The escalation path is documentation, and it should work at 3am without you.</p>
+
+        <h2>Anti-patterns I have had to undo</h2>
+        <ul>
+          <li><strong>Severity inflation.</strong> Someone marks everything high because they want it noticed. Six months later every alert is high and none of them are.</li>
+          <li><strong>Alerting the whole team.</strong> Broadcasting is not ownership. It is a way of guaranteeing that the person who could fix it assumes someone else has it.</li>
+          <li><strong>Dashboard-as-alert.</strong> If it requires someone to be looking at a screen, it is a report, not an alert.</li>
+          <li><strong>Thresholds set from the vendor's default.</strong> Your disk, your temperature, your ack window. Defaults are a starting point for a conversation, not a policy.</li>
+          <li><strong>No quiet hours for the non-critical tiers.</strong> A P3 at 2am trains people to mute the channel that P1 needs.</li>
+        </ul>
+
+        <h2>Rolling it out in a week</h2>
+        <p>You do not need a migration project for this. In practice: inventory every alert source and write down who would act on each one today. Anything with no answer goes to P4 until someone claims it. Then assign tiers by impact, set the ack windows, and run in shadow mode for a week so people can see what would have paged them. Only then turn paging on.</p>
+
+        <p>The measure of success is not fewer alerts. It is that when the phone buzzes, the person who picks it up believes it matters. That belief is the whole system.</p>
+
+        <p>If you want the operational end of this, the tooling I built for it is open source: <a href="../../case-studies/endpointwatch.html">endpointwatch</a> watches endpoints and explains what changed in plain English, and <a href="../../case-studies/rackpulse.html">rackpulse</a> does the same for older server hardware.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Alerting</span><span class="tag">Severity</span><span class="tag">On-call</span><span class="tag">Ops</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="bmc-foot" href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
