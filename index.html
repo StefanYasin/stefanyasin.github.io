@@ -286,12 +286,29 @@
   .row .yrs { color:var(--text-3); font-size:13px; white-space:nowrap; font-family:"SF Mono",ui-monospace,monospace; }
   @media (max-width:768px){ .row{ flex-direction:column; gap:6px; } }
 
+  /* ---- Experience groups ---- */
+  .exp-group { font-family:"SF Mono",ui-monospace,monospace; font-size:11.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--text-3); margin:38px 0 4px; }
+  .exp .exp-group:first-child { margin-top:0; }
+
   /* ---- Chips ---- */
   .chips { display:flex; flex-wrap:wrap; gap:10px; max-width:760px; }
   .chip { padding:10px 20px; border-radius:999px; font-size:13.5px; font-weight:520;
     color:var(--text-2); background:rgba(255,255,255,0.05); border:1px solid var(--line);
     transition:all .25s cubic-bezier(.16,1,.3,1); }
   .chip:hover { color:var(--text); border-color:rgba(255,255,255,0.22); transform:translateY(-2px); }
+
+  /* ---- Buy me a coffee ---- */
+  .bmc-wrap { position:relative; z-index:1; margin-top:30px; display:flex; flex-direction:column;
+    align-items:center; gap:10px; }
+  .bmc-btn { display:inline-flex; align-items:center; gap:10px; padding:13px 24px; border-radius:999px;
+    background:#ffdd00; color:#0b0b0c; font-weight:650; font-size:14.5px; text-decoration:none;
+    border:1px solid rgba(0,0,0,0.12);
+    transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease; }
+  .bmc-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(255,221,0,0.18); }
+  .bmc-btn svg { width:18px; height:18px; }
+  .bmc-note { color:var(--text-3); font-size:12.5px; }
+  @media (prefers-reduced-motion: reduce){ .bmc-btn:hover{ transform:none; } }
 
   /* ---- Contact ---- */
   .contact-card {
@@ -562,10 +579,33 @@
     <p>A decade of hands-on work where industrial systems meet business outcomes.</p>
   </div>
   <div class="exp">
+    <p class="exp-group">Full-time roles</p>
     <div class="row reveal">
-      <div><div class="co">Innovopak</div><div class="role">IT, Networking &amp; BMS Operations Lead</div></div>
+      <div><div class="co">Innovopak Inc.</div><div class="role">IT, Networking &amp; BMS Operations Lead</div></div>
       <div class="yrs">2023-2025</div>
     </div>
+    <div class="row reveal">
+      <div><div class="co">Penquin Group of Canada Inc.</div><div class="role">Marketing Manager</div></div>
+      <div class="yrs">2016-2022</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">Innovopak Inc.</div><div class="role">Technical Advisor, CAD and instrumentation</div></div>
+      <div class="yrs">2015-2016</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">Apple</div><div class="role">Technical Support Specialist &amp; Apple Genius</div></div>
+      <div class="yrs">2014</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">TheLabsPhoto</div><div class="role">Project Manager, production</div></div>
+      <div class="yrs">2008-2012</div>
+    </div>
+    <div class="row reveal">
+      <div><div class="co">WhirlWind Labs</div><div class="role">Founder, systems and performance computing</div></div>
+      <div class="yrs">2006</div>
+    </div>
+
+    <p class="exp-group">Concurrent, licensed and self-employed</p>
     <div class="row reveal">
       <div><div class="co">One Percent Realty</div><div class="role">Real Estate Agent</div></div>
       <div class="yrs">2021-2024</div>
@@ -575,8 +615,8 @@
       <div class="yrs">2016-2023</div>
     </div>
     <div class="row reveal">
-      <div><div class="co">WhirlWind Labs</div><div class="role">Founder, systems and performance computing</div></div>
-      <div class="yrs">2006</div>
+      <div><div class="co">Exclaim Digital Media Inc.</div><div class="role">Marketing Consultant</div></div>
+      <div class="yrs">2012-2023</div>
     </div>
   </div>
 </section>
@@ -687,6 +727,10 @@
       <a class="btn-ghost" href="https://github.com/StefanYasin" target="_blank" rel="noopener">GitHub</a>
       <a class="btn-ghost" href="https://linkedin.com/in/stefanyasin" target="_blank" rel="noopener">LinkedIn</a>
     </div>
+    <div class="bmc-wrap">
+      <a class="bmc-btn" href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/><path d="M16 9.5h1.4a2.5 2.5 0 0 1 0 5H16"/><path d="M7.5 4.2c0 .9-.9 1.3-.9 2.2M11.2 4.2c0 .9-.9 1.3-.9 2.2"/></svg> Buy me a coffee</a>
+      <p class="bmc-note">Everything here is free: the tools, the writing, the code. Tips keep the lab running.</p>
+    </div>
     <div class="contact-photo">
       <img src="avatar.jpg" alt="Stefan Yasin">
     </div>
@@ -694,7 +738,7 @@
 </section>
 
 <footer>
-  <p>© 2026 Stefan Yasin · <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">github.com/StefanYasin</a></p>
+  <p>© 2026 Stefan Yasin · <a href="https://github.com/StefanYasin" target="_blank" rel="noopener">github.com/StefanYasin</a> · <a href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a></p>
 </footer>
 
 <script>

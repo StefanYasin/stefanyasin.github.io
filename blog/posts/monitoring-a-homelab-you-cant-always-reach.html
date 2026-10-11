@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring a homelab you cannot always reach - Stefan Yasin</title>
+<meta name="description" content="What to monitor in a homelab that lives behind a VPN: disks and SMART, temps, UPS state, backup age, and the outside-in heartbeat that notices when the monitoring host itself dies.">
+<meta property="og:title" content="Monitoring a homelab you cannot always reach">
+<meta property="og:description" content="What to watch in a remote homelab: SMART, temps, UPS, backup age, and the outside-in heartbeat that catches a dead monitoring host.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html">
+<meta property="og:image" content="https://stefanyasin.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../css/site.css">
+<link rel="canonical" href="https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html">
+<link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Monitoring a homelab you cannot always reach",
+  "description": "What to monitor in a homelab that lives behind a VPN: disks and SMART, temps, UPS state, backup age, and the outside-in heartbeat that notices when the monitoring host itself dies.",
+  "url": "https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html",
+  "image": "https://stefanyasin.github.io/og.png",
+  "datePublished": "2026-10-11",
+  "dateModified": "2026-10-11",
+  "author": {
+    "@type": "Person",
+    "name": "Stefan Yasin",
+    "url": "https://stefanyasin.github.io/",
+    "sameAs": [
+      "https://github.com/StefanYasin",
+      "https://www.linkedin.com/in/stefanyasin/",
+      "https://orcid.org/0009-0004-3416-7447"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Stefan Yasin",
+    "url": "https://stefanyasin.github.io/",
+    "sameAs": [
+      "https://github.com/StefanYasin",
+      "https://www.linkedin.com/in/stefanyasin/",
+      "https://orcid.org/0009-0004-3416-7447"
+    ]
+  },
+  "isPartOf": {
+    "@type": "Blog",
+    "name": "Stefan Yasin - Writing",
+    "url": "https://stefanyasin.github.io/blog/"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html"
+  },
+  "inLanguage": "en-CA"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="../../index.html">Stefan Yasin</a>
+    <ul class="nav-links">
+      <li><a href="../../index.html#about">About</a></li>
+      <li><a href="../../index.html#experience">Experience</a></li>
+      <li><a href="../../index.html#skills">Skills</a></li>
+      <li><a href="../../index.html#projects">Projects</a></li>
+      <li><a href="../index.html">Writing</a></li>
+      <li><a href="../../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="pill" href="../../index.html#contact"><span class="dot" aria-hidden="true"></span>Open to work</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme"><span id="themeGlyph">&#9789;</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <article class="article">
+    <div class="container">
+      <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Homelab monitoring</span></p>
+      <p class="eyebrow">Blog</p>
+      <h1>Monitoring a homelab you cannot always reach</h1>
+      <p class="byline"><span>Stefan Yasin</span><span>Oct 11, 2026</span><span>~8 min read</span></p>
+
+      <div class="prose">
+        <p>The hard part of a homelab is not building it. It is being somewhere else when it breaks. A rack that is two rooms away while you are on a train is functionally the same as a data center two provinces away, except nobody else is watching it.</p>
+
+        <p>What follows is the monitoring setup I run, and the reasoning behind what I deliberately do not monitor. It assumes the lab is behind a VPN such as Tailscale, which is how I get to mine.</p>
+
+        <h2>What actually matters, in order</h2>
+        <p>Silent failures cost the most. Loud failures page you and you fix them. Silent failures wait until you need a backup that was never written.</p>
+
+        <h3>1. Storage, both today and in a year</h3>
+        <p>Free space is the obvious one, but it is the wrong signal on its own. What matters more is the trend and the drive's own health: reallocated sectors, pending sectors, and uncorrectable errors from SMART. A drive telling you it is dying is the single most useful alert in any lab. Capacity alerts belong at two thresholds, one that gives you weeks of runway and one that gives you days.</p>
+
+        <h3>2. Backup age, not backup status</h3>
+        <p>Every backup system reports success at the moment it runs. Almost none of them tell you the thing you actually need to know: how old the newest good copy is. Track age as a first-class metric and alert on it. If the newest backup is older than your acceptable window, that is the alert, and it is often the first sign that something upstream quietly stopped running.</p>
+
+        <h3>3. Thermal and power</h3>
+        <p>Server temperatures, ambient temperature, and UPS state. A UPS on battery is a countdown, not an outage: you want to know it is running on battery before the machine goes down, so you can shut things off in the right order. Power events also explain a whole class of mystery reboots that look like software faults.</p>
+
+        <h3>4. Reachability, from outside</h3>
+        <p>A ping from inside the network proves nothing about whether you can reach it from the train. The check that matters runs from somewhere else and asks the question you would ask: can I get in, and does a real service answer. A TCP handshake on the port you actually use beats an ICMP echo every time.</p>
+
+        <h2>What I do not alert on</h2>
+        <ul>
+          <li><strong>CPU spikes.</strong> A busy host doing its job. Alert on sustained saturation that affects a service, not on a number moving.</li>
+          <li><strong>Memory percentage.</strong> Unless the kernel is killing processes, high memory use is a healthy cache.</li>
+          <li><strong>A single failed check.</strong> Retry twice. One dropped packet is not an incident.</li>
+          <li><strong>Anything I cannot act on.</strong> If the only possible response at 2am is "wait", it belongs in tomorrow's digest.</li>
+        </ul>
+
+        <h2>The part most labs get wrong: who watches the watchman</h2>
+        <p>Your monitoring stack runs on the lab. When the lab loses power, the network drops, or the host itself dies, your monitoring goes quiet at exactly the moment you need it. Silence looks identical to healthy, and that is the failure mode that costs people weeks.</p>
+        <p>The fix is a heartbeat that lives outside: the lab checks in on a schedule, and something off-site notices when the check-ins stop. It is a small amount of code and it converts the worst failure mode into an ordinary alert. Run the heartbeat from a different provider than the one hosting the services you care about, so a single account problem cannot take both sides down.</p>
+
+        <h2>Getting alerts to a phone without a cloud bill</h2>
+        <p>Cloud notification services are fine, but for a lab you can do this for free and keep it private. A self-hosted push service, or a chat bot that forwards to your phone, gives you one channel per severity. Route the loud stuff to a channel that bypasses your phone's quiet hours, and send everything else in one morning digest. If every alert arrives the same way, people learn to ignore the channel, and then the important one goes missing too.</p>
+        <p>The other rule: alerts must not depend on the thing they are reporting on. Do not route the alert through the VPN that might be the thing that is down. Use the VPN for access from your devices, and a separate path for notifications.</p>
+
+        <h2>One page, five seconds</h2>
+        <p>After the alerting is right, build one view that answers "is everything fine" in five seconds: storage trend, newest backup age, temperatures, power status, and external reachability. Mine is the same idea I use at work, which is how I ended up open-sourcing <a href="../../case-studies/rackpulse.html">rackpulse</a> for older server hardware and <a href="../../case-studies/endpointwatch.html">endpointwatch</a> for what is happening on the endpoints themselves. Network reachability across a lab is what <a href="https://github.com/StefanYasin/pinggrid" target="_blank" rel="noopener">pinggrid</a> does.</p>
+
+        <p>More context on the lab itself is in <a href="zero-dollar-homelab-enterprise-ops.html">what a $0 home lab taught me about enterprise ops</a>, and the alerting design this all feeds into is in <a href="alert-severity-that-people-respect.html">alert severity that people actually respect</a>.</p>
+      </div>
+
+      <div class="post-footer">
+        <p><a href="../index.html">Back to all posts</a></p>
+        <div class="article-tags"><span class="tag">Homelab</span><span class="tag">Monitoring</span><span class="tag">Tailscale</span><span class="tag">Backups</span></div>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="container foot">
+    <p>&copy; 2026 Stefan Yasin. Static site. No trackers, no frameworks, no cookies.</p>
+    <p class="foot-status"><span class="dot" aria-hidden="true"></span> All systems operational</p>
+    <a class="bmc-foot" href="https://buymeacoffee.com/stefanthepro" target="_blank" rel="noopener">Buy me a coffee</a>
+    <a class="top" href="../../index.html">Home</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var stored = null;
+  try { stored = localStorage.getItem("theme"); } catch (e) {}
+  if (stored) document.documentElement.dataset.theme = stored;
+  var glyph = document.getElementById("themeGlyph");
+  var isDark = function () {
+    if (document.documentElement.dataset.theme) return document.documentElement.dataset.theme === "dark";
+    return !window.matchMedia("(prefers-color-scheme: light)").matches;
+  };
+  glyph.textContent = isDark() ? "\u2600" : "\u263E";
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    glyph.textContent = next === "dark" ? "\u2600" : "\u263E";
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -5,8 +5,22 @@
   <link href="https://stefanyasin.github.io/feed.xml" rel="self"/>
   <link href="https://stefanyasin.github.io/blog/"/>
   <id>https://stefanyasin.github.io/</id>
-  <updated>2026-08-30T00:00:00Z</updated>
+  <updated>2026-10-11T00:00:00Z</updated>
   <author><name>Stefan Yasin</name><email>StefanYasin@gmail.com</email></author>
+  <entry>
+    <title>Alert severity that people actually respect</title>
+    <link href="https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html</id>
+    <updated>2026-10-11T00:00:00Z</updated>
+    <summary>Most alerting systems have too many levels and no owners. The four-tier severity model I use, with ack windows and escalation timers.</summary>
+  </entry>
+  <entry>
+    <title>Monitoring a homelab you cannot always reach</title>
+    <link href="https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html</id>
+    <updated>2026-10-11T00:00:00Z</updated>
+    <summary>Silent failures cost the most. What to watch in a remote lab, what to ignore, and the outside-in heartbeat that catches a dead monitoring host.</summary>
+  </entry>
   <entry>
     <title>What a $0 home lab taught me about enterprise ops</title>
     <link href="https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html"/>
