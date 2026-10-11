@@ -6,7 +6,7 @@
   var src = strip.getAttribute("data-src") || "data/stats.json";
 
   function set(key, value) {
-    strip.querySelectorAll('[data-live="' + key + '"]').forEach(function (el) {
+    document.querySelectorAll('[data-live="' + key + '"]').forEach(function (el) {
       el.textContent = value;
     });
   }
@@ -28,7 +28,7 @@
       if (typeof d.commitsLast365 === "number") set("commits", String(d.commitsLast365));
       if (d.lastShip) {
         set("lastShip", d.lastShip.repo);
-        var link = strip.querySelector('[data-live-link="lastShip"]');
+        var link = document.querySelector('[data-live-link="lastShip"]');
         if (link && d.lastShip.url) link.setAttribute("href", d.lastShip.url);
       }
       if (d.generatedAt) set("stamp", "GitHub API, refreshed " + shortDate(d.generatedAt));
