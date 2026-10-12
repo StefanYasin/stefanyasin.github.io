@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-11T15:32:44.730Z",
+  "generatedAt": "2026-10-12T19:49:03.971Z",
   "user": "StefanYasin",
   "publicTools": 5,
   "repos": 7,
   "stars": 1,
-  "commitsLast365": 37,
+  "commitsLast365": 39,
   "lastShip": {
-    "repo": "restore-drill",
-    "url": "https://github.com/StefanYasin/restore-drill",
-    "date": "2026-10-11T15:21:13Z",
-    "message": "docs: add author footer with portfolio link"
+    "repo": "endpointwatch",
+    "url": "https://github.com/StefanYasin/endpointwatch",
+    "date": "2026-10-12T15:20:09Z",
+    "message": "ci: add GitHub Actions workflow (syntax + tests + packaging) (#8)"
   },
   "topRepos": [
     {
@@ -19,6 +19,14 @@
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
       "pushedAt": "2026-10-11T15:21:04Z"
+    },
+    {
+      "name": "endpointwatch",
+      "url": "https://github.com/StefanYasin/endpointwatch",
+      "stars": 0,
+      "language": "Python",
+      "description": "Live-response endpoint monitor for Windows: watches processes, connections, and persistence, enriched with VirusTotal + AbuseIPDB and plain-English LLM alerts.",
+      "pushedAt": "2026-10-12T15:20:12Z"
     },
     {
       "name": "restore-drill",
@@ -43,14 +51,6 @@
       "language": "Python",
       "description": "Lightweight network monitoring dashboard — ping sweeps, port scans, and instant alerts from one terminal view.",
       "pushedAt": "2026-10-11T15:21:08Z"
-    },
-    {
-      "name": "endpointwatch",
-      "url": "https://github.com/StefanYasin/endpointwatch",
-      "stars": 0,
-      "language": "Python",
-      "description": "Live-response endpoint monitor for Windows: watches processes, connections, and persistence, enriched with VirusTotal + AbuseIPDB and plain-English LLM alerts.",
-      "pushedAt": "2026-10-11T15:21:06Z"
     }
   ]
 }
