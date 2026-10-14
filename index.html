@@ -62,14 +62,20 @@
         "Applied AI and workflow automation",
         "Virtualization and homelab infrastructure",
         "Backup and recovery"
-      ]
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Sheridan College"
+      }
     },
     {
       "@type": "ProfessionalService",
       "@id": "https://stefanyasin.github.io/#service",
       "name": "Stefan Yasin Technical Operations Consulting",
       "url": "https://stefanyasin.github.io/",
-      "founder": { "@id": "https://stefanyasin.github.io/#person" },
+      "founder": {
+        "@id": "https://stefanyasin.github.io/#person"
+      },
       "email": "mailto:StefanYasin@gmail.com",
       "telephone": "+1-416-735-1899",
       "address": {
@@ -79,10 +85,22 @@
         "addressCountry": "CA"
       },
       "areaServed": [
-        { "@type": "AdministrativeArea", "name": "Hamilton, Ontario" },
-        { "@type": "AdministrativeArea", "name": "Greater Toronto Area" },
-        { "@type": "AdministrativeArea", "name": "Southern Ontario" },
-        { "@type": "Place", "name": "Remote (Canada and United States)" }
+        {
+          "@type": "AdministrativeArea",
+          "name": "Hamilton, Ontario"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Greater Toronto Area"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Southern Ontario"
+        },
+        {
+          "@type": "Place",
+          "name": "Remote (Canada and United States)"
+        }
       ],
       "availableLanguage": "en",
       "priceRange": "$$",
@@ -98,11 +116,41 @@
         "@type": "OfferCatalog",
         "name": "Services",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Infrastructure and network operations" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Monitoring, alerting, and incident response" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Industrial systems and PLC/SCADA support" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI and workflow automation" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom tooling and open-source utilities" } }
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Infrastructure and network operations"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Monitoring, alerting, and incident response"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Industrial systems and PLC/SCADA support"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "AI and workflow automation"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Custom tooling and open-source utilities"
+            }
+          }
         ]
       }
     },
@@ -110,8 +158,23 @@
       "@type": "ProfilePage",
       "@id": "https://stefanyasin.github.io/#page",
       "url": "https://stefanyasin.github.io/",
-      "about": { "@id": "https://stefanyasin.github.io/#person" },
-      "mainEntity": { "@id": "https://stefanyasin.github.io/#person" }
+      "about": {
+        "@id": "https://stefanyasin.github.io/#person"
+      },
+      "mainEntity": {
+        "@id": "https://stefanyasin.github.io/#person"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://stefanyasin.github.io/#website",
+      "url": "https://stefanyasin.github.io/",
+      "name": "Stefan Yasin",
+      "description": "Technical operations, IT infrastructure, and applied AI. Writing, case studies, and open-source tooling.",
+      "inLanguage": "en-CA",
+      "publisher": {
+        "@id": "https://stefanyasin.github.io/#person"
+      }
     }
   ]
 }
@@ -834,13 +897,20 @@
   };
 </script>
 <script type="module">
-  // Load the 3D hero after the page is interactive: keeps first paint fast,
-  // and if the import fails, the existing sparkles/backdrop simply stay.
-  const start3d = () => { import('./js/hero3d.js').catch(() => {}); };
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(start3d, { timeout: 2500 });
-  } else {
-    window.addEventListener('load', () => setTimeout(start3d, 600));
+  // The 3D hero pulls in ~640 KB of three.js. Load it after first paint, and only
+  // when it is worth the bytes: skip small screens, metered or 2G connections, and
+  // reduced-motion setups. The sparkles backdrop below stays as the fallback.
+  const conn = navigator.connection || {};
+  const metered = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
+  const wide = window.matchMedia('(min-width: 900px)').matches;
+  const calm = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (wide && calm && !metered) {
+    const start3d = () => { import('./js/hero3d.js').catch(() => {}); };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(start3d, { timeout: 2500 });
+    } else {
+      window.addEventListener('load', () => setTimeout(start3d, 600));
+    }
   }
 </script>
 <script src="js/palette.js" defer></script>

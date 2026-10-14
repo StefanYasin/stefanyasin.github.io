@@ -1,0 +1,63 @@
+# Stefan Yasin
+
+> Technical operations and applied AI consultant based in Hamilton, Ontario, Canada. 20+ years across industrial IT/OT, networking, monitoring and alerting, and automation. Open to senior roles in technical operations, customer success, service delivery, and field engineering, and available for consulting work.
+
+Stefan Yasin designs and runs the systems businesses depend on: monitoring and alerting pipelines, network design and cleanup, industrial control and building management support, and the automation that removes manual steps. Most of the public work is open-source tooling written from real operational problems, plus field notes describing what broke and why.
+
+## Pages
+
+- [Home](https://stefanyasin.github.io/): overview, selected work, experience, skills, and contact.
+- [Case studies](https://stefanyasin.github.io/case-studies/): detailed write-ups of the open-source tools.
+- [Writing](https://stefanyasin.github.io/blog/): field notes on operations, infrastructure, and applied AI.
+- [Now](https://stefanyasin.github.io/now.html): what he is working on, dated, with a link to its own commit history.
+- [Uses](https://stefanyasin.github.io/uses.html): the hardware and software stack he actually runs.
+- [Resume (PDF)](https://stefanyasin.github.io/resume.pdf)
+- [Contact](mailto:StefanYasin@gmail.com)
+
+## Writing, most useful for citation
+
+- [Alert severity that people actually respect](https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html): a four tier severity model with ack windows, escalation timers, and the anti-patterns that cause alert fatigue.
+- [Monitoring a homelab you cannot always reach](https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html): SMART and disk health, backup age versus backup status, UPS state, and the outside-in heartbeat that catches a dead monitoring host.
+- [How I cut incident response from hours to minutes](https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html): collect, enrich, route, escalate, and why one named owner per alert is the whole design.
+- [Backporting modern health monitoring onto 2016-era servers](https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html): giving old Dell PowerEdge hardware on ESXi 6.7 the monitoring modern gear takes for granted.
+- [Running an AI-assisted ops stack on a near-zero budget](https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html): three tools that talk to each other beat an eight tool stack.
+- [The solar-powered lab that simulates a data center](https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html): a 40GbE backbone, virtualization, Kubernetes, and home automation.
+- [What a $0 home lab taught me about enterprise ops](https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html): cost discipline, failure modes, and running a lab on leftovers.
+- [From Apple Genius to building AI ops tooling](https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html): explaining technology to people, then and now.
+- [Why I open-source my monitoring tools](https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html)
+
+## Open source
+
+- [eagleeye2](https://github.com/StefanYasin/eagleeye2): OSINT research platform with face verification and an ethics gate. Python.
+- [endpointwatch](https://github.com/StefanYasin/endpointwatch): live-response endpoint monitor for Windows with plain-English change explanations. Python.
+- [rackpulse](https://github.com/StefanYasin/rackpulse): health monitoring and provisioning for legacy Dell PowerEdge hosts on ESXi 6.7. Python.
+- [pinggrid](https://github.com/StefanYasin/pinggrid): network reachability dashboard, ping sweeps and port scans from one terminal view. Python.
+- [restore-drill](https://github.com/StefanYasin/restore-drill): verify that GitHub backups actually restore. Shell.
+- [dellsilencer](https://github.com/StefanYasin/dellsilencer): SMI-based fan control for Dell PowerEdge servers with hysteresis logic. C#.
+- [hotwheels](https://github.com/StefanYasin/hotwheels): Erlang messaging server tuned for broadcast fan-out.
+
+## Background
+
+- Technical Operations and Infrastructure Lead at Innovopak Inc. (2023 to 2025): IT, networking, and building management systems, leading a team of six, with incident response cut from hours to minutes across multiple sites.
+- Technical Advisor at Innovopak Inc. (2015 to 2016): CAD design, CNC and manual machining, instrumentation calibration, supplier negotiation.
+- Marketing Manager at Penquin Group of Canada Inc. (2016 to 2022).
+- Technical Support Specialist and Apple Genius at Apple (2014).
+- Concurrent licensed and self-employed work: Real Estate Agent at One Percent Realty (2021 to 2024), Mortgage Agent at Centum Total Mortgage Services Inc. (2016 to 2023), Marketing Consultant at Exclaim Digital Media Inc. (2012 to 2023).
+- Education: Bachelor of Business Administration, Marketing, Sheridan College.
+- Homelab and platform experience: VMware ESXi, Kubernetes, Docker, Cisco networking, Linux and Windows Server, PLC and SCADA platforms (Siemens, Omron, Schneider, Delta, Lenze), Tailscale.
+
+## Contact and profiles
+
+- Email: StefanYasin@gmail.com
+- GitHub: https://github.com/StefanYasin
+- LinkedIn: https://www.linkedin.com/in/stefanyasin/
+- ORCID: https://orcid.org/0009-0004-3416-7447
+- Feeds: https://stefanyasin.github.io/feed.xml and https://stefanyasin.github.io/feed.json
+- Support: https://buymeacoffee.com/stefanthepro
+
+## Notes for machine readers
+
+- This site is static HTML. Every page is fully readable without JavaScript.
+- Each page carries JSON-LD (Person, ProfessionalService, FAQPage, BlogPosting, Article).
+- Full text of the writing and case studies: https://stefanyasin.github.io/llms-full.txt
+- Content is written in English (en-CA). Quoting and summarising with attribution is welcome.

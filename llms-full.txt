@@ -1,0 +1,1033 @@
+# Stefan Yasin: full text
+
+Everything published on https://stefanyasin.github.io, flattened to markdown for machine readers.
+Canonical index: https://stefanyasin.github.io/llms.txt
+
+
+---
+
+## Running an AI-assisted ops stack on a near-zero budget
+
+URL: https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html
+Published: 2026-08-28
+
+Home (../../index.html) / Writing (../index.html) / AI-assisted ops
+
+ Blog
+
+ 
+## Running an AI-assisted ops stack on a near-zero budget
+
+ Stefan YasinAug 28, 2026~5 min read
+
+ 
+ There's a pattern I keep seeing in the marketing world: people subscribe to eight tools because each one does one thing, and the stack quietly runs to $1,000 or $2,000 a month. The better pattern is older than software: you don't need eight tools, you need three tools that actually talk to each other. My ops stack follows that rule, and it costs almost nothing.
+
+ 
+### What the stack is
+
+ I run an agent-based automation layer on my own hardware: a local orchestrator with model access through cheap APIs, plus the monitoring tools I've built (endpointwatch (../../case-studies/endpointwatch.html), pinggrid (../../index.html#projects), rackpulse (../../case-studies/rackpulse.html)). Three layers, all talking to each other:
+
+ 
+ - Collect. The monitors watch servers, endpoints, and the network continuously, and emit structured events.
+
+ - Reason. An agent layer turns those events into plain-language assessments and actions. It's the difference between "port 443 down" and "the website is down, the certificate expires in 6 days, and here's who to call".
+
+ - Act. Scheduled pipelines handle the repetitive work: ingesting email into searchable notes, tracking application statuses, transcribing meeting and video content, generating daily digests.
+
+ 
+
+ 
+### What it costs
+
+ Near zero. Local models cover the private work, cheap API access covers the heavy lifting, and everything runs on hardware I already own. Compare that with the subscription stacks I see quoted in the same conversations, and the difference is two orders of magnitude, with better privacy: the sensitive stuff never leaves the building.
+
+ 
+### What it actually does for me
+
+ 
+ - My job hunt runs on it. Postings are scanned continuously, applications are tracked, cover letters and resumes are tailored per role from a master profile. The repetitive parts are automated; the judgment stays mine.
+
+ - My monitoring writes its own alerts. The LLM layer converts raw events into plain-English summaries, which is the difference between an alert that gets ignored and one that gets acted on.
+
+ - Email becomes a knowledge base. Incoming material is captured, filed, and searchable instead of sitting in an inbox.
+
+ - Content compounds. The same pipelines transcribe and summarize the material I read, so nothing I consume is wasted.
+
+ 
+
+ 
+### The lessons
+
+ 
+ - Integration beats inventory. Three tools that share state outperform eight tools that don't. Every subscription should justify its data flow, not just its feature list.
+
+ - Automation is a force multiplier for a solo operator. What I can't do is hire a team, so the stack works shifts I don't.
+
+ - Privacy is a feature of local-first. Running the reasoning layer locally means my data is mine, and in a customer-facing ops role that's a story worth telling.
+
+ - Cheap models are good enough for structured work. The frontier models are impressive, but most operational workloads are bounded tasks where a small model with the right context wins.
+
+ 
+
+ None of this is exotic. It's the same discipline as the incident-response post: collect everything, decide what matters, tell the person who can act. The only difference is that now the person who can act sometimes runs on my own hardware.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ AI opsAutomationLocal LLMsMCP
+
+
+---
+
+## Alert severity that people actually respect
+
+URL: https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html
+Published: 2026-10-11
+
+Home (../../index.html) / Writing (../index.html) / Alert severity
+
+ Blog
+
+ 
+## Alert severity that people actually respect
+
+ Stefan YasinOct 11, 2026~7 min read
+
+ 
+ Every alerting system I have inherited had the same problem: too many severity levels, and no agreement on what they meant. One tool called a disk warning critical. Another called a production line fault a notice. The person on call learned to distrust all of it, which is the only rational response to a system that cries wolf.
+
+ Severity is not a label you attach to an event. It is a decision about who gets interrupted, and for how long you are willing to let something sit. Once I started treating it that way, the number of levels collapsed to four and the arguments stopped.
+
+ I wrote about the wider pipeline in how I cut incident response from hours to minutes (incident-response-hours-to-minutes.html). This post is the part people ask about most: the severity model itself.
+
+ 
+### Start with the interruption, not the event
+
+ The question is never "how bad is this event". It is "who needs to stop what they are doing, right now, because of this". That reframes everything. A dead disk in a replicated array is not the same event as a dead disk on a single point of failure, even though the monitoring tool reports both the same way.
+
+ 
+### The four tiers
+
+ Four levels is enough for a mid-sized operation. More than that and people stop remembering which is which.
+
+ 
+ 
+ TierWhat it meansWho gets itHowAck window
+
+ 
+ 
+ P1Something is down or about to cause damage. Operations or safety affected now.Named owner, then their backupPage15 minutes
+
+ P2Degraded, but the business is still running. Will become P1 if ignored.Named ownerPush or DMNext business morning
+
+ P3Needs a human decision eventually. Capacity, wear, licence, documentation drift.Queue ownerTicket or daily digestDays
+
+ P4Record it and move on. Nobody is interrupted, ever.NobodyLog and dashboardNone
+
+ 
+ 
+
+ The P4 tier is the one people forget to create, and it is the most important release valve. Without a place for noise to go, noise lands in P1 and P2 and ruins them.
+
+ 
+### Five rules that make the model hold
+
+ 
+#### 1. One owner per severity, by name
+
+ Not a team, not a shared inbox, a person. A shared inbox means nobody owns it. If you cannot name who should act on an alert, the alert is not finished being designed.
+
+ 
+#### 2. Severity comes from impact, not from the source system
+
+ Normalize on the way in. A network switch alerting "critical" because a port flapped does not get to define critical. Your severity assignment happens at the pipeline layer, where you know what the device does for the business.
+
+ 
+#### 3. Every tier has a different channel
+
+ P1 pages. P2 pushes. P3 becomes a ticket. P4 is a dashboard nobody watches until they need it. If two tiers share a channel, they are one tier pretending to be two.
+
+ 
+#### 4. Acknowledged is not resolved
+
+ Track the two states separately. An alert acknowledged and then forgotten is worse than one that never got a response, because the system thinks it is handled. Wire a second timer to ack-without-resolution.
+
+ 
+#### 5. Escalation is automatic and boring
+
+ No ack in the window, the next person gets it. No drama, no manual chase. The escalation path is documentation, and it should work at 3am without you.
+
+ 
+### Anti-patterns I have had to undo
+
+ 
+ - Severity inflation. Someone marks everything high because they want it noticed. Six months later every alert is high and none of them are.
+
+ - Alerting the whole team. Broadcasting is not ownership. It is a way of guaranteeing that the person who could fix it assumes someone else has it.
+
+ - Dashboard-as-alert. If it requires someone to be looking at a screen, it is a report, not an alert.
+
+ - Thresholds set from the vendor's default. Your disk, your temperature, your ack window. Defaults are a starting point for a conversation, not a policy.
+
+ - No quiet hours for the non-critical tiers. A P3 at 2am trains people to mute the channel that P1 needs.
+
+ 
+
+ 
+### Rolling it out in a week
+
+ You do not need a migration project for this. In practice: inventory every alert source and write down who would act on each one today. Anything with no answer goes to P4 until someone claims it. Then assign tiers by impact, set the ack windows, and run in shadow mode for a week so people can see what would have paged them. Only then turn paging on.
+
+ The measure of success is not fewer alerts. It is that when the phone buzzes, the person who picks it up believes it matters. That belief is the whole system.
+
+ If you want the operational end of this, the tooling I built for it is open source: endpointwatch (../../case-studies/endpointwatch.html) watches endpoints and explains what changed in plain English, and rackpulse (../../case-studies/rackpulse.html) does the same for older server hardware.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ AlertingSeverityOn-callOps
+
+
+---
+
+## Backporting modern health monitoring onto 2016-era servers
+
+URL: https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html
+Published: 2026-08-28
+
+Home (../../index.html) / Writing (../index.html) / rackpulse
+
+ Blog
+
+ 
+## Backporting modern health monitoring onto 2016-era servers
+
+ Stefan YasinAug 28, 2026~5 min read
+
+ 
+ Enterprise hardware is supposed to be retired on a schedule. In the real world, a lot of it runs past its date because it still works, and because replacing it costs more than the budget allows. My lab is full of exactly that: Dell PowerEdge servers on VMware ESXi 6.7, an edition old enough that the modern monitoring story mostly passes it by. rackpulse (../../case-studies/rackpulse.html) is what I built to close that gap.
+
+ 
+### The problem with old gear isn't the gear
+
+ An ESXi 6.7 host from 2016 can serve workloads fine. What it can't do is tell you it's dying in useful ways. The vendor's own tooling for that vintage is either sunset, expensive, or both, and the community tools that filled the gap have a habit of going unmaintained. So you end up with servers that run for years, then fail with no warning, because nobody is watching the metrics that predict failure: temperatures creeping up, disks degrading, sensors going quiet.
+
+ 
+### The design: testable core, thin hardware layer
+
+ The first version of rackpulse made the classic mistake: hardware calls tangled up with decision logic, which meant every test needed a real server. I split it.
+
+ 
+ - core.py is the decision engine: pure functions and dataclasses that take sensor readings and return health states. It has no idea what a server is.
+
+ - esxi.py is a thin adapter that talks to the host and feeds readings into the core.
+
+ 
+ That split changed everything. The thresholds, the hysteresis, the escalation logic, all of it is unit-testable on any machine in seconds. The hardware layer is small enough to review by eye. When I added the AI provisioning agent, it plugged into the same core, so the tests covered it too.
+
+ 
+### Severity escalation is a feature
+
+ Early on I "fixed" a bug where a hot CPU triggered multiple alerts as it crossed thresholds. Then I realized the escalation was the point. A warning at 75°C and a critical at 90°C are different events with different owners and different responses. Multi-tier thresholds produce multi-tier alerts, and that's correct behavior, so now the tests assert it.
+
+ 
+### What the old gear taught me
+
+ 
+ - Hardware-adjacent code should be testable without hardware. If you can't test the decision logic on a laptop, you'll stop testing it.
+
+ - "Maintained alternative" is a real position. The tools that died left a gap, and a maintained fork of a good idea is genuinely valuable to people still running the same gear.
+
+ - Legacy gear keeps operating skills honest. Old hardware doesn't have the guardrails new platforms have. You learn the fundamentals, or the fundamentals teach you.
+
+ 
+
+ The same philosophy runs through the rest of my tooling: endpointwatch (../../case-studies/endpointwatch.html) for Windows endpoints, pinggrid (../../index.html#projects) for the network side. Collect, decide, act. Whether the thing being watched was built in 2016 or last week.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ ESXiDell PowerEdgeMonitoringHomelab
+
+
+---
+
+## From Apple Genius to building AI ops tooling
+
+URL: https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html
+Published: 2026-08-31
+
+Home (../../index.html) / Writing (../index.html) / Career
+
+ Blog
+
+ 
+## From Apple Genius to building AI ops tooling
+
+ Stefan YasinAug 30, 2026~5 min read
+
+ 
+ In 2014 I stood behind the Genius Bar at Apple, explaining to people why their laptop was slow in words that didn't make their eyes glaze over. In 2026 I write code that explains itself to the person who needs to act. The job didn't change. The delivery system did.
+
+ 
+### The through-line: translation
+
+ Every role I've held has been the same career wearing different uniforms. Front-line support, technical advisor, marketing consultant, operations lead, now AI-assisted tooling. The common thread is translation: taking something complex and making it understandable and actionable for the person who owns the problem.
+
+ 
+ - Apple (2014): a customer with a slow laptop doesn't want a lecture, they want a decision they can act on with confidence. De-escalation and plain language, under pressure, on a busy retail floor.
+
+ - Technical advisor: turning engineering constraints into product decisions that front-line staff could execute and document.
+
+ - Operations lead (2023-2025): cutting incident response from hours to minutes with monitoring that routes the right alert to the right person. Same translation, different medium.
+
+ - Now: endpointwatch turns raw process and connection telemetry into plain-English alerts. The LLM isn't there to look modern. It's there so the person on call knows why they're being paged.
+
+ 
+
+ 
+### Why this matters for customer-facing roles
+
+ Technical depth is table stakes in operations. What gets remembered is whether you could make a non-technical stakeholder understand the situation fast enough to act. That's the skill hiring managers are really screening for, and it's the one that compounds: every explanation you've ever given makes the next one faster.
+
+ 
+### What the AI layer actually changed
+
+ It didn't replace the explanation. It made it scalable. A system that watches a hundred endpoints and writes a readable summary for each incident is a translator that never gets tired. The operator's job becomes judgment, not spelunking.
+
+ That's why my current work is split between infrastructure and applied AI: the infrastructure keeps running, and the AI layer makes sure the humans involved understand what it's doing. Same instinct as the Genius Bar, twenty years later, running on my own hardware instead of someone else's.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ CareerCustomer successAI opsTechnical communication
+
+
+---
+
+## How I cut incident response from hours to minutes
+
+URL: https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html
+Published: 2026-08-28
+
+Home (../../index.html) / Writing (../index.html) / Incident response
+
+ Blog
+
+ 
+## How I cut incident response from hours to minutes
+
+ Stefan YasinAug 28, 2026~6 min read
+
+ 
+ From 2023 to 2025 I ran IT, networking, and building management system (BMS) operations for a plastics manufacturer with multiple sites, leading a team of six. When I started, a real incident could take hours to surface, and longer to reach the right person. The fix wasn't buying a fancier monitoring platform. It was deciding what each alert was worth, and who it should wake up.
+
+ 
+### The problem: everything was monitored, nothing was actionable
+
+ The systems were all being watched. Network gear had one tool, servers another, the BMS a third, production equipment a fourth. Every one of them could generate alerts. The result was the classic failure mode: because everything pinged everyone, nothing mattered to anyone. A chilled water fault on the BMS and a dead disk on a file server competed for the same attention. Response time was measured in hours because the signal was buried in noise.
+
+ 
+### The build: collect, enrich, route, escalate
+
+ I rebuilt the alerting pipeline in four layers. None of the layers were exotic. The design was the hard part, not the tooling.
+
+ 
+#### 1. Collect
+
+ One intake path for every source: network devices, VMware hosts, Windows servers, BMS controllers, and the production endpoints that mattered. If it could emit a status, it got a collector. This closed the gaps where things silently stopped being watched.
+
+ 
+#### 2. Enrich
+
+ Every event was tagged with context: which site, which system class, which service it affected, and a severity. A storage warning on a non-critical server and a production line controller fault are not the same event, and the pipeline stopped treating them like they were.
+
+ 
+#### 3. Route
+
+ Each severity had one owner. Operators got operational alerts. I got the ones that needed a decision. Management got a daily digest, not a 2am page. The rule that changed everything: an alert with no named owner is a dashboard, not an alert.
+
+ 
+#### 4. Escalate
+
+ If a critical alert wasn't acknowledged inside a defined window, it escalated up the chain automatically. Acknowledged but not resolved? Same thing. Escalation made the system honest: silence no longer meant "fine".
+
+ 
+### The result
+
+ Incident response went from hours to minutes. Not because alerts were faster, but because the right person saw the right alert the first time, with the context to act. The same design carried us through the decommissioning of one site and the commissioning of another, which is where this kind of discipline pays for itself: during a move, things break constantly, and you need to know which breaks matter.
+
+ 
+### Lessons that transfer anywhere
+
+ 
+ - Alert fatigue is the real enemy. More dashboards don't fix it. Routing and severity do.
+
+ - Name an owner for every alert. If you can't say who should act, you haven't finished building the alert.
+
+ - Escalation is a feature. Acknowledged-but-ignored is a state your system should track.
+
+ - Document the runbook before the crisis. The move taught me that the second value of monitoring is knowing what's normal, which you can't reconstruct under pressure.
+
+ - Monitoring is a people problem. The best pipeline fails if the on-call culture doesn't trust it.
+
+ 
+
+ I later open-sourced part of this philosophy in endpointwatch (../../case-studies/endpointwatch.html), a live-response endpoint monitor that watches processes, connections, and persistence and explains what changed in plain English. Same idea: collect everything, decide what matters, tell the person who can act.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ Incident responseMonitoringAlertingOps
+
+
+---
+
+## Monitoring a homelab you cannot always reach
+
+URL: https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html
+Published: 2026-10-11
+
+Home (../../index.html) / Writing (../index.html) / Homelab monitoring
+
+ Blog
+
+ 
+## Monitoring a homelab you cannot always reach
+
+ Stefan YasinOct 11, 2026~8 min read
+
+ 
+ The hard part of a homelab is not building it. It is being somewhere else when it breaks. A rack that is two rooms away while you are on a train is functionally the same as a data center two provinces away, except nobody else is watching it.
+
+ What follows is the monitoring setup I run, and the reasoning behind what I deliberately do not monitor. It assumes the lab is behind a VPN such as Tailscale, which is how I get to mine.
+
+ 
+### What actually matters, in order
+
+ Silent failures cost the most. Loud failures page you and you fix them. Silent failures wait until you need a backup that was never written.
+
+ 
+#### 1. Storage, both today and in a year
+
+ Free space is the obvious one, but it is the wrong signal on its own. What matters more is the trend and the drive's own health: reallocated sectors, pending sectors, and uncorrectable errors from SMART. A drive telling you it is dying is the single most useful alert in any lab. Capacity alerts belong at two thresholds, one that gives you weeks of runway and one that gives you days.
+
+ 
+#### 2. Backup age, not backup status
+
+ Every backup system reports success at the moment it runs. Almost none of them tell you the thing you actually need to know: how old the newest good copy is. Track age as a first-class metric and alert on it. If the newest backup is older than your acceptable window, that is the alert, and it is often the first sign that something upstream quietly stopped running.
+
+ 
+#### 3. Thermal and power
+
+ Server temperatures, ambient temperature, and UPS state. A UPS on battery is a countdown, not an outage: you want to know it is running on battery before the machine goes down, so you can shut things off in the right order. Power events also explain a whole class of mystery reboots that look like software faults.
+
+ 
+#### 4. Reachability, from outside
+
+ A ping from inside the network proves nothing about whether you can reach it from the train. The check that matters runs from somewhere else and asks the question you would ask: can I get in, and does a real service answer. A TCP handshake on the port you actually use beats an ICMP echo every time.
+
+ 
+### What I do not alert on
+
+ 
+ - CPU spikes. A busy host doing its job. Alert on sustained saturation that affects a service, not on a number moving.
+
+ - Memory percentage. Unless the kernel is killing processes, high memory use is a healthy cache.
+
+ - A single failed check. Retry twice. One dropped packet is not an incident.
+
+ - Anything I cannot act on. If the only possible response at 2am is "wait", it belongs in tomorrow's digest.
+
+ 
+
+ 
+### The part most labs get wrong: who watches the watchman
+
+ Your monitoring stack runs on the lab. When the lab loses power, the network drops, or the host itself dies, your monitoring goes quiet at exactly the moment you need it. Silence looks identical to healthy, and that is the failure mode that costs people weeks.
+
+ The fix is a heartbeat that lives outside: the lab checks in on a schedule, and something off-site notices when the check-ins stop. It is a small amount of code and it converts the worst failure mode into an ordinary alert. Run the heartbeat from a different provider than the one hosting the services you care about, so a single account problem cannot take both sides down.
+
+ 
+### Getting alerts to a phone without a cloud bill
+
+ Cloud notification services are fine, but for a lab you can do this for free and keep it private. A self-hosted push service, or a chat bot that forwards to your phone, gives you one channel per severity. Route the loud stuff to a channel that bypasses your phone's quiet hours, and send everything else in one morning digest. If every alert arrives the same way, people learn to ignore the channel, and then the important one goes missing too.
+
+ The other rule: alerts must not depend on the thing they are reporting on. Do not route the alert through the VPN that might be the thing that is down. Use the VPN for access from your devices, and a separate path for notifications.
+
+ 
+### One page, five seconds
+
+ After the alerting is right, build one view that answers "is everything fine" in five seconds: storage trend, newest backup age, temperatures, power status, and external reachability. Mine is the same idea I use at work, which is how I ended up open-sourcing rackpulse (../../case-studies/rackpulse.html) for older server hardware and endpointwatch (../../case-studies/endpointwatch.html) for what is happening on the endpoints themselves. Network reachability across a lab is what pinggrid (https://github.com/StefanYasin/pinggrid) does.
+
+ More context on the lab itself is in what a $0 home lab taught me about enterprise ops (zero-dollar-homelab-enterprise-ops.html), and the alerting design this all feeds into is in alert severity that people actually respect (alert-severity-that-people-respect.html).
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ HomelabMonitoringTailscaleBackups
+
+
+---
+
+## The solar-powered lab that simulates a data center
+
+URL: https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html
+Published: 2026-08-28
+
+Home (../../index.html) / Writing (../index.html) / Homelab
+
+ Blog
+
+ 
+## The solar-powered lab that simulates a data center
+
+ Stefan YasinAug 28, 2026~5 min read
+
+ 
+ People ask why I keep a full server rack at home when I've spent my career working on enterprise systems for a living. The honest answer: a home lab is the only place you get to break things on purpose. Production is where you learn to be careful. The lab is where you learn what happens when careful isn't enough, and it costs you a Saturday instead of a customer.
+
+ 
+### What's in it
+
+ 
+ - A full-size rack with a 40GbE fibre backbone bridged to 10GbE copper, so the network itself is a real networking problem, not a toy one.
+
+ - Dell PowerEdge servers on VMware ESXi, running the workloads: VMs, containers, and a Kubernetes cluster.
+
+ - Network-attached storage for the data layer, with the backup and restore discipline that production deserves (restore-drill (https://github.com/StefanYasin/restore-drill) exists because of this).
+
+ - A Cisco rack for the switching and routing fundamentals.
+
+ - Tailscale mesh with a VPS interlink, so I can reach the lab from anywhere on the planet, the same way distributed teams reach their infrastructure.
+
+ 
+
+ 
+### It's not just a basement rack
+
+ The lab is solar-supported, and it extends into every room of the house. Whole-home automation handles lighting, climate, security, and media through Home Assistant with Z-Wave and Zigbee devices on a mesh Wi-Fi network. That part matters more than it sounds: running a facility, any facility, means managing power, environmental conditions, and a fleet of devices that weren't designed to talk to each other. It's the same muscle as managing a server room, just with better coffee nearby.
+
+ 
+### What it's for
+
+ 
+ - Skills that stay sharp. ESXi, Docker, Kubernetes, VLANs, VPNs, storage, monitoring. Every one of these is a line on my resume because I run them at home, not because I read about them.
+
+ - Breaking things safely. The monitoring tools I open-source (rackpulse (../../case-studies/rackpulse.html), pinggrid (../../index.html#projects), endpointwatch (../../case-studies/endpointwatch.html)) were built to solve problems this lab actually had.
+
+ - Interview prep. When a hiring manager asks how I'd handle a failing host, a noisy network, or an alert that won't stop, I don't answer from theory. I answer from the last time it happened to me at 11pm on a Tuesday.
+
+ 
+
+ 
+### The lessons
+
+ 
+ - Simulate the hard parts. A lab that only does the easy things teaches you nothing. Put real switching, real storage, and real failure modes in it.
+
+ - Power is infrastructure. Solar support isn't a gimmick, it's an availability story. Same lesson as a UPS in a server room: the grid is a dependency, not a guarantee.
+
+ - Automation compounds. The whole-home layer runs the same pattern as my ops stack: collect, decide, act. The house is just another environment to operate.
+
+ - Run what you claim. Everything on my resume that can run at home, runs at home. It keeps claims honest, which is the whole point.
+
+ 
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ HomelabSolarSmart homeKubernetesESXi
+
+
+---
+
+## Why I open-source my monitoring tools
+
+URL: https://stefanyasin.github.io/blog/posts/why-i-open-source-my-monitoring-tools.html
+Published: 2026-08-31
+
+Home (../../index.html) / Writing (../index.html) / Open source
+
+ Blog
+
+ 
+## Why I open-source my monitoring tools
+
+ Stefan YasinAug 30, 2026~5 min read
+
+ 
+ My repos have zero stars. No marketing, no launch post, no audience. So when people ask why I bother open-sourcing at all, the honest answer is: because the category needs it, and because publishing proves things that prose can't.
+
+ 
+### The category is full of abandoned tools
+
+ Almost every monitoring tool I wanted to use for my setup was either dead, broken against modern systems, or a free trial of something that would cost more than the hardware it monitors. The pattern keeps repeating: a tool solves a real problem, the maintainer loses interest, and the community is left holding a repo with broken issues and open PRs. Being the maintained alternative is a real position. It's not glamorous and it's not funded, but it keeps useful software alive. That's the reason endpointwatch (../../case-studies/endpointwatch.html), rackpulse (https://github.com/StefanYasin/rackpulse), and pinggrid (https://github.com/StefanYasin/pinggrid) exist.
+
+ 
+### MIT is a trust statement
+
+ Security and monitoring tooling that isn't auditable isn't serious. A license that lets anyone read, modify, and reuse the code is the opening move of trust. If I'm going to watch your processes and connections, the code that does it should be open. Same reason I don't ship telemetry back to a server I control: the tool trusts no one, which is exactly what endpoint monitoring tools should look like.
+
+ 
+### Publishing forces honesty
+
+ There's a discipline to a public repo that a private script never gets: clear README, real license, versioned releases, tests that exist because someone might run them. The public commits make my claims checkable. When a README says "the maintained alternative in a field of abandoned tools", the badge, the commit history, and the release tags are all right there for anyone to verify. That's why the "no fake numbers" rule applies hard to my repos: zero stars is a fact, not a failure.
+
+ 
+### What it gets me (and what it doesn't)
+
+ 
+ - Proof of ability. A recruiter or hiring manager can look at the design decisions, the tests, and the changelog, not just the resume line.
+
+ - Evidence of the full loop. Design, build, document, release, maintain. That's the whole discipline on display.
+
+ - Dogfooding. My own infrastructure runs on the tools I ship. When something breaks, I fix it or I feel it.
+
+ - It won't make me famous. Zero stars still. The grind of gaining traction is a separate job, and the tools will earn it slowly or not at all.
+
+ 
+
+ 
+### The next step is the community's, not mine
+
+ The projects are MIT, documented, released, and tested. They're honest engines for the niches I actually work in: Windows endpoint monitoring, legacy PowerEdge health, and lightweight network visibility. If they find users, they'll earn stars the old-fashioned way. And if they don't, they were still worth building, because I use them every day.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ Open sourceMonitoringMITSecurity tooling
+
+
+---
+
+## What a $0 home lab taught me about enterprise ops
+
+URL: https://stefanyasin.github.io/blog/posts/zero-dollar-homelab-enterprise-ops.html
+Published: 2026-08-31
+
+Home (../../index.html) / Writing (../index.html) / Homelab
+
+ Blog
+
+ 
+## What a $0 home lab taught me about enterprise ops
+
+ Stefan YasinAug 30, 2026~5 min read
+
+ 
+ Some people spend thousands of dollars on a home lab. Mine is built from leftovers, decommissioned hardware, and open-source software, and the bill rounds to zero. As it turns out, the zero is the point: a lab that has to stay cheap teaches you the cost discipline that enterprise ops rarely gets to practice.
+
+ 
+### The lab is where I practice, production is where I perform
+
+ Production is where you learn to be careful. The lab is where you learn what happens when careful isn't enough. Every failure mode I've ever met in a server room, I first met at 11pm in the basement: a host that won't respond, a switch that silently drops frames, a backup that says it succeeded but restores nothing. Each one cost me a Saturday and taught me more than any course.
+
+ 
+### Cost discipline is a skill, not a constraint
+
+ My lab runs on solar power and hardware that was already in the building. That means every problem gets solved with what's on hand, not with a purchase order. That constraint is a feature. The question "can we afford this?" turns into "what does this actually need?", and the answer is usually less than you think. In a business, that muscle saves serious money. The same discipline runs through everything I build: the monitoring stack is self-hosted, the AI layer runs on cheap models, the whole portfolio site is static with zero frameworks.
+
+ 
+### The lessons that transfer
+
+ 
+ - If you can't break it, you don't own it. The ability to destroy something safely is the prerequisite for knowing how it works.
+
+ - Old hardware is honest. Modern platforms hide the fundamentals. Legacy gear doesn't, so you learn the real behavior of storage, IO, and thermal limits.
+
+ - Cheap forces clarity. When you can't buy a tool, you either fix the process or build the tool. Both are better outcomes than buying one.
+
+ - Self-hosting is a repeatable skill. DNS, certs, backups, monitoring, and power management are the same problems at any scale.
+
+ - Interview answers come from experience. When a hiring manager asks how I'd handle a failing host, I answer from the last time one failed on me. Theory is cheap; history isn't.
+
+ 
+
+ 
+### The whole house is the lab
+
+ The rack is the core, but the lab extends into every room: lighting, climate, security, and media automated through Home Assistant with Z-Wave and Zigbee on a mesh network, all solar-supported. Running a facility, any facility, means managing power, environmental conditions, and a fleet of devices that weren't designed to talk to each other. Same muscle as a server room, warmer coffee.
+
+ None of this is a flex. It's a method: run the hard parts at home, and bring the lessons to work. The best part is that after 20+ years, I still find new ways to break things, and that's exactly why I keep doing it.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ HomelabOpsCost disciplineSolar
+
+
+---
+
+## endpointwatch - Case Study
+
+URL: https://stefanyasin.github.io/case-studies/endpointwatch.html
+Published: 2026-08-28
+
+Home (../index.html) / Case studies (index.html) / endpointwatch
+
+ Case study
+
+ 
+## endpointwatch: endpoint monitoring that explains itself
+
+ Stefan YasinPython / psutil / VirusTotal / AbuseIPDB / LLM alerts
+
+ 
+ 
+### Overview
+
+ endpointwatch (https://github.com/StefanYasin/endpointwatch) is a live-response endpoint monitor for Windows. It watches processes, network connections, and persistence mechanisms, enriches what it finds with VirusTotal and AbuseIPDB lookups, and turns the result into plain-English alerts written by an LLM. It's the maintained alternative in a field of abandoned tools, MIT-licensed and built with Python and psutil.
+
+ 
+### The problem
+
+ Two gaps motivated it. First, the endpoint monitoring tools that used to fill this niche for small operators and homelab owners are largely dead: unmaintained, broken against modern Windows, or quietly turned into paid SaaS. Second, raw endpoint telemetry is noise to the person who has to act on it. A process spawning at 3am from a temp directory is significant, but only if someone connects that dot to the IP it's talking to and knows what either of them means.
+
+ 
+### How it works
+
+ 
+ - Watch. Continuously monitors running processes, active connections, and persistence points (services, scheduled tasks, startup entries) using psutil.
+
+ - Enrich. Suspicious indicators are checked against VirusTotal and AbuseIPDB, so a new connection to a known-bad IP or a hash with a threat score becomes an explicit fact, not a guess.
+
+ - Explain. An LLM layer converts the enriched event into a plain-English alert: what changed, why it matters, and what to check next. No dashboard spelunking required.
+
+ 
+
+ 
+### Design decisions
+
+ 
+ - "Maintained alternative" as a position. The category leader is abandoned. The README says so plainly, and the project positions itself as the maintained answer. Users running this class of tool are actively looking for that.
+
+ - Python and psutil. The stack is boring on purpose: ubiquitous, auditable, and runnable on any Windows box without a build chain.
+
+ - Windows-first. Endpoint monitoring pain is loudest on Windows desktops and servers in small shops. One platform, done properly, beats three platforms done poorly.
+
+ - LLM alerts as a feature, not a wrapper. The model isn't bolted on to look modern. It exists because the failure mode of raw alerts is alert fatigue, and plain-English context is the fix. That's the same lesson from my incident-response work: an alert that explains itself gets acted on.
+
+ - MIT license. Security tooling should be readable and reusable. Licensing it openly is part of the trust story.
+
+ 
+
+ 
+### Result
+
+ A self-hosted, zero-cloud endpoint monitor that turns raw telemetry into decisions. It runs on the same philosophy as the rest of my tooling: collect everything, decide what matters, tell the person who can act.
+
+ 
+ View the repository -> (https://github.com/StefanYasin/endpointwatch)  /  Related post: incident response (../blog/posts/incident-response-hours-to-minutes.html)
+
+ PythonEndpoint securityDFIRLLM alertsMIT
+
+
+---
+
+## Case Studies
+
+URL: https://stefanyasin.github.io/case-studies/index.html
+
+Case studies
+
+ 
+## How the tools were built
+
+ Deep dives on the projects: the problem each one solves, the design decisions, and what I'd do differently. Code is in the repositories; this is the reasoning behind it.
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ Featured
+ 
+ 
+#### endpointwatch: endpoint monitoring that explains itself (endpointwatch.html)
+
+ Processes, connections, and persistence on Windows, enriched with VirusTotal and AbuseIPDB, and turned into plain-English LLM alerts. The maintained alternative in a field of abandoned tools.
+
+ 
+
+ 
+
+ 
+ Featured
+ 
+ 
+#### rackpulse: modern health monitoring for 2016-era servers (rackpulse.html)
+
+ A testable decision core behind a thin hardware layer, backporting modern host and hardware health monitoring onto legacy Dell PowerEdge gear running ESXi 6.7.
+
+
+---
+
+## rackpulse - Case Study
+
+URL: https://stefanyasin.github.io/case-studies/rackpulse.html
+Published: 2026-08-28
+
+Home (../index.html) / Case studies (index.html) / rackpulse
+
+ Case study
+
+ 
+## rackpulse: modern health monitoring for 2016-era servers
+
+ Stefan YasinPython / ESXi / Dell PowerEdge / AI provisioning
+
+ 
+ 
+### Overview
+
+ rackpulse (https://github.com/StefanYasin/rackpulse) is a health monitoring and AI provisioning agent for legacy Dell PowerEdge servers running VMware ESXi 6.7. It backports the host and hardware health monitoring that modern platforms take for granted onto enterprise gear that's past its vendor's support window but still doing real work.
+
+ 
+### The problem
+
+ ESXi 6.7 hosts from the mid-2010s are everywhere, and they keep running because they're reliable. The problem is visibility. The tooling that used to watch this vintage is sunset, expensive, or abandoned, and the failure mode of old hardware is rarely sudden: temperatures climb, disks degrade, sensors go quiet. Without monitoring, those trends are invisible until something stops working.
+
+ 
+### The design: testable core, thin adapter
+
+ The architecture is the point of this project:
+
+ 
+ - core.py is a pure decision engine: dataclasses and functions that take sensor readings and return health states with severity. No hardware imports, no I/O, fully unit-testable on any machine.
+
+ - esxi.py is a thin adapter that talks to the host through pyVmomi and feeds readings into the core.
+
+ 
+ This split means the threshold logic, hysteresis, and escalation behavior are verified by tests that run in milliseconds, without a server in sight. The hardware layer is small enough to review by eye.
+
+ 
+### Key behaviors
+
+ 
+ - Multi-tier severity. A warning at one threshold and a critical at the next are distinct events with distinct owners. Escalation is asserted in tests, not treated as a bug to smooth over.
+
+ - AI provisioning agent. The agent plugs into the same core, so it inherits the same tested decision logic when it assesses host state and suggests provisioning actions.
+
+ - Legacy as a first-class citizen. The project is explicit about its target: old enterprise gear, kept honest by modern monitoring. That's a real niche with real users.
+
+ 
+
+ 
+### Design decisions
+
+ 
+ - Hardware-adjacent code must be testable without hardware. If the tests need a live server, they won't be run, and then the logic rots. This was the single most important decision in the project.
+
+ - One platform, deeply. ESXi 6.7 with Dell iDRAC hardware. Narrow scope, done properly.
+
+ - Homelab-first, production-relevant. Built against the same servers that run my workloads, so every feature is exercised by real use, not hypotheticals.
+
+ 
+
+ 
+### Result
+
+ Old servers with new visibility: temperature, disk, and host health trends that predict failure instead of reporting it. The same pattern, collect, decide, act, applied to the most stubborn hardware in the building.
+
+ 
+ View the repository -> (https://github.com/StefanYasin/rackpulse)  /  Related post: backporting monitoring (../blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html)
+
+ PythonESXiDell PowerEdgeMonitoringMIT
+
+
+---
+
+## Now
+
+URL: https://stefanyasin.github.io/now.html
+
+Home (index.html) / Now
+
+ Now
+
+ 
+## What I'm doing right now
+
+ Last updated: October 11, 2026history for this page (https://github.com/StefanYasin/stefanyasin.github.io/commits/main/now.html)
+
+ 
+ This page is a snapshot, not a feed. When it goes stale, the commit history above will show it, which is the honest version of a status page.
+
+ 
+### Open to work
+
+ Senior roles in technical operations, customer success, service delivery, and field engineering. Remote first, or onsite across the GTA and Southern Ontario. I am also taking consulting work in monitoring and alerting rebuilds, network design and cleanup, industrial systems support, and automation that removes a manual step.
+
+ 
+### Building
+
+ 
+ - endpointwatch (https://github.com/StefanYasin/endpointwatch) - live-response endpoint monitoring for Windows with plain-English change explanations.
+
+ - rackpulse (https://github.com/StefanYasin/rackpulse) - health monitoring and provisioning for older Dell PowerEdge hosts on ESXi 6.7.
+
+ - pinggrid (https://github.com/StefanYasin/pinggrid) - network reachability dashboard built for a terminal-first workflow.
+
+ - eagleeye2 (https://github.com/StefanYasin/eagleeye2) - OSINT research platform with a face verification layer and an ethics gate.
+
+ - This site - static, no trackers, and the numbers on the homepage are refreshed by a scheduled Action rather than typed by hand.
+
+ 
+
+ 
+### Studying
+
+ Offensive security, as a working operator rather than a collector of certificates. TryHackMe and HackTheBox labs are ongoing, and OSCP is in progress, not completed. That distinction matters and I keep it straight in anything I publish.
+
+ 
+### Writing
+
+ Field notes from real operations, roughly one deep post at a time. Recent pieces: alert severity that people actually respect (blog/posts/alert-severity-that-people-respect.html) and monitoring a homelab you cannot always reach (blog/posts/monitoring-a-homelab-you-cant-always-reach.html).
+
+ 
+### The lab
+
+ A rack that has to keep working while I am not standing in front of it: ESXi on older PowerEdge hardware, a NAS, a Kubernetes node, wired 40GbE between the heavy hitters, and Tailscale for access from anywhere. Tools and gear are listed on the uses page (uses.html).
+
+ 
+### Not doing
+
+ No crypto, no dropshipping, no growth-hacking experiments. If it does not make an operation measurably more reliable, it is not on the list.
+
+ 
+
+ 
+ Back to the portfolio (index.html)
+
+
+---
+
+## Uses
+
+URL: https://stefanyasin.github.io/uses.html
+
+Home (index.html) / Uses
+
+ Uses
+
+ 
+## The stack I actually run
+
+ Updated October 11, 2026No affiliate links, nothing sponsored
+
+ 
+ Everything here is in service of one thing: keeping systems observable and recoverable when nobody is standing in front of them. If a tool cannot be monitored, backed up, and restored, it does not earn a place.
+
+ 
+### Servers and virtualization
+
+ 
+ - Dell PowerEdge hardware, still earning its keep on ESXi 6.7 rather than being replaced
+
+ - VMware ESXi for the hypervisor layer, with VMs split by job: monitoring, storage, automation
+
+ - Kubernetes for the workloads that benefit from it, including the agents that scrape and report
+
+ - Docker for everything that does not need an orchestrator
+
+ - NAS storage with offsite replication, and restore drills that get run instead of assumed
+
+ 
+
+ 
+### Networking
+
+ 
+ - Cisco switching and routing, racked and cabled by hand
+
+ - 40GbE backbone between the heavy hitters where the data actually moves
+
+ - Tailscale for reaching the lab from anywhere without opening a port to the internet
+
+ - Segmented networks for management, storage, and anything exposed
+
+ 
+
+ 
+### Monitoring and alerting
+
+ 
+ - My own tooling, because the failure modes I care about are specific: endpointwatch (https://github.com/StefanYasin/endpointwatch), rackpulse (https://github.com/StefanYasin/rackpulse), pinggrid (https://github.com/StefanYasin/pinggrid), restore-drill (https://github.com/StefanYasin/restore-drill)
+
+ - Severity tiers with one named owner per tier, and escalation that runs whether or not I am awake. The model is written up in this post (blog/posts/alert-severity-that-people-respect.html)
+
+ - An outside-in heartbeat, so silence itself becomes an alert when the lab is the thing that died
+
+ 
+
+ 
+### Industrial and control systems
+
+ 
+ - PLC platforms: Siemens, Omron, Schneider, Delta, Lenze
+
+ - SCADA and HMI: Siemens WinCC and comparable HMI panels
+
+ - Injection and blow molding lines, cap lining, grinders, drives and robotics integration
+
+ - Plant services as one system: natural gas, compressed air, water, electrical, HVAC and chillers
+
+ 
+
+ 
+### Software and scripting
+
+ 
+ - Python for automation, scraping, and the glue between systems
+
+ - PowerShell and Bash for the unglamorous work that has to be repeatable
+
+ - Windows Server and Linux in the same rack, because operations reality is mixed
+
+ - AI models as a component, not a product: summarising, classifying, and explaining what changed
+
+ 
+
+ 
+### Home and lab automation
+
+ 
+ - Z-Wave and Home Assistant for lighting, sensors, and whole-home control
+
+ - A solar-supported lab, which is the most direct way to learn what a power event does to a workload
+
+ - ESP32 and CAN bus for the hardware-level work that pure software people skip
+
+ 
+
+ 
+### How this page stays honest
+
+ Nothing on this page is an affiliate link and nothing is sponsored. If a tool leaves the stack, it leaves the page. Related reading: what a $0 home lab taught me about enterprise ops (blog/posts/zero-dollar-homelab-enterprise-ops.html).
+
+ 
+
+ 
+ Back to the portfolio (index.html)
