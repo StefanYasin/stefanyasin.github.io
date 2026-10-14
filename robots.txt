@@ -1,4 +1,45 @@
+# Stefan Yasin - https://stefanyasin.github.io
+# Everything here is public and citation-friendly. AI crawlers are explicitly welcome.
+
 User-agent: *
 Allow: /
 
+# Answer engines and assistants
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://stefanyasin.github.io/sitemap.xml
+# Machine-readable index: https://stefanyasin.github.io/llms.txt

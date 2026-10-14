@@ -1,0 +1,27 @@
+name: IndexNow submit
+
+# Tells Bing (and Yandex, Seznam, Naver) that the site changed, so new pages are
+# crawled in hours instead of weeks. Bing's index feeds Microsoft Copilot and a
+# large part of ChatGPT's web grounding.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Submit URLs
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: node scripts/indexnow.mjs
