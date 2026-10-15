@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-14T15:11:05.599Z",
+  "generatedAt": "2026-10-15T15:03:35.428Z",
   "user": "StefanYasin",
   "publicTools": 5,
   "repos": 7,
   "stars": 1,
-  "commitsLast365": 39,
+  "commitsLast365": 58,
   "lastShip": {
     "repo": "endpointwatch",
     "url": "https://github.com/StefanYasin/endpointwatch",
-    "date": "2026-10-12T15:20:09Z",
-    "message": "ci: add GitHub Actions workflow (syntax + tests + packaging) (#8)"
+    "date": "2026-10-15T07:09:12Z",
+    "message": "chore: bump version to 1.1.0 (#10)"
   },
   "topRepos": [
     {
@@ -26,23 +26,7 @@
       "stars": 0,
       "language": "Python",
       "description": "Live-response endpoint monitor for Windows: watches processes, connections, and persistence, enriched with VirusTotal + AbuseIPDB and plain-English LLM alerts.",
-      "pushedAt": "2026-10-12T15:20:12Z"
-    },
-    {
-      "name": "restore-drill",
-      "url": "https://github.com/StefanYasin/restore-drill",
-      "stars": 0,
-      "language": "Shell",
-      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
-      "pushedAt": "2026-10-11T15:21:14Z"
-    },
-    {
-      "name": "rackpulse",
-      "url": "https://github.com/StefanYasin/rackpulse",
-      "stars": 0,
-      "language": "Python",
-      "description": "Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7 — backports modern host/hardware health onto old enterprise gear.",
-      "pushedAt": "2026-10-11T15:21:11Z"
+      "pushedAt": "2026-10-15T07:09:33Z"
     },
     {
       "name": "pinggrid",
@@ -50,7 +34,23 @@
       "stars": 0,
       "language": "Python",
       "description": "Lightweight network monitoring dashboard — ping sweeps, port scans, and instant alerts from one terminal view.",
-      "pushedAt": "2026-10-11T15:21:08Z"
+      "pushedAt": "2026-10-15T07:09:26Z"
+    },
+    {
+      "name": "rackpulse",
+      "url": "https://github.com/StefanYasin/rackpulse",
+      "stars": 0,
+      "language": "Python",
+      "description": "Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7 — backports modern host/hardware health onto old enterprise gear.",
+      "pushedAt": "2026-10-15T07:09:23Z"
+    },
+    {
+      "name": "restore-drill",
+      "url": "https://github.com/StefanYasin/restore-drill",
+      "stars": 0,
+      "language": "Shell",
+      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
+      "pushedAt": "2026-10-15T07:09:19Z"
     }
   ]
 }
