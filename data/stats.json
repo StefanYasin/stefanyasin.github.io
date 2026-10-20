@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-19T16:59:35.077Z",
+  "generatedAt": "2026-10-20T15:07:20.576Z",
   "user": "StefanYasin",
   "publicTools": 5,
   "repos": 7,
   "stars": 1,
-  "commitsLast365": 58,
+  "commitsLast365": 59,
   "lastShip": {
-    "repo": "endpointwatch",
-    "url": "https://github.com/StefanYasin/endpointwatch",
-    "date": "2026-10-15T07:09:12Z",
-    "message": "chore: bump version to 1.1.0 (#10)"
+    "repo": "restore-drill",
+    "url": "https://github.com/StefanYasin/restore-drill",
+    "date": "2026-10-19T17:59:56Z",
+    "message": "Fix #5: pick a temp path per OS instead of assuming Windows (#6)"
   },
   "topRepos": [
     {
@@ -19,6 +19,14 @@
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
       "pushedAt": "2026-10-11T15:21:04Z"
+    },
+    {
+      "name": "restore-drill",
+      "url": "https://github.com/StefanYasin/restore-drill",
+      "stars": 0,
+      "language": "Shell",
+      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
+      "pushedAt": "2026-10-19T17:59:58Z"
     },
     {
       "name": "endpointwatch",
@@ -43,14 +51,6 @@
       "language": "Python",
       "description": "Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7 — backports modern host/hardware health onto old enterprise gear.",
       "pushedAt": "2026-10-15T07:09:23Z"
-    },
-    {
-      "name": "restore-drill",
-      "url": "https://github.com/StefanYasin/restore-drill",
-      "stars": 0,
-      "language": "Shell",
-      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
-      "pushedAt": "2026-10-15T07:09:19Z"
     }
   ]
 }
