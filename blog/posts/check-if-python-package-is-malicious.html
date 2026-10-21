@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="view-transition" content="same-origin">
+  <title>How to check whether a Python package is malicious - Stefan Yasin</title>
+  <meta name="description" content="A backdoored LiteLLM release on PyPI shipped a credential stealer in site-packages. The checks I run before and after installing a Python dependency, and what to do if one is already installed.">
+  <meta property="og:title" content="How to check whether a Python package is malicious">
+  <meta property="og:description" content="A backdoored LiteLLM release shipped a credential stealer in site-packages. The checks I run before and after installing a dependency.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html">
+  <meta property="og:image" content="https://stefanyasin.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../css/site.css">
+  <link rel="canonical" href="https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html">
+  <link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to check whether a Python package is malicious",
+    "description": "A backdoored LiteLLM release on PyPI shipped a credential stealer in site-packages. The checks I run before and after installing a Python dependency, and what to do if one is already installed.",
+    "url": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html",
+    "image": "https://stefanyasin.github.io/og.png",
+    "datePublished": "2026-10-21",
+    "dateModified": "2026-10-21",
+    "author": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Stefan Yasin - Writing",
+      "url": "https://stefanyasin.github.io/blog/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html"
+    },
+    "inLanguage": "en-CA"
+  }
+  </script>
+  <link rel="stylesheet" href="../../css/palette.css">
+  <link rel="alternate" type="application/feed+json" title="Stefan Yasin - Writing (JSON Feed)" href="https://stefanyasin.github.io/feed.json">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html">Stefan Yasin</a>
+      <nav aria-label="Primary">
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Writing</a>
+        <a href="../../case-studies/index.html">Case studies</a>
+        <a href="../../uses.html">Uses</a>
+        <a href="../../now.html">Now</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <div class="container">
+        <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Python package checks</span></p>
+        <p class="eyebrow">Blog</p>
+        <h1>How to check whether a Python package is malicious</h1>
+        <p class="byline"><span>Stefan Yasin</span><span>Oct 21, 2026</span><span>~7 min read</span></p>
+        <div class="prose">
+          <p>On Oct 21, 2026, the LiteLLM 1.107.0 release on PyPI shipped a credential stealer and a remote code execution backdoor in all seven wheels. The upstream GitHub source did not contain it, and PyPI has since pulled the release. The detail that matters is not the package. It is where the payload lived: two files in site-packages that Python runs at startup, on every process, whether or not anything imports the library.</p>
+          <p>That breaks the mental model most of us install with. We assume a package only runs when we import it. A <code>.pth</code> file and a <code>sitecustomize.py</code> do not need an import. If you install into a virtualenv, every Python process in that environment loads them.</p>
+
+          <h2>What the malicious release actually did</h2>
+          <p>The public analysis from <a href="https://safedep.io/litellm-pypi-compromise-credential-stealer-backdoor/">SafeDep</a> is worth reading in full. The short version:</p>
+          <ul>
+            <li>Three files landed in site-packages: <code>cook.pth</code> at 12 bytes containing <code>import cook</code>, <code>cook.py</code> as the obfuscated stealer, and <code>sitecustomize.py</code> as a loader with an hourly beacon.</li>
+            <li>The stealer went after SSH keys, cloud credentials, CI secrets, AI provider tokens, browser passwords, and the keys stored in a LiteLLM proxy database.</li>
+            <li>It entered through one line in the sdist's <code>pyproject.toml</code>: <code>data = "cook"</code> under the maturin build section, which copies a folder into the built wheel.</li>
+            <li>The sdist did not match its git tag. No public commit contained that line or that folder, and the release carried no provenance attestation.</li>
+            <li>Versions 1.106.2, 1.107.0rc1, and 1.107.0rc2 were clean.</li>
+          </ul>
+          <p>For an AI stack this is a high value target. A LiteLLM proxy holds the API keys for every provider you route through it. One install and the keys for the whole model budget leave the building, along with the SSH key to the host they sit on.</p>
+
+          <h2>Checks I run before installing</h2>
+          <h3>1. Is there a provenance attestation?</h3>
+          <p>Open the package's files page on PyPI and look for attestations. Plenty of small packages do not publish them and are perfectly fine, so absence is not proof of anything. But a widely used package, a fresh release, and no attestation is worth a second look before you put it on a box that holds credentials.</p>
+          <h3>2. Does the sdist match the tag?</h3>
+          <p>Pull the source distribution rather than the wheel and compare it to the release tag: <code>pip download --no-deps --no-binary :all: &lt;package&gt;==&lt;version&gt;</code>, unpack it, and read the build files. Build configuration in <code>pyproject.toml</code> and <code>setup.py</code> is where a payload gets copied into a wheel, so that is where an unexpected line shows up. In this case it was a single <code>data =</code> key pointing at a folder that existed in no commit.</p>
+          <h3>3. Are the companion pins sane?</h3>
+          <p>The malicious LiteLLM release also rewrote its version and pinned two companion packages back to the previous release candidate's versions, so a dependency diff against the candidate looked ordinary. If a new release pins dependencies backwards, that is a question, not a convenience.</p>
+
+          <h2>Checks I run after installing</h2>
+          <ul>
+            <li><strong>Read the file list.</strong> <code>pip show -f &lt;package&gt;</code> and actually look at it. A <code>.pth</code> file at the top of site-packages gets an explanation or it gets deleted.</li>
+            <li><strong>Find the startup hooks.</strong> Search site-packages for <code>*.pth</code> and <code>sitecustomize.py</code>. Most legitimate .pth files are a line or two adding a path. A .pth that imports a module is doing work at interpreter startup, and you should know what.</li>
+            <li><strong>Compare RECORD to the repo.</strong> The implant files here were listed honestly in the wheel's RECORD, which is the tell: the wheel was internally consistent and inconsistent with the source.</li>
+            <li><strong>Watch outbound traffic for a day.</strong> I use <a href="../../case-studies/endpointwatch.html">endpointwatch</a> on Windows for this. It watches processes, connections, and persistence, and explains what changed in plain English. A Python process talking to a domain nobody on your team recognises is the signal that matters.</li>
+          </ul>
+
+          <h2>Rules that keep a small stack out of trouble</h2>
+          <ul>
+            <li>One virtualenv per service. A compromised dependency should not be able to read the environment holding another service's keys.</li>
+            <li>Scope secrets to the service that needs them. Provider keys belong in that service's environment, not in a global shell profile, and not all in one place. If one service is hit you rotate one set.</li>
+            <li>Hash pin anything that runs unattended: <code>pip install --require-hashes -r requirements.txt</code>. Tedious once, quiet forever.</li>
+            <li>Do not install a brand new release the same day on a host that holds credentials. This build was live for roughly ten minutes before it was caught. A short delay costs nothing.</li>
+            <li>Rotate on suspicion, not on proof. Keys are cheap. The call with a provider about a leaked key is not.</li>
+          </ul>
+
+          <h2>If you think you already installed it</h2>
+          <p>Order matters here: isolate, then rotate, then investigate.</p>
+          <ol>
+            <li>Take the host off the network, or block its outbound access first.</li>
+            <li>Rotate SSH keys, cloud tokens, CI secrets, AI provider keys, and anything in the proxy database. Browser password stores on that host count too.</li>
+            <li>Look for what the implant added: scheduled tasks, services, startup hooks.</li>
+            <li>Rebuild the environment from a clean requirements file instead of uninstalling the package. Once a startup hook has run, uninstalling does not tell you what else happened.</li>
+            <li>Keep the evidence. The wheel, the RECORD, and timestamps are what upstream maintainers and PyPI need.</li>
+          </ol>
+
+          <h2>The trust question moved</h2>
+          <p>We keep using popularity as the trust test. The LiteLLM incident shows the real question is whether the artifact was built from the tag. The repository was clean, the tag was clean, the wheel was not, and being widely used did not help anyone.</p>
+          <p>I wrote about the wider response loop in <a href="incident-response-hours-to-minutes.html">cutting incident response from hours to minutes</a>, and about running this kind of stack on a small budget in <a href="ai-assisted-ops-stack-near-zero-budget.html">the AI assisted ops stack</a>. The boring controls still win: pinned versions, separate environments, scoped keys, and one monitor that tells you what actually changed on the box.</p>
+        </div>
+        <div class="post-footer">
+          <p><a href="../index.html">Back to all posts</a></p>
+          <div class="article-tags"><span class="tag">Security</span><span class="tag">Python</span><span class="tag">Supply chain</span><span class="tag">Ops</span></div>
+        </div>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Stefan Yasin. Built as static HTML, hosted on GitHub Pages.</p>
+      <nav aria-label="Footer">
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Writing</a>
+        <a href="../../case-studies/index.html">Case studies</a>
+        <a href="https://github.com/StefanYasin" rel="me">GitHub</a>
+        <a href="https://www.linkedin.com/in/stefanyasin/" rel="me">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="../../js/site.js" defer></script>
+</body>
+</html>
