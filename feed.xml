@@ -5,8 +5,15 @@
   <link href="https://stefanyasin.github.io/feed.xml" rel="self"/>
   <link href="https://stefanyasin.github.io/blog/"/>
   <id>https://stefanyasin.github.io/</id>
-  <updated>2026-10-11T00:00:00Z</updated>
+  <updated>2026-10-21T00:00:00Z</updated>
   <author><name>Stefan Yasin</name><email>StefanYasin@gmail.com</email></author>
+  <entry>
+    <title>How to check whether a Python package is malicious</title>
+    <link href="https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html</id>
+    <updated>2026-10-21T00:00:00Z</updated>
+    <summary>A backdoored LiteLLM release shipped a credential stealer in site-packages. The checks I run before and after installing a dependency.</summary>
+  </entry>
   <entry>
     <title>Alert severity that people actually respect</title>
     <link href="https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html"/>
