@@ -259,6 +259,127 @@ Home (../../index.html) / Writing (../index.html) / rackpulse
 
 ---
 
+## How to check whether a Python package is malicious
+
+URL: https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html
+Published: 2026-10-21
+
+Home (../../index.html) / Writing (../index.html) / Python package checks
+
+ Blog
+
+ 
+## How to check whether a Python package is malicious
+
+ Stefan YasinOct 21, 2026~7 min read
+
+ 
+ On Oct 21, 2026, the LiteLLM 1.107.0 release on PyPI shipped a credential stealer and a remote code execution backdoor in all seven wheels. The upstream GitHub source did not contain it, and PyPI has since pulled the release. The detail that matters is not the package. It is where the payload lived: two files in site-packages that Python runs at startup, on every process, whether or not anything imports the library.
+
+ That breaks the mental model most of us install with. We assume a package only runs when we import it. A .pth file and a sitecustomize.py do not need an import. If you install into a virtualenv, every Python process in that environment loads them.
+
+ 
+### What the malicious release actually did
+
+ The public analysis from SafeDep (https://safedep.io/litellm-pypi-compromise-credential-stealer-backdoor/) is worth reading in full. The short version:
+
+ 
+ - Three files landed in site-packages: cook.pth at 12 bytes containing import cook, cook.py as the obfuscated stealer, and sitecustomize.py as a loader with an hourly beacon.
+
+ - The stealer went after SSH keys, cloud credentials, CI secrets, AI provider tokens, browser passwords, and the keys stored in a LiteLLM proxy database.
+
+ - It entered through one line in the sdist's pyproject.toml: data = "cook" under the maturin build section, which copies a folder into the built wheel.
+
+ - The sdist did not match its git tag. No public commit contained that line or that folder, and the release carried no provenance attestation.
+
+ - Versions 1.106.2, 1.107.0rc1, and 1.107.0rc2 were clean.
+
+ 
+ For an AI stack this is a high value target. A LiteLLM proxy holds the API keys for every provider you route through it. One install and the keys for the whole model budget leave the building, along with the SSH key to the host they sit on.
+
+ 
+### Checks I run before installing
+
+ 
+#### 1. Is there a provenance attestation?
+
+ Open the package's files page on PyPI and look for attestations. Plenty of small packages do not publish them and are perfectly fine, so absence is not proof of anything. But a widely used package, a fresh release, and no attestation is worth a second look before you put it on a box that holds credentials.
+
+ 
+#### 2. Does the sdist match the tag?
+
+ Pull the source distribution rather than the wheel and compare it to the release tag: pip download --no-deps --no-binary :all: <package>==<version>, unpack it, and read the build files. Build configuration in pyproject.toml and setup.py is where a payload gets copied into a wheel, so that is where an unexpected line shows up. In this case it was a single data = key pointing at a folder that existed in no commit.
+
+ 
+#### 3. Are the companion pins sane?
+
+ The malicious LiteLLM release also rewrote its version and pinned two companion packages back to the previous release candidate's versions, so a dependency diff against the candidate looked ordinary. If a new release pins dependencies backwards, that is a question, not a convenience.
+
+ 
+### Checks I run after installing
+
+ 
+ - Read the file list. pip show -f <package> and actually look at it. A .pth file at the top of site-packages gets an explanation or it gets deleted.
+
+ - Find the startup hooks. Search site-packages for *.pth and sitecustomize.py. Most legitimate .pth files are a line or two adding a path. A .pth that imports a module is doing work at interpreter startup, and you should know what.
+
+ - Compare RECORD to the repo. The implant files here were listed honestly in the wheel's RECORD, which is the tell: the wheel was internally consistent and inconsistent with the source.
+
+ - Watch outbound traffic for a day. I use endpointwatch (../../case-studies/endpointwatch.html) on Windows for this. It watches processes, connections, and persistence, and explains what changed in plain English. A Python process talking to a domain nobody on your team recognises is the signal that matters.
+
+ 
+
+ 
+### Rules that keep a small stack out of trouble
+
+ 
+ - One virtualenv per service. A compromised dependency should not be able to read the environment holding another service's keys.
+
+ - Scope secrets to the service that needs them. Provider keys belong in that service's environment, not in a global shell profile, and not all in one place. If one service is hit you rotate one set.
+
+ - Hash pin anything that runs unattended: pip install --require-hashes -r requirements.txt. Tedious once, quiet forever.
+
+ - Do not install a brand new release the same day on a host that holds credentials. This build was live for roughly ten minutes before it was caught. A short delay costs nothing.
+
+ - Rotate on suspicion, not on proof. Keys are cheap. The call with a provider about a leaked key is not.
+
+ 
+
+ 
+### If you think you already installed it
+
+ Order matters here: isolate, then rotate, then investigate.
+
+ 
+ - Take the host off the network, or block its outbound access first.
+
+ - Rotate SSH keys, cloud tokens, CI secrets, AI provider keys, and anything in the proxy database. Browser password stores on that host count too.
+
+ - Look for what the implant added: scheduled tasks, services, startup hooks.
+
+ - Rebuild the environment from a clean requirements file instead of uninstalling the package. Once a startup hook has run, uninstalling does not tell you what else happened.
+
+ - Keep the evidence. The wheel, the RECORD, and timestamps are what upstream maintainers and PyPI need.
+
+ 
+
+ 
+### The trust question moved
+
+ We keep using popularity as the trust test. The LiteLLM incident shows the real question is whether the artifact was built from the tag. The repository was clean, the tag was clean, the wheel was not, and being widely used did not help anyone.
+
+ I wrote about the wider response loop in cutting incident response from hours to minutes (incident-response-hours-to-minutes.html), and about running this kind of stack on a small budget in the AI assisted ops stack (ai-assisted-ops-stack-near-zero-budget.html). The boring controls still win: pinned versions, separate environments, scoped keys, and one monitor that tells you what actually changed on the box.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ SecurityPythonSupply chainOps
+
+
+---
+
 ## From Apple Genius to building AI ops tooling
 
 URL: https://stefanyasin.github.io/blog/posts/from-apple-genius-to-ai-ops-tooling.html

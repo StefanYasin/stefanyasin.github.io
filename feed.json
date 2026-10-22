@@ -13,6 +13,13 @@
   ],
   "items": [
     {
+      "id": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html",
+      "url": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html",
+      "title": "How to check whether a Python package is malicious",
+      "date_published": "2026-10-21T00:00:00Z",
+      "summary": "A backdoored LiteLLM release shipped a credential stealer in site-packages. The checks I run before and after installing a dependency."
+    },
+    {
       "id": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html",
       "url": "https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html",
       "title": "Alert severity that people actually respect",
