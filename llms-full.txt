@@ -26,7 +26,7 @@ Home (../../index.html) / Writing (../index.html) / AI-assisted ops
  
 ### What the stack is
 
- I run an agent-based automation layer on my own hardware: a local orchestrator with model access through cheap APIs, plus the monitoring tools I've built (endpointwatch (../../case-studies/endpointwatch.html), pinggrid (../../index.html#projects), rackpulse (../../case-studies/rackpulse.html)). Three layers, all talking to each other:
+ I run an agent-based automation layer on my own hardware: a local orchestrator with model access through cheap APIs, plus the monitoring tools I've built (endpointwatch (../../case-studies/endpointwatch.html), pinggrid (../../index.html#work), rackpulse (../../case-studies/rackpulse.html)). Three layers, all talking to each other:
 
  
  - Collect. The monitors watch servers, endpoints, and the network continuously, and emit structured events.
@@ -247,7 +247,7 @@ Home (../../index.html) / Writing (../index.html) / rackpulse
 
  
 
- The same philosophy runs through the rest of my tooling: endpointwatch (../../case-studies/endpointwatch.html) for Windows endpoints, pinggrid (../../index.html#projects) for the network side. Collect, decide, act. Whether the thing being watched was built in 2016 or last week.
+ The same philosophy runs through the rest of my tooling: endpointwatch (../../case-studies/endpointwatch.html) for Windows endpoints, pinggrid (../../index.html#work) for the network side. Collect, decide, act. Whether the thing being watched was built in 2016 or last week.
 
  
 
@@ -648,7 +648,7 @@ Home (../../index.html) / Writing (../index.html) / Homelab
  
  - Skills that stay sharp. ESXi, Docker, Kubernetes, VLANs, VPNs, storage, monitoring. Every one of these is a line on my resume because I run them at home, not because I read about them.
 
- - Breaking things safely. The monitoring tools I open-source (rackpulse (../../case-studies/rackpulse.html), pinggrid (../../index.html#projects), endpointwatch (../../case-studies/endpointwatch.html)) were built to solve problems this lab actually had.
+ - Breaking things safely. The monitoring tools I open-source (rackpulse (../../case-studies/rackpulse.html), pinggrid (../../index.html#work), endpointwatch (../../case-studies/endpointwatch.html)) were built to solve problems this lab actually had.
 
  - Interview prep. When a hiring manager asks how I'd handle a failing host, a noisy network, or an alert that won't stop, I don't answer from theory. I answer from the last time it happened to me at 11pm on a Tuesday.
 
