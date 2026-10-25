@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="view-transition" content="same-origin">
+  <title>Nine tools in one week, and what each one actually does - Stefan Yasin</title>
+  <meta name="description" content="Nine MIT repos shipped in one week: phonepilot, agentpulse, esp32-mcp, agent-surface-report, re-ai, mcp-firewall, diagrams-from-json, trend-radar and ollama-watch. What each one does, what it does not, and the 646 tests behind them.">
+  <meta property="og:title" content="Nine tools in one week, and what each one actually does">
+  <meta property="og:description" content="Nine MIT repos in a week. What each one does, where it stops, and the 646 tests behind the fleet.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html">
+  <meta property="og:image" content="https://stefanyasin.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../css/site.css">
+  <link rel="canonical" href="https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html">
+  <link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Nine tools in one week, and what each one actually does",
+    "description": "Nine MIT repos shipped in one week: phonepilot, agentpulse, esp32-mcp, agent-surface-report, re-ai, mcp-firewall, diagrams-from-json, trend-radar and ollama-watch. What each one does, what it does not, and the 646 tests behind them.",
+    "url": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html",
+    "image": "https://stefanyasin.github.io/og.png",
+    "datePublished": "2026-10-24",
+    "dateModified": "2026-10-24",
+    "author": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Stefan Yasin - Writing",
+      "url": "https://stefanyasin.github.io/blog/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html"
+    },
+    "inLanguage": "en-CA"
+  }
+  </script>
+  <link rel="stylesheet" href="../../css/palette.css">
+  <link rel="alternate" type="application/feed+json" title="Stefan Yasin - Writing (JSON Feed)" href="https://stefanyasin.github.io/feed.json">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html">Stefan Yasin</a>
+      <nav aria-label="Primary">
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Writing</a>
+        <a href="../../case-studies/index.html">Case studies</a>
+        <a href="../../uses.html">Uses</a>
+        <a href="../../now.html">Now</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <div class="container">
+        <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Fleet release</span></p>
+        <p class="eyebrow">Blog</p>
+        <h1>Nine tools in one week, and what each one actually does</h1>
+        <p class="byline"><span>Stefan Yasin</span><span>Oct 24, 2026</span><span>~5 min read</span></p>
+        <div class="prose">
+          <p>Nine repositories went public this week. Nine MIT repos, each with tests, CI on every push, a tagged v0.1.x release, and a README that lists what the tool does not do before it gets to what it does. I did not set out to ship a fleet. I had a list of small annoyances I had been working around by hand, and one week where the fixes landed close together.</p>
+
+          <h2>The bar was the same for all nine</h2>
+          <p>Every repo got pytest tests, GitHub Actions on every push, an MIT license, a tag, release notes, and a Limits or Deferred section. Across the nine that is 646 tests, and all nine CI runs are green on the release commits. That is not a quality score, only evidence that the code is exercised.</p>
+
+          <h2>Anything an agent can touch needs a boundary</h2>
+          <h3>mcp-firewall</h3>
+          <p>An MCP server gives an agent its whole tool surface. <a href="https://github.com/StefanYasin/mcp-firewall">mcp-firewall</a> sits in the stdio path, checks every <code>tools/call</code> against a YAML policy, denies with a JSON-RPC error, rate limits the rest, and writes one JSONL line per call. Globs like <code>read_*</code> work and the default is deny. It is a process boundary, not a sandbox. 42 tests.</p>
+
+          <h3>agent-surface-report</h3>
+          <p>The question I wanted answered on my own machine: if an agent ran as me, what could it touch, and how could it persist? <a href="https://github.com/StefanYasin/agent-surface-report">agent-surface-report</a> reads Run keys, Startup folders, auto-start services, scheduled tasks, credential targets, listening ports, writable PATH entries and PowerShell policy, then scores each item info, warn or critical. Read only, and it says when elevation left gaps. 53 tests.</p>
+
+          <h3>esp32-mcp</h3>
+          <p><a href="https://github.com/StefanYasin/esp32-mcp">esp32-mcp</a> is the hardware version. An MCP server that speaks HTTP to an ESP32 sketch, exposing relays, GPIO and analog sensors as tools. The Python side implements stdio by hand with no dependencies, and tests run against a simulated board, so CI needs no hardware. The sketch compiles at 74 percent flash. CI does not compile it yet. 88 tests.</p>
+
+          <h2>The machine underneath has to be observable</h2>
+          <h3>agentpulse</h3>
+          <p>My cron directory is a 28 job wall of JSON, and the failures hide in it: a backup erroring for nine runs, a job drifting because <code>next_run_at</code> is past while it is still enabled. <a href="https://github.com/StefanYasin/agentpulse">agentpulse</a> reads <code>jobs.json</code> and shows normalized status, failure streaks, drift, heartbeat age and what runs next, as a page, a JSON API or a digest. Standard library only, read only, and no durations because <code>jobs.json</code> does not record them. 59 tests.</p>
+
+          <h3>ollama-watch</h3>
+          <p>Ollama tells you what is loaded now and forgets it. <a href="https://github.com/StefanYasin/ollama-watch">ollama-watch</a> samples <code>/api/ps</code>, <code>/api/tags</code> and <code>/api/version</code> into SQLite, then answers what the last day looked like: peak VRAM, which models stayed resident and for how long. Gaps are clamped so a stopped recorder cannot invent residency. Stock Ollama reports no tokens per second, so the digest says so. 52 tests.</p>
+
+          <h3>re-ai</h3>
+          <p><a href="https://github.com/StefanYasin/re-ai">re-ai</a> is the triage I do on an unknown binary, as one markdown report: DOS and COFF headers, sections, imports with ordinals, strings with offsets, Shannon entropy at three levels, overlay data, and the packer heuristics I used to check by hand. The optional narrative needs <code>--llm</code>. PE only, static only, no disassembly, and a clean report is not a clean sample. 115 tests.</p>
+
+          <h2>Repetitive work should be a file</h2>
+          <h3>diagrams-from-json</h3>
+          <p>I kept redrawing the same six boxes in editors that export a megabyte of metadata. <a href="https://github.com/StefanYasin/diagrams-from-json">diagrams-from-json</a> takes a YAML or JSON spec and writes one standalone SVG: layers, typed nodes, edges, notes, dark or light. Layout is deterministic on purpose and there is no solver, so if the order is wrong you change the spec. PyYAML is the only dependency. 67 tests.</p>
+
+          <h3>trend-radar</h3>
+          <p><a href="https://github.com/StefanYasin/trend-radar">trend-radar</a> pulls GitHub searches, Hacker News through Algolia, and Reddit feeds, then scores each item on skill fit, recency, traction and competition against a YAML profile of what I actually work with. The output is a ranked markdown report. No caching yet, no JSON output yet, and GitHub rate limits are warnings rather than retries. 68 tests.</p>
+
+          <h3>phonepilot</h3>
+          <p><a href="https://github.com/StefanYasin/phonepilot">phonepilot</a> is the one with hardware in it. An ESP32 is a BLE keyboard, a physical approve button and an HTTP queue; iOS Shortcuts do the app work; a Python CLI validates YAML workflows, runs them on a schedule, and stops for a button press before anything is published. 102 tests, including end to end runs against a server that speaks the firmware API. The sketch compiles. It has never been flashed on a real board, so the first flash is bring-up.</p>
+
+          <h2>What nine green badges do not prove</h2>
+          <p>They cover a simulated board, fixture files and a fake job state. They do not cover a real ESP32, a real MCP client with a wide tool surface, or a binary built to waste an afternoon. The Deferred lists are longer than the feature lists on purpose. A v0.1 that hides its edges is a demo, and I have no use for a demo at 2 a.m.</p>
+
+          <p>That standard comes from operations, not open source. <a href="../../case-studies/endpointwatch.html">endpointwatch</a> and <a href="../../case-studies/rackpulse.html">rackpulse</a> exist because a script with no owner and no release notes is how monitoring dies quietly. Same thinking in <a href="incident-response-hours-to-minutes.html">cutting incident response from hours to minutes</a>, <a href="alert-severity-that-people-respect.html">alert severity that people respect</a>, and <a href="why-i-open-source-my-monitoring-tools.html">why I open source these tools</a>.</p>
+
+          <p>Most of the new repos use nothing but the standard library. Partly taste, partly the lesson from <a href="check-if-python-package-is-malicious.html">the PyPI compromise I wrote about on Oct 21</a>: every dependency is attack surface, and a tool that watches your machine should not need a supply chain to do it.</p>
+
+          <h2>The deal</h2>
+          <p>Nine repos, nine tags, 646 tests, all MIT. If one saves you an afternoon, the README will tell you where it breaks before it tells you what it does. Use it because it is honest, not because it is loud.</p>
+        </div>
+        <div class="post-footer">
+          <p><a href="../index.html">Back to all posts</a></p>
+          <div class="article-tags"><span class="tag">AI agents</span><span class="tag">MCP</span><span class="tag">Python</span><span class="tag">Open source</span><span class="tag">ESP32</span></div>
+        </div>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Stefan Yasin. Built as static HTML, hosted on GitHub Pages.</p>
+      <nav aria-label="Footer">
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Writing</a>
+        <a href="../../case-studies/index.html">Case studies</a>
+        <a href="https://github.com/StefanYasin" rel="me">GitHub</a>
+        <a href="https://www.linkedin.com/in/stefanyasin/" rel="me">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="../../js/site.js" defer></script>
+</body>
+</html>

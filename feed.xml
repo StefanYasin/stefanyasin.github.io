@@ -5,8 +5,15 @@
   <link href="https://stefanyasin.github.io/feed.xml" rel="self"/>
   <link href="https://stefanyasin.github.io/blog/"/>
   <id>https://stefanyasin.github.io/</id>
-  <updated>2026-10-21T00:00:00Z</updated>
+  <updated>2026-10-24T00:00:00Z</updated>
   <author><name>Stefan Yasin</name><email>StefanYasin@gmail.com</email></author>
+  <entry>
+    <title>Nine tools in one week, and what each one actually does</title>
+    <link href="https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html"/>
+    <id>https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html</id>
+    <updated>2026-10-24T00:00:00Z</updated>
+    <summary>Nine MIT repos shipped in one week, each with tests, CI and a tagged release. What each tool does, where it stops, and the 646 tests behind the fleet.</summary>
+  </entry>
   <entry>
     <title>How to check whether a Python package is malicious</title>
     <link href="https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html"/>

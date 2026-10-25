@@ -13,6 +13,13 @@
   ],
   "items": [
     {
+      "id": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html",
+      "url": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html",
+      "title": "Nine tools in one week, and what each one actually does",
+      "date_published": "2026-10-24T00:00:00Z",
+      "summary": "Nine MIT repos shipped in one week, each with tests, CI and a tagged release. What each tool does, where it stops, and the 646 tests behind the fleet."
+    },
+    {
       "id": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html",
       "url": "https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html",
       "title": "How to check whether a Python package is malicious",

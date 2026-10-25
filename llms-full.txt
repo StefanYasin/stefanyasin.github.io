@@ -604,6 +604,106 @@ Home (../../index.html) / Writing (../index.html) / Homelab monitoring
 
 ---
 
+## Nine tools in one week, and what each one actually does
+
+URL: https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html
+Published: 2026-10-24
+
+Home (../../index.html) / Writing (../index.html) / Fleet release
+
+ Blog
+
+ 
+## Nine tools in one week, and what each one actually does
+
+ Stefan YasinOct 24, 2026~5 min read
+
+ 
+ Nine repositories went public this week. Nine MIT repos, each with tests, CI on every push, a tagged v0.1.x release, and a README that lists what the tool does not do before it gets to what it does. I did not set out to ship a fleet. I had a list of small annoyances I had been working around by hand, and one week where the fixes landed close together.
+
+ 
+### The bar was the same for all nine
+
+ Every repo got pytest tests, GitHub Actions on every push, an MIT license, a tag, release notes, and a Limits or Deferred section. Across the nine that is 646 tests, and all nine CI runs are green on the release commits. That is not a quality score, only evidence that the code is exercised.
+
+ 
+### Anything an agent can touch needs a boundary
+
+ 
+#### mcp-firewall
+
+ An MCP server gives an agent its whole tool surface. mcp-firewall (https://github.com/StefanYasin/mcp-firewall) sits in the stdio path, checks every tools/call against a YAML policy, denies with a JSON-RPC error, rate limits the rest, and writes one JSONL line per call. Globs like read_* work and the default is deny. It is a process boundary, not a sandbox. 42 tests.
+
+ 
+#### agent-surface-report
+
+ The question I wanted answered on my own machine: if an agent ran as me, what could it touch, and how could it persist? agent-surface-report (https://github.com/StefanYasin/agent-surface-report) reads Run keys, Startup folders, auto-start services, scheduled tasks, credential targets, listening ports, writable PATH entries and PowerShell policy, then scores each item info, warn or critical. Read only, and it says when elevation left gaps. 53 tests.
+
+ 
+#### esp32-mcp
+
+ esp32-mcp (https://github.com/StefanYasin/esp32-mcp) is the hardware version. An MCP server that speaks HTTP to an ESP32 sketch, exposing relays, GPIO and analog sensors as tools. The Python side implements stdio by hand with no dependencies, and tests run against a simulated board, so CI needs no hardware. The sketch compiles at 74 percent flash. CI does not compile it yet. 88 tests.
+
+ 
+### The machine underneath has to be observable
+
+ 
+#### agentpulse
+
+ My cron directory is a 28 job wall of JSON, and the failures hide in it: a backup erroring for nine runs, a job drifting because next_run_at is past while it is still enabled. agentpulse (https://github.com/StefanYasin/agentpulse) reads jobs.json and shows normalized status, failure streaks, drift, heartbeat age and what runs next, as a page, a JSON API or a digest. Standard library only, read only, and no durations because jobs.json does not record them. 59 tests.
+
+ 
+#### ollama-watch
+
+ Ollama tells you what is loaded now and forgets it. ollama-watch (https://github.com/StefanYasin/ollama-watch) samples /api/ps, /api/tags and /api/version into SQLite, then answers what the last day looked like: peak VRAM, which models stayed resident and for how long. Gaps are clamped so a stopped recorder cannot invent residency. Stock Ollama reports no tokens per second, so the digest says so. 52 tests.
+
+ 
+#### re-ai
+
+ re-ai (https://github.com/StefanYasin/re-ai) is the triage I do on an unknown binary, as one markdown report: DOS and COFF headers, sections, imports with ordinals, strings with offsets, Shannon entropy at three levels, overlay data, and the packer heuristics I used to check by hand. The optional narrative needs --llm. PE only, static only, no disassembly, and a clean report is not a clean sample. 115 tests.
+
+ 
+### Repetitive work should be a file
+
+ 
+#### diagrams-from-json
+
+ I kept redrawing the same six boxes in editors that export a megabyte of metadata. diagrams-from-json (https://github.com/StefanYasin/diagrams-from-json) takes a YAML or JSON spec and writes one standalone SVG: layers, typed nodes, edges, notes, dark or light. Layout is deterministic on purpose and there is no solver, so if the order is wrong you change the spec. PyYAML is the only dependency. 67 tests.
+
+ 
+#### trend-radar
+
+ trend-radar (https://github.com/StefanYasin/trend-radar) pulls GitHub searches, Hacker News through Algolia, and Reddit feeds, then scores each item on skill fit, recency, traction and competition against a YAML profile of what I actually work with. The output is a ranked markdown report. No caching yet, no JSON output yet, and GitHub rate limits are warnings rather than retries. 68 tests.
+
+ 
+#### phonepilot
+
+ phonepilot (https://github.com/StefanYasin/phonepilot) is the one with hardware in it. An ESP32 is a BLE keyboard, a physical approve button and an HTTP queue; iOS Shortcuts do the app work; a Python CLI validates YAML workflows, runs them on a schedule, and stops for a button press before anything is published. 102 tests, including end to end runs against a server that speaks the firmware API. The sketch compiles. It has never been flashed on a real board, so the first flash is bring-up.
+
+ 
+### What nine green badges do not prove
+
+ They cover a simulated board, fixture files and a fake job state. They do not cover a real ESP32, a real MCP client with a wide tool surface, or a binary built to waste an afternoon. The Deferred lists are longer than the feature lists on purpose. A v0.1 that hides its edges is a demo, and I have no use for a demo at 2 a.m.
+
+ That standard comes from operations, not open source. endpointwatch (../../case-studies/endpointwatch.html) and rackpulse (../../case-studies/rackpulse.html) exist because a script with no owner and no release notes is how monitoring dies quietly. Same thinking in cutting incident response from hours to minutes (incident-response-hours-to-minutes.html), alert severity that people respect (alert-severity-that-people-respect.html), and why I open source these tools (why-i-open-source-my-monitoring-tools.html).
+
+ Most of the new repos use nothing but the standard library. Partly taste, partly the lesson from the PyPI compromise I wrote about on Oct 21 (check-if-python-package-is-malicious.html): every dependency is attack surface, and a tool that watches your machine should not need a supply chain to do it.
+
+ 
+### The deal
+
+ Nine repos, nine tags, 646 tests, all MIT. If one saves you an afternoon, the README will tell you where it breaks before it tells you what it does. Use it because it is honest, not because it is loud.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ AI agentsMCPPythonOpen sourceESP32
+
+
+---
+
 ## The solar-powered lab that simulates a data center
 
 URL: https://stefanyasin.github.io/blog/posts/solar-powered-lab-that-simulates-a-data-center.html
