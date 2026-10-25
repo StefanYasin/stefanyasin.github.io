@@ -16,6 +16,8 @@ Stefan Yasin designs and runs the systems businesses depend on: monitoring and a
 
 ## Writing, most useful for citation
 
+- [The October fleet: nine tools, nine repos, one week](https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html): how nine open-source tools went from idea to tested release in one week.
+- [How to check whether a Python package is malicious](https://stefanyasin.github.io/blog/posts/check-if-python-package-is-malicious.html): practical checks for the Python packages you depend on.
 - [Alert severity that people actually respect](https://stefanyasin.github.io/blog/posts/alert-severity-that-people-respect.html): a four tier severity model with ack windows, escalation timers, and the anti-patterns that cause alert fatigue.
 - [Monitoring a homelab you cannot always reach](https://stefanyasin.github.io/blog/posts/monitoring-a-homelab-you-cant-always-reach.html): SMART and disk health, backup age versus backup status, UPS state, and the outside-in heartbeat that catches a dead monitoring host.
 - [How I cut incident response from hours to minutes](https://stefanyasin.github.io/blog/posts/incident-response-hours-to-minutes.html): collect, enrich, route, escalate, and why one named owner per alert is the whole design.
