@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-25T03:45:36.886Z",
+  "generatedAt": "2026-10-25T14:23:37.106Z",
   "user": "StefanYasin",
-  "publicTools": 15,
-  "repos": 17,
+  "publicTools": 17,
+  "repos": 19,
   "stars": 1,
   "commitsLast365": 110,
   "lastShip": {
-    "repo": "phonepilot",
-    "url": "https://github.com/StefanYasin/phonepilot",
-    "date": "2026-10-23T03:53:24Z",
-    "message": "fix(firmware): build the ESP32 sketch on core 3.3.12"
+    "repo": "awesome-agent-ops",
+    "url": "https://github.com/StefanYasin/awesome-agent-ops",
+    "date": "2026-10-25T03:50:15Z",
+    "message": "Use current GitHub Actions major versions"
   },
   "topRepos": [
     {
@@ -19,6 +19,22 @@
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
       "pushedAt": "2026-10-11T15:21:04Z"
+    },
+    {
+      "name": "awesome-agent-ops",
+      "url": "https://github.com/StefanYasin/awesome-agent-ops",
+      "stars": 0,
+      "language": "Python",
+      "description": "A curated list of tools for operating AI agents in production: observability, evaluation, guardrails, sandboxing, MCP security, fleet orchestration, cost tracking and incident response.",
+      "pushedAt": "2026-10-25T03:51:27Z"
+    },
+    {
+      "name": "free-tools-for-solo-ops",
+      "url": "https://github.com/StefanYasin/free-tools-for-solo-ops",
+      "stars": 0,
+      "language": "Python",
+      "description": "Curated list of genuinely free tools for solo IT consultants, sysadmins, and small business operators.",
+      "pushedAt": "2026-10-25T03:48:18Z"
     },
     {
       "name": "phonepilot",
@@ -35,22 +51,6 @@
       "language": "Python",
       "description": "Read-only operations dashboard for Hermes cron fleets: status, errors, drift and next runs. Stdlib Python, no dependencies.",
       "pushedAt": "2026-10-23T03:05:00Z"
-    },
-    {
-      "name": "esp32-mcp",
-      "url": "https://github.com/StefanYasin/esp32-mcp",
-      "stars": 0,
-      "language": "Python",
-      "description": "MCP server that gives AI agents control of ESP32 hardware: relays, GPIO and sensors over a small HTTP API",
-      "pushedAt": "2026-10-22T16:08:14Z"
-    },
-    {
-      "name": "diagrams-from-json",
-      "url": "https://github.com/StefanYasin/diagrams-from-json",
-      "stars": 0,
-      "language": "Python",
-      "description": "Turn a YAML or JSON spec into a clean SVG architecture diagram",
-      "pushedAt": "2026-10-22T16:01:47Z"
     }
   ]
 }
