@@ -487,10 +487,10 @@
     <a class="btn-ghost" href="#contact">Get in touch</a>
   </div>
   <div class="stats">
-    <div class="stat"><div class="n" data-count="20">0</div><div class="l">Years deep</div></div>
+    <div class="stat"><div class="n" data-count="20">0</div><div class="l">Years in operations</div></div>
     <div class="stat"><div class="n" data-live="publicTools">15</div><div class="l">Tool repos</div></div>
     <div class="stat"><div class="n" data-count="1500">0</div><div class="l">Endpoints watched</div></div>
-    <div class="stat"><div class="n" data-count="24">0</div><div class="l">Cron automations</div></div>
+    <div class="stat"><div class="n" data-count="27">0</div><div class="l">Cron automations</div></div>
   </div>
 </header>
 
@@ -918,7 +918,9 @@
   const statObs = new IntersectionObserver((es) => {
     es.forEach(e => {
       if (!e.isIntersecting) return;
-      const el = e.target, target = +el.dataset.count, dur = 1400, t0 = performance.now();
+      const el = e.target;
+      if (!el.dataset.count) return; // live-fed stats carry no data-count; keep their baked value
+      const target = +el.dataset.count, dur = 1400, t0 = performance.now();
       const tick = (t) => {
         const p = Math.min((t - t0) / dur, 1);
         const eased = 1 - Math.pow(1 - p, 3);
