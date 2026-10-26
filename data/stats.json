@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-25T14:23:37.106Z",
+  "generatedAt": "2026-10-26T16:48:33.485Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
   "stars": 1,
-  "commitsLast365": 110,
+  "commitsLast365": 112,
   "lastShip": {
-    "repo": "awesome-agent-ops",
-    "url": "https://github.com/StefanYasin/awesome-agent-ops",
-    "date": "2026-10-25T03:50:15Z",
-    "message": "Use current GitHub Actions major versions"
+    "repo": "eagleeye2",
+    "url": "https://github.com/StefanYasin/eagleeye2",
+    "date": "2026-10-26T15:23:09Z",
+    "message": "Fix #5: validate --purpose instead of crashing (#6)"
   },
   "topRepos": [
     {
@@ -18,7 +18,7 @@
       "stars": 1,
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
-      "pushedAt": "2026-10-11T15:21:04Z"
+      "pushedAt": "2026-10-26T15:23:11Z"
     },
     {
       "name": "awesome-agent-ops",
