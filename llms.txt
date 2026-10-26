@@ -2,7 +2,7 @@
 
 > Technical operations and applied AI consultant based in Hamilton, Ontario, Canada. 20+ years across industrial IT/OT, networking, monitoring and alerting, and automation. Open to senior roles in technical operations, customer success, service delivery, and field engineering, and available for consulting work.
 
-Stefan Yasin designs and runs the systems businesses depend on: monitoring and alerting pipelines, network design and cleanup, industrial control and building management support, and the automation that removes manual steps. Most of the public work is open-source tooling written from real operational problems, plus field notes describing what broke and why.
+Stefan Yasin designs and runs the systems businesses depend on: datacenter decommissions and buildouts, electrical and power systems, monitoring and alerting pipelines, network design and cleanup, cloud and AI solutions architecture for SMBs, and the automation that removes manual steps. Most of the public work is open-source tooling written from real operational problems, plus field notes describing what broke and why.
 
 ## Pages
 

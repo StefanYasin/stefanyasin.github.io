@@ -13,7 +13,8 @@ ROOT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else ".")
 BASE = "https://stefanyasin.github.io/"
 
 ORDER = (
-    sorted(glob.glob(os.path.join(ROOT, "blog", "posts", "*.html")))
+    [os.path.join(ROOT, "index.html")]
+    + sorted(glob.glob(os.path.join(ROOT, "blog", "posts", "*.html")))
     + sorted(glob.glob(os.path.join(ROOT, "case-studies", "*.html")))
     + [os.path.join(ROOT, n) for n in ("now.html", "uses.html")]
 )
@@ -52,7 +53,10 @@ def main():
         raw = open(path, encoding="utf-8").read()
         body = re.search(r"<main[^>]*>(.*?)</main>", raw, re.S)
         if not body:
-            continue
+            trimmed = re.sub(r"<(header|nav|footer|script|style)[^>]*>.*?</\1>", "", raw, flags=re.S | re.I)
+            body = re.search(r"<body[^>]*>(.*)</body>", trimmed, re.S)
+            if not body:
+                continue
         text = strip_tags(body.group(1))
         if len(text) < 400:
             continue

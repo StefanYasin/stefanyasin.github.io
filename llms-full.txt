@@ -6,6 +6,534 @@ Canonical index: https://stefanyasin.github.io/llms.txt
 
 ---
 
+## Stefan Yasin — Technical Operations & Applied AI
+
+URL: https://stefanyasin.github.io/index.html
+
+### Selected work
+
+ Open-source tools built from real problems in operations, monitoring, and security. The newest nine shipped in October 2026.
+
+ 
+
+ 
+ 
+ 🔍
+
+ 
+#### eagleeye2
+
+ OSINT research platform with Kali integration. Built to be taught in courses, used by agencies, and trusted by security teams.
+
+ OSINT · Security · Python
+
+ (https://github.com/StefanYasin/eagleeye2)
+ 
+
+ 
+ 🛡️
+
+ 
+#### endpointwatch
+
+ Live-response endpoint monitoring with plain-English alerts for Windows.
+
+ Monitoring · Alerts
+
+ (https://github.com/StefanYasin/endpointwatch)
+ 
+
+ 
+ 📡
+
+ 
+#### pinggrid
+
+ Distributed uptime and latency tracking across a grid of nodes.
+
+ Uptime · Distributed
+
+ (https://github.com/StefanYasin/pinggrid)
+ 
+
+ 
+ 🧊
+
+ 
+#### rackpulse
+
+ Health monitoring and AI provisioning for legacy Dell PowerEdge servers on ESXi 6.7.
+
+ Hardware · Telemetry
+
+ (https://github.com/StefanYasin/rackpulse)
+ 
+
+ 
+ 🔕
+
+ 
+#### dellsilencer
+
+ Fan control with hysteresis for Dell laptops. Quiet without the screaming.
+
+ Hardware · Fan Control
+
+ (https://github.com/StefanYasin/dellsilencer)
+ 
+
+ 
+ 💾
+
+ 
+#### restore-drill
+
+ Backup restore verification CLI. Tests that backups actually restore, before you need them.
+
+ Backups · Verification
+
+ (https://github.com/StefanYasin/restore-drill)
+ 
+
+ 
+ 🏘️
+
+ 
+#### Nextdoor Lead Engine
+
+ Scans Nextdoor for service requests, drafts replies in the right voice, tracks leads.
+
+ Lead Gen · Automation
+
+ (https://github.com/StefanYasin/nextdoor-lead-engine)
+ 
+
+ 
+ 📱
+
+ 
+#### phonepilot
+
+ ESP32 and iPhone control plane: a BLE keyboard, a physical approve button, and YAML workflows you can read before they run.
+
+ Automation · ESP32 · iOS
+
+ (https://github.com/StefanYasin/phonepilot)
+ 
+
+ 
+ 💓
+
+ 
+#### agentpulse
+
+ Read-only dashboard for a Hermes cron fleet. What failed, what drifted, and what runs next.
+
+ Cron · Observability
+
+ (https://github.com/StefanYasin/agentpulse)
+ 
+
+ 
+ 🔌
+
+ 
+#### esp32-mcp
+
+ MCP server that gives an agent relays, GPIO and sensors over a local HTTP API. No cloud in the middle.
+
+ MCP · IoT · ESP32
+
+ (https://github.com/StefanYasin/esp32-mcp)
+ 
+
+ 
+ 🧭
+
+ 
+#### agent-surface-report
+
+ Read-only Windows audit of what an agent could touch or persist, scored info, warn or critical.
+
+ Security · Windows · Audit
+
+ (https://github.com/StefanYasin/agent-surface-report)
+ 
+
+ 
+ 🔬
+
+ 
+#### re-ai
+
+ One markdown report per binary: PE headers, imports, strings, entropy and packer heuristics.
+
+ Reverse engineering · Static analysis
+
+ (https://github.com/StefanYasin/re-ai)
+ 
+
+ 
+ 🧱
+
+ 
+#### mcp-firewall
+
+ Policy gateway for MCP stdio servers. Allow or deny tools, rate limit calls, log every call to JSONL.
+
+ MCP · Policy · Audit
+
+ (https://github.com/StefanYasin/mcp-firewall)
+ 
+
+ 
+ 🗺️
+
+ 
+#### diagrams-from-json
+
+ YAML or JSON spec in, clean standalone SVG architecture diagram out. No browser, no Graphviz.
+
+ Diagrams · CLI
+
+ (https://github.com/StefanYasin/diagrams-from-json)
+ 
+
+ 
+ 📊
+
+ 
+#### trend-radar
+
+ Ranks GitHub, Hacker News and Reddit trends against a YAML profile of the skills you actually have.
+
+ Trends · Scoring · CLI
+
+ (https://github.com/StefanYasin/trend-radar)
+ 
+
+ 
+ 🦙
+
+ 
+#### ollama-watch
+
+ Polls a local Ollama into SQLite, prints daily digests, serves a dark dashboard.
+
+ LLM ops · SQLite
+
+ (https://github.com/StefanYasin/ollama-watch)
+ 
+
+ 
+
+ 
+ 
+### Live from GitHub
+
+ Real numbers, pulled from the GitHub API by a scheduled Action. No hand-typed achievements.
+
+ 
+
+ 
+ 15
+
+Public tools
+
+ …
+
+Stars
+
+ …
+
+Commits, 12 mo
+
+ repos (https://github.com/StefanYasin)
+
+Last shipped
+
+ Reads data/stats.json, refreshed daily by a scheduled GitHub Action.
+
+ 
+
+ 
+ 
+### Blueprints
+
+ How the stack fits together. Industrial floors, network core, and AI layer, one system.
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+ 
+ INDUSTRIAL LAYER
+ NETWORK / INFRA
+ DATA & SECURITY
+ AGENT / AI LAYER
+
+ 
+ 
+ PLC & Process Control
+ Siemens · Omron · Schneider · Delta
+
+ 
+ SCADA + HMI
+ Siemens WinCC · Remote I/O
+
+ 
+ BMS & M&E Systems
+ HVAC · Chillers · Boilers · UPS
+
+ 
+ 
+ Network Core
+ Cisco Rack · Firewalls · VLANs
+
+ 
+ Servers & Storage
+ PowerEdge ESXi · NAS · Docker
+
+ 
+ Fleet & Telematics
+ GT350 · Viper · fleet.json · Monitors
+
+ 
+ 
+ OSINT & Security
+ eagleeye2 · Shodan · Threat Intel
+
+ 
+ Monitoring & Alerts
+ endpointwatch · pinggrid · rackpulse
+
+ 
+ Backups & Restore
+ restore-drill · Vault · Git
+
+ 
+ 
+ Hermes Agent Suite
+ Memory (MemOS) · Vault · Cron Automations · Email Ingest · Reddit Research
+ WebUI over Tailscale · Model routing (qwen flash / deepseek strategic)
+
+ 
+ Outbound
+ Lead Engine · Faceless IG
+ LinkedIn drafts · Agency Kit
+
+ 
+ - 
+ - 
+ - 
+ - 
+ - 
+ - 
+
+ 
+ Legend
+ 
+ Industrial
+ 
+ Network
+ 
+ Security
+ 
+ Data
+ 
+ Agent
+ 
+ Outbound
+ 
+ 
+
+ 
+ 
+### Experience
+
+ A decade of hands-on work where industrial systems meet business outcomes.
+
+ 
+
+ 
+ Full-time roles
+
+ 
+ Innovopak Inc.
+
+IT, Networking & BMS Operations Lead
+
+ 2023-2025
+
+ 
+
+ 
+ Penquin Group of Canada Inc.
+
+Marketing Manager
+
+ 2016-2022
+
+ 
+
+ 
+ Innovopak Inc.
+
+Technical Advisor, CAD and instrumentation
+
+ 2015-2016
+
+ 
+
+ 
+ Apple
+
+Technical Support Specialist & Apple Genius
+
+ 2014
+
+ 
+
+ 
+ TheLabsPhoto
+
+Project Manager, production
+
+ 2008-2012
+
+ 
+
+ 
+ WhirlWind Labs
+
+Founder, systems and performance computing
+
+ 2006
+
+ 
+
+ Concurrent, licensed and self-employed
+
+ 
+ One Percent Realty
+
+Real Estate Agent
+
+ 2021-2024
+
+ 
+
+ 
+ Centum Total Mortgage Services Inc.
+
+Mortgage Agent
+
+ 2016-2023
+
+ 
+
+ 
+ Exclaim Digital Media Inc.
+
+Marketing Consultant
+
+ 2012-2023
+
+ 
+
+ 
+
+ 
+ 
+### Skills
+
+ The stack behind the work.
+
+ 
+
+ 
+ PLC & SCADA (Siemens WinCC)
+ Industrial Automation
+ Network Infrastructure
+ Fleet & Telematics
+ OSINT & Security
+ Backup & Recovery
+ Python
+ Systems Monitoring
+ Homelab & Virtualization
+ AI Workflows & Automation
+ Datacenter & Buildouts
+ Cloud & AI Architecture
+ Electrical & Power Systems
+ 
+
+ 
+ 
+### Questions
+
+ Straight answers before you reach out.
+
+ 
+
+ 
+ 
+ What kind of work do you take on?
+ Technical operations and IT infrastructure work, applied AI and automation, and custom tooling. Recent examples: monitoring and alerting rebuilds, network design and cleanup, datacenter decommissions and buildouts, electrical and power systems support, cloud and AI solutions architecture for SMBs, and the glue code that connects them. Available for consulting, contract, or full-time roles.
+
+ 
+ 
+ Are you open to full-time roles?
+ Yes. Senior technical operations, customer success, service delivery, and field engineering. Remote, or onsite across the GTA and Southern Ontario. The full resume is at stefanyasin.github.io/resume.pdf (resume.pdf).
+
+ 
+ 
+ Do you work remotely?
+ Remote first, onsite when it matters. Based in Hamilton, Ontario, working Eastern Time, and I travel for commissioning, cutovers, and site work.
+
+ 
+ 
+ What does an engagement look like?
+ It starts with the problem, not a platform. I map what is running, what breaks, and who gets woken up when it does. Then we fix the most expensive failure first: alerting that routes to one owner, a monitoring gap, or a manual process worth automating. Scoped in weeks, shipped in pieces, documented as it goes.
+
+ 
+ 
+ Where can I see the work?
+ Maintained open-source tools on GitHub (https://github.com/StefanYasin), written case studies (case-studies/), and a blog (blog/) with the technical detail behind them.
+
+ 
+ 
+
+ 
+ 
+### Let's build something.
+
+ Technical consulting, custom tooling, or automation for industrial, automotive, and operations-focused teams.
+
+ 
+ Email Me (mailto:StefanYasin@gmail.com)
+
+ GitHub (https://github.com/StefanYasin)
+ LinkedIn (https://linkedin.com/in/stefanyasin)
+ 
+
+ 
+ Buy me a coffee (https://buymeacoffee.com/stefanthepro)
+ Everything here is free: the tools, the writing, the code. Tips keep the lab running.
+
+
+---
+
 ## Running an AI-assisted ops stack on a near-zero budget
 
 URL: https://stefanyasin.github.io/blog/posts/ai-assisted-ops-stack-near-zero-budget.html
