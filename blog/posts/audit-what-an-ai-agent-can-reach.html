@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="view-transition" content="same-origin">
+  <title>How to audit what an AI agent can reach on Windows - Stefan Yasin</title>
+  <meta name="description" content="An AI agent running as your Windows user inherits every stored credential, startup hook and writable PATH directory. A read-only audit that maps what it can actually reach.">
+  <meta property="og:title" content="How to audit what an AI agent can reach on Windows">
+  <meta property="og:description" content="An AI agent running as your Windows user inherits every stored credential, startup hook and writable PATH directory. A read-only audit that maps what it can actually reach.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html">
+  <meta property="og:image" content="https://stefanyasin.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233fb950'/%3E%3Ctext x='32' y='42' font-family='Arial, sans-serif' font-size='28' font-weight='bold' fill='%230b0f14' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../css/site.css">
+  <link rel="canonical" href="https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html">
+  <link rel="alternate" type="application/atom+xml" title="Stefan Yasin - Writing" href="https://stefanyasin.github.io/feed.xml">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "How to audit what an AI agent can reach on Windows",
+    "description": "An AI agent running as your Windows user inherits every stored credential, startup hook and writable PATH directory. A read-only audit that maps what it can actually reach.",
+    "url": "https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html",
+    "image": "https://stefanyasin.github.io/og.png",
+    "datePublished": "2026-10-31",
+    "dateModified": "2026-10-31",
+    "author": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Stefan Yasin",
+      "url": "https://stefanyasin.github.io/",
+      "sameAs": [
+        "https://github.com/StefanYasin",
+        "https://www.linkedin.com/in/stefanyasin/",
+        "https://orcid.org/0009-0004-3416-7447"
+      ]
+    },
+    "isPartOf": {
+      "@type": "Blog",
+      "name": "Stefan Yasin - Writing",
+      "url": "https://stefanyasin.github.io/blog/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html"
+    },
+    "inLanguage": "en-CA"
+  }
+  </script>
+  <link rel="stylesheet" href="../../css/palette.css">
+  <link rel="alternate" type="application/feed+json" title="Stefan Yasin - Writing (JSON Feed)" href="https://stefanyasin.github.io/feed.json">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../../index.html">Stefan Yasin</a>
+      <nav aria-label="Primary">
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">Writing</a>
+        <a href="../../case-studies/index.html">Case studies</a>
+        <a href="../../uses.html">Uses</a>
+        <a href="../../now.html">Now</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <div class="container">
+        <p class="breadcrumbs"><a href="../../index.html">Home</a> / <a href="../index.html">Writing</a> / <span>Agent audit</span></p>
+        <p class="eyebrow">Blog</p>
+        <h1>How to audit what an AI agent can reach on Windows</h1>
+        <p class="byline"><span>Stefan Yasin</span><span>Oct 31, 2026</span><span>~7 min read</span></p>
+        <div class="prose">
+          <p>Every agent deployment has the same gap. Someone gives a CLI tool permission to run commands on a workstation, the tool works, and nobody writes down what that account could touch. A permissions dialog will not tell you. The machine will.</p>
+          <p>I built <a href="https://github.com/StefanYasin/agent-surface-report">agent-surface-report</a> to answer one narrow question: if an agent got loose on this Windows box, what could it reach, and how could it persist? It is a read-only audit with no third party dependencies, and it prints a report you can diff from one week to the next.</p>
+
+          <h2>The user account is the real perimeter</h2>
+          <p>You do not need an exploit to get from agent to everything-you-own. If the agent runs as your user, it starts with your rights. Any process in your session can read your stored credential targets, write to any directory your account can write, add a Run key under HKCU, or drop a shortcut in your Startup folder. None of that needs admin.</p>
+          <p>That is the part people underestimate. Persistence rarely requires elevation, it requires your session, and the agent already has your session. So the useful audit is not a malware scan. It is a map of ambient authority: what exists on this machine that the account running the agent can use, replace or add.</p>
+
+          <h2>The eight checks that matter</h2>
+          <ul>
+            <li><strong>Run keys.</strong> HKCU and HKLM Run and RunOnce values start a program at logon. The HKCU half needs no administrator rights, so an agent can add one line and be back after the next reboot.</li>
+            <li><strong>Startup folders.</strong> The per-user and all-users Startup directories. One shortcut is enough for logon persistence, and it looks like an ordinary application.</li>
+            <li><strong>Auto-start services, with signature status.</strong> Boot-time code, usually running as SYSTEM. An unsigned auto-start service on a workstation is a real finding, not a curiosity.</li>
+            <li><strong>Scheduled tasks.</strong> Everything outside the Microsoft baseline, with its action, the account it runs as and its run level. Repeating execution is how a process survives you closing its window.</li>
+            <li><strong>Stored credentials, via <code>cmdkey /list</code>.</strong> Credential targets, not secrets. That distinction helps less than it sounds: any process in your session can use a stored target, so a target an agent should never authenticate as is exposed.</li>
+            <li><strong>Listening ports mapped to processes.</strong> What is reachable from the network, which process owns each listener, and therefore which of them an agent could talk to locally.</li>
+            <li><strong>PATH directories writable by the current user.</strong> Binary planting by name. If a writable user directory sits on PATH, a dropped file with the right name wins the race against the real tool.</li>
+            <li><strong>PowerShell execution policy, per scope.</strong> Whether script execution has any guardrail at all, machine-wide and in the current session.</li>
+          </ul>
+
+          <h2>Severity is triage, the evidence is the finding</h2>
+          <p>Every item is scored info, warn or critical. Critical means an agent running as you could replace or add it without admin rights, or a high risk service is exposed to the network. Warn means real persistence or exposure surface worth a look. Info is expected state, recorded so you have a baseline.</p>
+          <p>The scoring is deliberately heuristic. Path location, signature status, bind address, port, task flags and PATH writability drive it. Read the evidence column before acting on the colour. A critical that turns out to be your own tooling is not a problem, it is documentation.</p>
+
+          <h2>Running it</h2>
+          <pre><code>pip install git+https://github.com/StefanYasin/agent-surface-report
+agent-surface-report
+agent-surface-report --json --output surface.json
+agent-surface-report --fail-on critical</code></pre>
+          <p><code>--fail-on critical</code> exits with code 1 when a critical finding exists, which is what makes it usable on a schedule or in CI. Default output is markdown for a human. <code>--json</code> emits a stable object with <code>schema_version</code>, <code>summary</code>, <code>checks_run</code> and <code>findings</code>, which is the one you diff. Python 3.9 and up, no runtime dependencies.</p>
+
+          <h2>What it will not tell you</h2>
+          <ul>
+            <li>It does not stop, delete or change anything. The only write is a temporary probe file inside each PATH directory, created and removed to test writability.</li>
+            <li>It does not scan file contents, memory or network traffic. Pair it with something that watches connections if that is your concern. <a href="../../case-studies/endpointwatch.html">endpointwatch</a> is what I use on Windows.</li>
+            <li>Signatures are only checked for auto-start services. Run entries and scheduled tasks are scored on path, quoting and command flags.</li>
+            <li>Without elevation, some machine-wide data is missing. Collection failures are listed in the report notes instead of being hidden.</li>
+            <li>Scheduled tasks under <code>\Microsoft\Windows</code> are excluded as baseline.</li>
+          </ul>
+
+          <h2>The other half of the surface is the tool layer</h2>
+          <p>Mapping the machine answers what an agent could touch. It does not answer what an agent was allowed to call. For that I run <a href="https://github.com/StefanYasin/mcp-firewall">mcp-firewall</a>, a policy gateway in front of MCP servers on stdio: allow or deny tools per server, rate limit calls, and write every call to JSONL.</p>
+          <p>The allowlist is the part people think about. The log is the part that saves you. Six weeks after an incident, which tools did this agent call and how often is a question you either can answer from a file or cannot answer at all.</p>
+
+          <h2>A routine that takes ten minutes a week</h2>
+          <ol>
+            <li>Capture a baseline JSON on a machine that is in the state you want.</li>
+            <li>Run the audit weekly and keep the JSON next to the baseline.</li>
+            <li>Diff. New critical items get investigated before anything else that week.</li>
+            <li>Write down the accepted risks and the reason, so the next audit does not relitigate them.</li>
+          </ol>
+          <p>Two of those steps carry the whole value. Most teams can generate a report. Few keep the previous one.</p>
+
+          <h2>Where this fits</h2>
+          <p>This is not an argument against agents. It is an argument for a map. Delegated authority needs the same review a firewall rule set gets, and if you are going to let a model run commands on a machine that holds your cloud keys, you should be able to say what it could reach before something unexpected happens, not after.</p>
+          <p>The supply chain side of the same problem is in <a href="check-if-python-package-is-malicious.html">checking whether a Python package is malicious</a>, and the response side is in <a href="incident-response-hours-to-minutes.html">cutting incident response from hours to minutes</a>. The cheap way to run the stack is in <a href="ai-assisted-ops-stack-near-zero-budget.html">the AI assisted ops stack</a>. agent-surface-report is on GitHub under MIT.</p>
+        </div>
+        <div class="post-footer">
+          <p><a href="../index.html">Back to all posts</a></p>
+          <div class="article-tags"><span class="tag">Security</span><span class="tag">AI agents</span><span class="tag">Windows</span><span class="tag">Ops</span></div>
+        </div>
+      </div>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Stefan Yasin. Built as static HTML, hosted on GitHub Pages.</p>
+    </div>
+  </footer>
+  <script src="../../js/site.js" defer></script>
+</body>
+</html>

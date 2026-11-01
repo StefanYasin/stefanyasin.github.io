@@ -13,6 +13,13 @@
   ],
   "items": [
     {
+      "id": "https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html",
+      "url": "https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html",
+      "title": "How to audit what an AI agent can reach on Windows",
+      "date_published": "2026-10-31T00:00:00Z",
+      "summary": "An AI agent running as your Windows user inherits stored credentials, autostart hooks and writable PATH directories. A read-only audit of what it can actually reach."
+    },
+    {
       "id": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html",
       "url": "https://stefanyasin.github.io/blog/posts/october-fleet-nine-tools-one-week.html",
       "title": "Nine tools in one week, and what each one actually does",

@@ -723,6 +723,125 @@ Home (../../index.html) / Writing (../index.html) / Alert severity
 
 ---
 
+## How to audit what an AI agent can reach on Windows
+
+URL: https://stefanyasin.github.io/blog/posts/audit-what-an-ai-agent-can-reach.html
+Published: 2026-10-31
+
+Home (../../index.html) / Writing (../index.html) / Agent audit
+
+ Blog
+
+ 
+## How to audit what an AI agent can reach on Windows
+
+ Stefan YasinOct 31, 2026~7 min read
+
+ 
+ Every agent deployment has the same gap. Someone gives a CLI tool permission to run commands on a workstation, the tool works, and nobody writes down what that account could touch. A permissions dialog will not tell you. The machine will.
+
+ I built agent-surface-report (https://github.com/StefanYasin/agent-surface-report) to answer one narrow question: if an agent got loose on this Windows box, what could it reach, and how could it persist? It is a read-only audit with no third party dependencies, and it prints a report you can diff from one week to the next.
+
+ 
+### The user account is the real perimeter
+
+ You do not need an exploit to get from agent to everything-you-own. If the agent runs as your user, it starts with your rights. Any process in your session can read your stored credential targets, write to any directory your account can write, add a Run key under HKCU, or drop a shortcut in your Startup folder. None of that needs admin.
+
+ That is the part people underestimate. Persistence rarely requires elevation, it requires your session, and the agent already has your session. So the useful audit is not a malware scan. It is a map of ambient authority: what exists on this machine that the account running the agent can use, replace or add.
+
+ 
+### The eight checks that matter
+
+ 
+ - Run keys. HKCU and HKLM Run and RunOnce values start a program at logon. The HKCU half needs no administrator rights, so an agent can add one line and be back after the next reboot.
+
+ - Startup folders. The per-user and all-users Startup directories. One shortcut is enough for logon persistence, and it looks like an ordinary application.
+
+ - Auto-start services, with signature status. Boot-time code, usually running as SYSTEM. An unsigned auto-start service on a workstation is a real finding, not a curiosity.
+
+ - Scheduled tasks. Everything outside the Microsoft baseline, with its action, the account it runs as and its run level. Repeating execution is how a process survives you closing its window.
+
+ - Stored credentials, via cmdkey /list. Credential targets, not secrets. That distinction helps less than it sounds: any process in your session can use a stored target, so a target an agent should never authenticate as is exposed.
+
+ - Listening ports mapped to processes. What is reachable from the network, which process owns each listener, and therefore which of them an agent could talk to locally.
+
+ - PATH directories writable by the current user. Binary planting by name. If a writable user directory sits on PATH, a dropped file with the right name wins the race against the real tool.
+
+ - PowerShell execution policy, per scope. Whether script execution has any guardrail at all, machine-wide and in the current session.
+
+ 
+
+ 
+### Severity is triage, the evidence is the finding
+
+ Every item is scored info, warn or critical. Critical means an agent running as you could replace or add it without admin rights, or a high risk service is exposed to the network. Warn means real persistence or exposure surface worth a look. Info is expected state, recorded so you have a baseline.
+
+ The scoring is deliberately heuristic. Path location, signature status, bind address, port, task flags and PATH writability drive it. Read the evidence column before acting on the colour. A critical that turns out to be your own tooling is not a problem, it is documentation.
+
+ 
+### Running it
+
+ pip install git+https://github.com/StefanYasin/agent-surface-report
+agent-surface-report
+agent-surface-report --json --output surface.json
+agent-surface-report --fail-on critical
+ --fail-on critical exits with code 1 when a critical finding exists, which is what makes it usable on a schedule or in CI. Default output is markdown for a human. --json emits a stable object with schema_version, summary, checks_run and findings, which is the one you diff. Python 3.9 and up, no runtime dependencies.
+
+ 
+### What it will not tell you
+
+ 
+ - It does not stop, delete or change anything. The only write is a temporary probe file inside each PATH directory, created and removed to test writability.
+
+ - It does not scan file contents, memory or network traffic. Pair it with something that watches connections if that is your concern. endpointwatch (../../case-studies/endpointwatch.html) is what I use on Windows.
+
+ - Signatures are only checked for auto-start services. Run entries and scheduled tasks are scored on path, quoting and command flags.
+
+ - Without elevation, some machine-wide data is missing. Collection failures are listed in the report notes instead of being hidden.
+
+ - Scheduled tasks under \Microsoft\Windows are excluded as baseline.
+
+ 
+
+ 
+### The other half of the surface is the tool layer
+
+ Mapping the machine answers what an agent could touch. It does not answer what an agent was allowed to call. For that I run mcp-firewall (https://github.com/StefanYasin/mcp-firewall), a policy gateway in front of MCP servers on stdio: allow or deny tools per server, rate limit calls, and write every call to JSONL.
+
+ The allowlist is the part people think about. The log is the part that saves you. Six weeks after an incident, which tools did this agent call and how often is a question you either can answer from a file or cannot answer at all.
+
+ 
+### A routine that takes ten minutes a week
+
+ 
+ - Capture a baseline JSON on a machine that is in the state you want.
+
+ - Run the audit weekly and keep the JSON next to the baseline.
+
+ - Diff. New critical items get investigated before anything else that week.
+
+ - Write down the accepted risks and the reason, so the next audit does not relitigate them.
+
+ 
+ Two of those steps carry the whole value. Most teams can generate a report. Few keep the previous one.
+
+ 
+### Where this fits
+
+ This is not an argument against agents. It is an argument for a map. Delegated authority needs the same review a firewall rule set gets, and if you are going to let a model run commands on a machine that holds your cloud keys, you should be able to say what it could reach before something unexpected happens, not after.
+
+ The supply chain side of the same problem is in checking whether a Python package is malicious (check-if-python-package-is-malicious.html), and the response side is in cutting incident response from hours to minutes (incident-response-hours-to-minutes.html). The cheap way to run the stack is in the AI assisted ops stack (ai-assisted-ops-stack-near-zero-budget.html). agent-surface-report is on GitHub under MIT.
+
+ 
+
+ 
+ Back to all posts (../index.html)
+
+ SecurityAI agentsWindowsOps
+
+
+---
+
 ## Backporting modern health monitoring onto 2016-era servers
 
 URL: https://stefanyasin.github.io/blog/posts/backporting-modern-monitoring-to-legacy-poweredge.html
