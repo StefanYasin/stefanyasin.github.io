@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-01T16:49:42.643Z",
+  "generatedAt": "2026-11-02T20:22:58.055Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
   "stars": 1,
-  "commitsLast365": 112,
+  "commitsLast365": 118,
   "lastShip": {
-    "repo": "eagleeye2",
-    "url": "https://github.com/StefanYasin/eagleeye2",
-    "date": "2026-10-26T15:23:09Z",
-    "message": "Fix #5: validate --purpose instead of crashing (#6)"
+    "repo": "awesome-agent-ops",
+    "url": "https://github.com/StefanYasin/awesome-agent-ops",
+    "date": "2026-11-02T17:49:34Z",
+    "message": "docs: add HOL Guard to agent operations guardrails (#1)"
   },
   "topRepos": [
     {
@@ -18,7 +18,7 @@
       "stars": 1,
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
-      "pushedAt": "2026-10-26T15:23:11Z"
+      "pushedAt": "2026-11-02T17:45:21Z"
     },
     {
       "name": "awesome-agent-ops",
@@ -26,23 +26,23 @@
       "stars": 0,
       "language": "Python",
       "description": "A curated list of tools for operating AI agents in production: observability, evaluation, guardrails, sandboxing, MCP security, fleet orchestration, cost tracking and incident response.",
-      "pushedAt": "2026-10-25T03:51:27Z"
+      "pushedAt": "2026-11-02T17:49:34Z"
     },
     {
-      "name": "free-tools-for-solo-ops",
-      "url": "https://github.com/StefanYasin/free-tools-for-solo-ops",
+      "name": "agent-surface-report",
+      "url": "https://github.com/StefanYasin/agent-surface-report",
       "stars": 0,
       "language": "Python",
-      "description": "Curated list of genuinely free tools for solo IT consultants, sysadmins, and small business operators.",
-      "pushedAt": "2026-10-25T03:48:18Z"
+      "description": "Read-only Windows audit of what an AI agent could touch or persist: autostart, services, tasks, credentials, listeners, PATH and PowerShell policy.",
+      "pushedAt": "2026-11-01T22:56:53Z"
     },
     {
-      "name": "phonepilot",
-      "url": "https://github.com/StefanYasin/phonepilot",
+      "name": "mcp-firewall",
+      "url": "https://github.com/StefanYasin/mcp-firewall",
       "stars": 0,
       "language": "Python",
-      "description": "ESP32 + iPhone automation control plane: BLE HID bridge, iOS Shortcuts, and reviewable YAML workflows with confirmation gates.",
-      "pushedAt": "2026-10-23T03:53:34Z"
+      "description": "Policy gateway for MCP servers over stdio: allow or deny tools per server, rate limit calls, and log every tool call to JSONL. Stdlib only.",
+      "pushedAt": "2026-11-01T22:56:51Z"
     },
     {
       "name": "agentpulse",
@@ -50,7 +50,7 @@
       "stars": 0,
       "language": "Python",
       "description": "Read-only operations dashboard for Hermes cron fleets: status, errors, drift and next runs. Stdlib Python, no dependencies.",
-      "pushedAt": "2026-10-23T03:05:00Z"
+      "pushedAt": "2026-11-01T22:56:49Z"
     }
   ]
 }
