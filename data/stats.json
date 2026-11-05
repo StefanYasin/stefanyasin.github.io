@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-04T17:59:33.455Z",
+  "generatedAt": "2026-11-05T18:02:25.890Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
-  "stars": 1,
+  "stars": 2,
   "commitsLast365": 118,
   "lastShip": {
     "repo": "awesome-agent-ops",
@@ -21,20 +21,20 @@
       "pushedAt": "2026-11-02T17:45:21Z"
     },
     {
+      "name": "agent-surface-report",
+      "url": "https://github.com/StefanYasin/agent-surface-report",
+      "stars": 1,
+      "language": "Python",
+      "description": "Read-only Windows audit of what an AI agent could touch or persist: autostart, services, tasks, credentials, listeners, PATH and PowerShell policy.",
+      "pushedAt": "2026-11-01T22:56:53Z"
+    },
+    {
       "name": "awesome-agent-ops",
       "url": "https://github.com/StefanYasin/awesome-agent-ops",
       "stars": 0,
       "language": "Python",
       "description": "A curated list of tools for operating AI agents in production: observability, evaluation, guardrails, sandboxing, MCP security, fleet orchestration, cost tracking and incident response.",
       "pushedAt": "2026-11-02T17:49:34Z"
-    },
-    {
-      "name": "agent-surface-report",
-      "url": "https://github.com/StefanYasin/agent-surface-report",
-      "stars": 0,
-      "language": "Python",
-      "description": "Read-only Windows audit of what an AI agent could touch or persist: autostart, services, tasks, credentials, listeners, PATH and PowerShell policy.",
-      "pushedAt": "2026-11-01T22:56:53Z"
     },
     {
       "name": "mcp-firewall",
