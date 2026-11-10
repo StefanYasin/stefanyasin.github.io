@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-09T20:46:18.254Z",
+  "generatedAt": "2026-11-10T17:52:40.107Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
   "stars": 2,
-  "commitsLast365": 118,
+  "commitsLast365": 119,
   "lastShip": {
-    "repo": "awesome-agent-ops",
-    "url": "https://github.com/StefanYasin/awesome-agent-ops",
-    "date": "2026-11-02T17:49:34Z",
-    "message": "docs: add HOL Guard to agent operations guardrails (#1)"
+    "repo": "agentpulse",
+    "url": "https://github.com/StefanYasin/agentpulse",
+    "date": "2026-11-10T17:33:02Z",
+    "message": "Add CI, license, and Python version badges to README header"
   },
   "topRepos": [
     {
@@ -29,6 +29,14 @@
       "pushedAt": "2026-11-01T22:56:53Z"
     },
     {
+      "name": "agentpulse",
+      "url": "https://github.com/StefanYasin/agentpulse",
+      "stars": 0,
+      "language": "Python",
+      "description": "Read-only operations dashboard for Hermes cron fleets: status, errors, drift and next runs. Stdlib Python, no dependencies.",
+      "pushedAt": "2026-11-10T17:33:08Z"
+    },
+    {
       "name": "awesome-agent-ops",
       "url": "https://github.com/StefanYasin/awesome-agent-ops",
       "stars": 0,
@@ -43,14 +51,6 @@
       "language": "Python",
       "description": "Policy gateway for MCP servers over stdio: allow or deny tools per server, rate limit calls, and log every tool call to JSONL. Stdlib only.",
       "pushedAt": "2026-11-01T22:56:51Z"
-    },
-    {
-      "name": "agentpulse",
-      "url": "https://github.com/StefanYasin/agentpulse",
-      "stars": 0,
-      "language": "Python",
-      "description": "Read-only operations dashboard for Hermes cron fleets: status, errors, drift and next runs. Stdlib Python, no dependencies.",
-      "pushedAt": "2026-11-01T22:56:49Z"
     }
   ]
 }
