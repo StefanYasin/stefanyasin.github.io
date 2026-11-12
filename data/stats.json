@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-11T17:54:30.663Z",
+  "generatedAt": "2026-11-12T18:21:04.522Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
-  "stars": 2,
+  "stars": 3,
   "commitsLast365": 119,
   "lastShip": {
     "repo": "agentpulse",
@@ -15,7 +15,7 @@
     {
       "name": "eagleeye2",
       "url": "https://github.com/StefanYasin/eagleeye2",
-      "stars": 1,
+      "stars": 2,
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
       "pushedAt": "2026-11-02T17:45:21Z"
