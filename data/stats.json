@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-15T17:13:00.801Z",
+  "generatedAt": "2026-11-16T20:30:13.340Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
   "stars": 3,
-  "commitsLast365": 119,
+  "commitsLast365": 135,
   "lastShip": {
-    "repo": "agentpulse",
-    "url": "https://github.com/StefanYasin/agentpulse",
-    "date": "2026-11-10T17:33:02Z",
-    "message": "Add CI, license, and Python version badges to README header"
+    "repo": "pinggrid",
+    "url": "https://github.com/StefanYasin/pinggrid",
+    "date": "2026-11-16T17:31:25Z",
+    "message": "Dashboard v3: heartbeat history, banner, controls, themes, maintenance states (#7)"
   },
   "topRepos": [
     {
@@ -18,7 +18,7 @@
       "stars": 2,
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
-      "pushedAt": "2026-11-02T17:45:21Z"
+      "pushedAt": "2026-11-16T17:27:21Z"
     },
     {
       "name": "agent-surface-report",
@@ -29,28 +29,28 @@
       "pushedAt": "2026-11-01T22:56:53Z"
     },
     {
-      "name": "agentpulse",
-      "url": "https://github.com/StefanYasin/agentpulse",
+      "name": "pinggrid",
+      "url": "https://github.com/StefanYasin/pinggrid",
       "stars": 0,
       "language": "Python",
-      "description": "Read-only operations dashboard for Hermes cron fleets: status, errors, drift and next runs. Stdlib Python, no dependencies.",
-      "pushedAt": "2026-11-10T17:33:08Z"
+      "description": "Lightweight network monitoring dashboard — ping sweeps, port scans, and instant alerts from one terminal view.",
+      "pushedAt": "2026-11-16T17:31:29Z"
     },
     {
-      "name": "awesome-agent-ops",
-      "url": "https://github.com/StefanYasin/awesome-agent-ops",
+      "name": "restore-drill",
+      "url": "https://github.com/StefanYasin/restore-drill",
       "stars": 0,
-      "language": "Python",
-      "description": "A curated list of tools for operating AI agents in production: observability, evaluation, guardrails, sandboxing, MCP security, fleet orchestration, cost tracking and incident response.",
-      "pushedAt": "2026-11-02T17:49:34Z"
+      "language": "Shell",
+      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
+      "pushedAt": "2026-11-16T17:27:19Z"
     },
     {
-      "name": "mcp-firewall",
-      "url": "https://github.com/StefanYasin/mcp-firewall",
+      "name": "dellsilencer",
+      "url": "https://github.com/StefanYasin/dellsilencer",
       "stars": 0,
-      "language": "Python",
-      "description": "Policy gateway for MCP servers over stdio: allow or deny tools per server, rate limit calls, and log every tool call to JSONL. Stdlib only.",
-      "pushedAt": "2026-11-01T22:56:51Z"
+      "language": "C#",
+      "description": "Fan control for Dell PowerEdge servers - SMI-based with hysteresis (deadband) logic to stop fan oscillation. Quiet your rack without cooking your drives.",
+      "pushedAt": "2026-11-16T17:27:18Z"
     }
   ]
 }
