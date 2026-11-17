@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-16T20:30:13.340Z",
+  "generatedAt": "2026-11-17T19:11:47.508Z",
   "user": "StefanYasin",
   "publicTools": 17,
   "repos": 19,
   "stars": 3,
-  "commitsLast365": 135,
+  "commitsLast365": 147,
   "lastShip": {
-    "repo": "pinggrid",
-    "url": "https://github.com/StefanYasin/pinggrid",
-    "date": "2026-11-16T17:31:25Z",
-    "message": "Dashboard v3: heartbeat history, banner, controls, themes, maintenance states (#7)"
+    "repo": "rackpulse",
+    "url": "https://github.com/StefanYasin/rackpulse",
+    "date": "2026-11-17T04:26:29Z",
+    "message": "Merge PR #7"
   },
   "topRepos": [
     {
@@ -18,7 +18,7 @@
       "stars": 2,
       "language": "Python",
       "description": "Find a person's social profiles from a face photo — modern EagleEye successor (deepface + profile discovery + face verification)",
-      "pushedAt": "2026-11-16T17:27:21Z"
+      "pushedAt": "2026-11-17T04:26:51Z"
     },
     {
       "name": "agent-surface-report",
@@ -34,23 +34,23 @@
       "stars": 0,
       "language": "Python",
       "description": "Lightweight network monitoring dashboard — ping sweeps, port scans, and instant alerts from one terminal view.",
-      "pushedAt": "2026-11-16T17:31:29Z"
+      "pushedAt": "2026-11-17T04:26:52Z"
     },
     {
-      "name": "restore-drill",
-      "url": "https://github.com/StefanYasin/restore-drill",
+      "name": "endpointwatch",
+      "url": "https://github.com/StefanYasin/endpointwatch",
       "stars": 0,
-      "language": "Shell",
-      "description": "Verify your GitHub backups actually restore — clone, verify, clean up in one command",
-      "pushedAt": "2026-11-16T17:27:19Z"
+      "language": "Python",
+      "description": "Live-response endpoint monitor for Windows: watches processes, connections, and persistence, enriched with VirusTotal + AbuseIPDB and plain-English LLM alerts.",
+      "pushedAt": "2026-11-17T04:26:49Z"
     },
     {
-      "name": "dellsilencer",
-      "url": "https://github.com/StefanYasin/dellsilencer",
+      "name": "rackpulse",
+      "url": "https://github.com/StefanYasin/rackpulse",
       "stars": 0,
-      "language": "C#",
-      "description": "Fan control for Dell PowerEdge servers - SMI-based with hysteresis (deadband) logic to stop fan oscillation. Quiet your rack without cooking your drives.",
-      "pushedAt": "2026-11-16T17:27:18Z"
+      "language": "Python",
+      "description": "Health monitoring and AI provisioning agent for legacy Dell PowerEdge servers on ESXi 6.7 — backports modern host/hardware health onto old enterprise gear.",
+      "pushedAt": "2026-11-17T04:26:48Z"
     }
   ]
 }
