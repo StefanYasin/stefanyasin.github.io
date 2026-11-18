@@ -1,0 +1,4 @@
+Contact: mailto:stefanyasin@gmail.com
+Expires: 2027-12-31T00:00:00Z
+Preferred-Languages: en
+Canonical: https://stefanyasin.com/.well-known/security.txt

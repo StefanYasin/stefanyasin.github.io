@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stefan Yasin</title>
+    <link>https://stefanyasin.com/blog/</link>
+    <description>Notes on infrastructure, AI for small business, and building systems that survive.</description>
+    <language>en-CA</language>
+    <atom:link href="https://stefanyasin.com/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Nov 2026 17:08:40 GMT</lastBuildDate>
+    <item>
+      <title><![CDATA[The Real Ops Stack Nobody Talks About]]></title>
+      <link>https://stefanyasin.com/blog/the-real-ops-stack-nobody-talks-about/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/the-real-ops-stack-nobody-talks-about/</guid>
+      <pubDate>Sat, 07 Nov 2026 17:00:00 GMT</pubDate>
+      <description><![CDATA[The ops stack nobody talks about. Why cross-domain depth across plant systems, BMS networking, IT, and AI pipelines beats single-silo management.]]></description>
+      <category><![CDATA[Operations]]></category>
+    </item>
+    <item>
+      <title><![CDATA[What a small business should actually monitor]]></title>
+      <link>https://stefanyasin.com/blog/what-small-business-should-monitor/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/what-small-business-should-monitor/</guid>
+      <pubDate>Sat, 24 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[Five things, not five hundred. Monitoring works when it pages the right person about the right failure.]]></description>
+      <category><![CDATA[Operations]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Backups are a promise you have not tested]]></title>
+      <link>https://stefanyasin.com/blog/backups-are-a-promise-untested/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/backups-are-a-promise-untested/</guid>
+      <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[A backup you have never restored is a hope, not a plan. Test it before the bad day decides for you.]]></description>
+      <category><![CDATA[Operations]]></category>
+    </item>
+    <item>
+      <title><![CDATA[The first 90 days of AI in a small business]]></title>
+      <link>https://stefanyasin.com/blog/first-90-days-ai-small-business/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/first-90-days-ai-small-business/</guid>
+      <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[A calendar, not a demo. Three months of boring automations that pay for themselves before the chatbots arrive.]]></description>
+      <category><![CDATA[AI]]></category>
+    </item>
+    <item>
+      <title><![CDATA[The two questions that stop most small business breaches]]></title>
+      <link>https://stefanyasin.com/blog/two-questions-stop-small-business-breaches/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/two-questions-stop-small-business-breaches/</guid>
+      <pubDate>Fri, 23 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[Stored credentials and untested backups cause more damage than exotic malware. Two boring questions fix most of it.]]></description>
+      <category><![CDATA[Security]]></category>
+    </item>
+    <item>
+      <title><![CDATA[AI for small business: start with the boring stuff]]></title>
+      <link>https://stefanyasin.com/blog/ai-for-small-business/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/ai-for-small-business/</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[The unglamorous automations pay first. The chatbots come later.]]></description>
+      <category><![CDATA[AI]]></category>
+    </item>
+    <item>
+      <title><![CDATA[What plant IT taught me about small business]]></title>
+      <link>https://stefanyasin.com/blog/plant-it-to-small-business/</link>
+      <guid isPermaLink="true">https://stefanyasin.com/blog/plant-it-to-small-business/</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[Downtime is measured in dollars per minute in both places. The difference is who feels it.]]></description>
+      <category><![CDATA[Operations]]></category>
+    </item>
+  </channel>
+</rss>
